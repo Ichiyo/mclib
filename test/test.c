@@ -16,7 +16,7 @@ static void traverse(unsigned long key, void* data)
 
 int
 main (int argc, char *argv[])
-{
+{ 
 	struct m_string* str = new_string();
 	struct m_string* str2 = new_string();
 	mstr_char(str, "Welcome");
