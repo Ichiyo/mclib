@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/manh/Documents/clibraries/test/gltest.c
+stdio.h
+-
+stdlib.h
+-
+GLUT/glut.h
+-
+GL/glut.h
+-
+GLES3/gl3.h
+-
+

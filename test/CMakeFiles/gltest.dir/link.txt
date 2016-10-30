@@ -1,0 +1,1 @@
+/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/gltest.dir/gltest.c.o  -o gltest  -L/home/manh/Documents/clibraries/test/.. -rdynamic -lclibraries -lm -lpthread -lGL -lGLU -lglut -Wl,-rpath,/home/manh/Documents/clibraries/test/.. 

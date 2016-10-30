@@ -1,0 +1,1 @@
+/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/libtest.dir/test.c.o  -o libtest  -L/home/manh/Documents/clibraries/test/.. -rdynamic -lclibraries -lm -lpthread -Wl,-rpath,/home/manh/Documents/clibraries/test/.. 
