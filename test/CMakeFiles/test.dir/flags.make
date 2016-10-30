@@ -6,5 +6,5 @@ C_FLAGS = -O3 -DNDEBUG
 
 C_DEFINES = 
 
-C_INCLUDES = -I/home/manh/Documents/clibraries/test/../include 
+C_INCLUDES = -I/home/manh/Documents/mclib/test/../include 
 

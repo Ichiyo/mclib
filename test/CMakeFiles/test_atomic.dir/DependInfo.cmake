@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/manh/Documents/clibraries/test/test_atomic.c" "/home/manh/Documents/clibraries/test/CMakeFiles/test_atomic.dir/test_atomic.c.o"
+  "/home/manh/Documents/mclib/test/test_atomic.c" "/home/manh/Documents/mclib/test/CMakeFiles/test_atomic.dir/test_atomic.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

@@ -6,5 +6,5 @@ C_FLAGS = -O3 -DNDEBUG -fPIC
 
 C_DEFINES = -DAPP_DEBUG -Dclibraries_EXPORTS
 
-C_INCLUDES = -I/home/manh/Documents/clibraries/include -I/home/manh/Documents/clibraries/hxcocoa/ios 
+C_INCLUDES = -I/home/manh/Documents/mclib/include 
 

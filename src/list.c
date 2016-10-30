@@ -177,7 +177,7 @@ typedef struct _m_array_list_node m_array_list_node;
 
 struct _m_array_list_content
 {
-  m_array_list_content* elements;
+  m_array_list_node* elements;
   int ordered;
 };
 typedef struct _m_array_list_content m_array_list_content;

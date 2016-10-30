@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/manh/Documents/clibraries/test/gltest.c
+/home/manh/Documents/mclib/test/gltest.c
 stdio.h
 -
 stdlib.h

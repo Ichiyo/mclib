@@ -10,36 +10,33 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/manh/Documents/clibraries/CMakeFiles/3.5.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/manh/Documents/mclib/CMakeFiles/3.5.2/CompilerIdC/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
+Change Dir: /home/manh/Documents/mclib/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_0b2d5/fast"
-gmake[3]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-/usr/bin/gmake -f CMakeFiles/cmTC_0b2d5.dir/build.make CMakeFiles/cmTC_0b2d5.dir/build
-gmake[4]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0b2d5.dir/testCCompiler.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_0b2d5.dir/testCCompiler.c.o   -c /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_0b2d5
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0b2d5.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_0b2d5.dir/testCCompiler.c.o  -o cmTC_0b2d5 -rdynamic 
-gmake[4]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_80e5d/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_80e5d.dir/build.make CMakeFiles/cmTC_80e5d.dir/build
+gmake[1]: Entering directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_80e5d.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_80e5d.dir/testCCompiler.c.o   -c /home/manh/Documents/mclib/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_80e5d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_80e5d.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_80e5d.dir/testCCompiler.c.o  -o cmTC_80e5d -rdynamic 
+gmake[1]: Leaving directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
+Change Dir: /home/manh/Documents/mclib/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_40cdc/fast"
-gmake[3]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-/usr/bin/gmake -f CMakeFiles/cmTC_40cdc.dir/build.make CMakeFiles/cmTC_40cdc.dir/build
-gmake[4]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_40cdc
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40cdc.dir/link.txt --verbose=1
-/usr/bin/cc      -v CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o  -o cmTC_40cdc -rdynamic  
+Run Build Command:"/usr/bin/gmake" "cmTC_907bd/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_907bd.dir/build.make CMakeFiles/cmTC_907bd.dir/build
+gmake[1]: Entering directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_907bd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_907bd.dir/link.txt --verbose=1
+/usr/bin/cc      -v CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o  -o cmTC_907bd -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper
@@ -49,26 +46,24 @@ Thread model: posix
 gcc version 6.1.1 20160510 (Red Hat 6.1.1-2) (GCC) 
 COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.1.1/:/usr/lib/gcc/x86_64-redhat-linux/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.1.1/:/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_40cdc' '-rdynamic' '-mtune=generic' '-march=x86-64'
- /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5VkR6K.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_40cdc /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../.. CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_40cdc' '-rdynamic' '-mtune=generic' '-march=x86-64'
-gmake[4]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_907bd' '-rdynamic' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9k9He2.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_907bd /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../.. CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_907bd' '-rdynamic' '-mtune=generic' '-march=x86-64'
+gmake[1]: Leaving directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/manh/Documents/mclib/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_40cdc/fast"]
-  ignore line: [gmake[3]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_40cdc.dir/build.make CMakeFiles/cmTC_40cdc.dir/build]
-  ignore line: [gmake[4]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_40cdc]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40cdc.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o  -o cmTC_40cdc -rdynamic  ]
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_907bd/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_907bd.dir/build.make CMakeFiles/cmTC_907bd.dir/build]
+  ignore line: [gmake[1]: Entering directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_907bd]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_907bd.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o  -o cmTC_907bd -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper]
@@ -78,13 +73,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 6.1.1 20160510 (Red Hat 6.1.1-2) (GCC) ]
   ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/:/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/6.1.1/:/usr/lib/gcc/x86_64-redhat-linux/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/6.1.1/:/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_40cdc' '-rdynamic' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5VkR6K.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_40cdc /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../.. CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_907bd' '-rdynamic' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/collect2 -plugin /usr/libexec/gcc/x86_64-redhat-linux/6.1.1/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9k9He2.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_907bd /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../.. CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtend.o /usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crtn.o]
     arg [/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/libexec/gcc/x86_64-redhat-linux/6.1.1/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/cc5VkR6K.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc9k9He2.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -100,7 +95,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_40cdc] ==> ignore
+    arg [cmTC_907bd] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../../../lib64/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-redhat-linux/6.1.1/crtbegin.o] ==> ignore
@@ -109,7 +104,7 @@ Parsed C implicit link information from above output:
     arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
     arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
     arg [-L/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/6.1.1/../../..]
-    arg [CMakeFiles/cmTC_40cdc.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_907bd.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -138,19 +133,17 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
+Change Dir: /home/manh/Documents/mclib/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_d1e3e/fast"
-gmake[3]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-/usr/bin/gmake -f CMakeFiles/cmTC_d1e3e.dir/build.make CMakeFiles/cmTC_d1e3e.dir/build
-gmake[4]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d1e3e.dir/feature_tests.c.o
-/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_d1e3e.dir/feature_tests.c.o   -c /home/manh/Documents/clibraries/CMakeFiles/feature_tests.c
-Linking C executable cmTC_d1e3e
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1e3e.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_d1e3e.dir/feature_tests.c.o  -o cmTC_d1e3e -rdynamic 
-gmake[4]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_93f1b/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_93f1b.dir/build.make CMakeFiles/cmTC_93f1b.dir/build
+gmake[1]: Entering directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_93f1b.dir/feature_tests.c.o
+/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_93f1b.dir/feature_tests.c.o   -c /home/manh/Documents/mclib/CMakeFiles/feature_tests.c
+Linking C executable cmTC_93f1b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_93f1b.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_93f1b.dir/feature_tests.c.o  -o cmTC_93f1b -rdynamic 
+gmake[1]: Leaving directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -160,19 +153,17 @@ gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
+Change Dir: /home/manh/Documents/mclib/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_90b99/fast"
-gmake[3]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-/usr/bin/gmake -f CMakeFiles/cmTC_90b99.dir/build.make CMakeFiles/cmTC_90b99.dir/build
-gmake[4]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_90b99.dir/feature_tests.c.o
-/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_90b99.dir/feature_tests.c.o   -c /home/manh/Documents/clibraries/CMakeFiles/feature_tests.c
-Linking C executable cmTC_90b99
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_90b99.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_90b99.dir/feature_tests.c.o  -o cmTC_90b99 -rdynamic 
-gmake[4]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_cec5a/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_cec5a.dir/build.make CMakeFiles/cmTC_cec5a.dir/build
+gmake[1]: Entering directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cec5a.dir/feature_tests.c.o
+/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_cec5a.dir/feature_tests.c.o   -c /home/manh/Documents/mclib/CMakeFiles/feature_tests.c
+Linking C executable cmTC_cec5a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cec5a.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_cec5a.dir/feature_tests.c.o  -o cmTC_cec5a -rdynamic 
+gmake[1]: Leaving directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -182,19 +173,17 @@ gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /home/manh/Documents/clibraries/CMakeFiles/CMakeTmp
+Change Dir: /home/manh/Documents/mclib/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/gmake" "cmTC_476c1/fast"
-gmake[3]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-/usr/bin/gmake -f CMakeFiles/cmTC_476c1.dir/build.make CMakeFiles/cmTC_476c1.dir/build
-gmake[4]: Entering directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_476c1.dir/feature_tests.c.o
-/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_476c1.dir/feature_tests.c.o   -c /home/manh/Documents/clibraries/CMakeFiles/feature_tests.c
-Linking C executable cmTC_476c1
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_476c1.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_476c1.dir/feature_tests.c.o  -o cmTC_476c1 -rdynamic 
-gmake[4]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
-gmake[3]: Leaving directory '/home/manh/Documents/clibraries/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/gmake" "cmTC_50502/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_50502.dir/build.make CMakeFiles/cmTC_50502.dir/build
+gmake[1]: Entering directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_50502.dir/feature_tests.c.o
+/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_50502.dir/feature_tests.c.o   -c /home/manh/Documents/mclib/CMakeFiles/feature_tests.c
+Linking C executable cmTC_50502
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_50502.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_50502.dir/feature_tests.c.o  -o cmTC_50502 -rdynamic 
+gmake[1]: Leaving directory '/home/manh/Documents/mclib/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes

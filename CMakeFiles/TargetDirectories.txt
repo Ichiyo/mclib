@@ -1,3 +1,3 @@
-/home/manh/Documents/clibraries/CMakeFiles/rebuild_cache.dir
-/home/manh/Documents/clibraries/CMakeFiles/edit_cache.dir
-/home/manh/Documents/clibraries/CMakeFiles/clibraries.dir
+/home/manh/Documents/mclib/CMakeFiles/rebuild_cache.dir
+/home/manh/Documents/mclib/CMakeFiles/edit_cache.dir
+/home/manh/Documents/mclib/CMakeFiles/clibraries.dir

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/manh/Documents/clibraries/test/test_atomic.c
+/home/manh/Documents/mclib/test/test_atomic.c
 pthread.h
 -
 stdio.h

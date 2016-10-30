@@ -110,7 +110,7 @@ base/ref.h
 inttypes.h
 -
 
-/home/manh/Documents/clibraries/test/test.c
+/home/manh/Documents/mclib/test/test.c
 stdio.h
 -
 mstr/string.h

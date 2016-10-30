@@ -6,7 +6,6 @@ set(CMAKE_BUILD_TYPE Release)
 add_definitions(-DAPP_DEBUG)
 
 include_directories(include)
-include_directories(hxcocoa/ios) # using GLKMath
 
 file(GLOB SOURCES "src/*.c")
 
