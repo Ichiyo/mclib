@@ -6,10 +6,30 @@
 
 #IncludeRegexTransform: 
 
+../include/base/ref.h
+stdatomic.h
+-
+
+../include/graphic/graphic.h
+GLUT/glut.h
+-
+GL/glut.h
+-
+GLES3/gl3.h
+-
+
+../include/graphic/shader.h
+base/ref.h
+-
+graphic/graphic.h
+-
+
 /home/manh/Documents/mclib/test/gltest.c
 stdio.h
 -
 stdlib.h
+-
+graphic/shader.h
 -
 GLUT/glut.h
 -

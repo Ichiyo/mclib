@@ -42,6 +42,14 @@ CMakeFiles/clibraries.dir/src/node.c.o
 CMakeFiles/clibraries.dir/src/serialize.c.o
  /home/manh/Documents/mclib/src/serialize.c
  include/serialize/serialize.h
+CMakeFiles/clibraries.dir/src/shader.c.o
+ /home/manh/Documents/mclib/src/shader.c
+ include/base/ref.h
+ include/graphic/graphic.h
+ include/graphic/shader.h
+ include/mstr/data.h
+ include/mstr/string.h
+ include/utils/file_utils.h
 CMakeFiles/clibraries.dir/src/string.c.o
  /home/manh/Documents/mclib/src/string.c
  include/base/ref.h

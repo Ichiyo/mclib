@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <graphic/shader.h>
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -11,7 +12,7 @@
 GLdouble width, height;   /* window width and height */
 int wd;                   /* GLUT window handle */
 GLuint VBO, VAO, EBO;
-GLuint shaderProgram ;
+g_shader* shader;
 // Shaders
 const GLchar* vertexShaderSource = "\n"
     "attribute vec3 position;\n"
@@ -42,14 +43,17 @@ display(void)
   glClear(GL_COLOR_BUFFER_BIT);
 
   // Draw our first triangle
-  glUseProgram(shaderProgram);
+  glUseProgram(shader->id);
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 
   glFlush();
+}
 
-  return;
+void update(void)
+{
+  ref_update_auto_release_pool();
 }
 
 void
@@ -69,10 +73,13 @@ kbd(unsigned char key, int x, int y)
   switch((char)key) {
   case 'q':
   case 27:    /* ESC */
+    shader->release(shader);
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     glutDestroyWindow(wd);
+
+    ref_update_auto_release_pool();
     exit(0);
   default:
     break;
@@ -87,7 +94,6 @@ main(int argc, char *argv[])
   /* perform initialization NOT OpenGL/GLUT dependent,
      as we haven't created a GLUT window yet */
   init();
-
   /* initialize GLUT, let it extract command-line
      GLUT options that you may provide
      - NOTE THE '&' BEFORE argc */
@@ -114,48 +120,15 @@ main(int argc, char *argv[])
   /* register function that draws in the window */
   glutDisplayFunc(display);
 
+  glutIdleFunc(update);
+
   /* init GL */
   glClearColor(1.0, 1.0, 1.0, 0.0);
 
   //-----------------------------------------------
   // Build and compile our shader program
-    // Vertex shader
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    // Check for compile time errors
-    GLint success;
-    GLchar infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
-    }
-    // Fragment shader
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    // Check for compile time errors
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
-    }
-    // Link shaders
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    // Check for linking errors
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
-    }
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+  shader = shader_new(vertexShaderSource, fragmentShaderSource);
+  shader->retain(shader);
 
   GLfloat vertices[] = {
        0.5f,  0.5f, 0.0f,  // Top Right

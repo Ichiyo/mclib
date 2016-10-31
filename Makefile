@@ -312,6 +312,33 @@ src/serialize.c.s:
 	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/serialize.c.s
 .PHONY : src/serialize.c.s
 
+src/shader.o: src/shader.c.o
+
+.PHONY : src/shader.o
+
+# target to build an object file
+src/shader.c.o:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/shader.c.o
+.PHONY : src/shader.c.o
+
+src/shader.i: src/shader.c.i
+
+.PHONY : src/shader.i
+
+# target to preprocess a source file
+src/shader.c.i:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/shader.c.i
+.PHONY : src/shader.c.i
+
+src/shader.s: src/shader.c.s
+
+.PHONY : src/shader.s
+
+# target to generate assembly for a file
+src/shader.c.s:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/shader.c.s
+.PHONY : src/shader.c.s
+
 src/string.o: src/string.c.o
 
 .PHONY : src/string.o
@@ -396,6 +423,9 @@ help:
 	@echo "... src/serialize.o"
 	@echo "... src/serialize.i"
 	@echo "... src/serialize.s"
+	@echo "... src/shader.o"
+	@echo "... src/shader.i"
+	@echo "... src/shader.s"
 	@echo "... src/string.o"
 	@echo "... src/string.i"
 	@echo "... src/string.s"

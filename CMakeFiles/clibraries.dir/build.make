@@ -177,9 +177,33 @@ CMakeFiles/clibraries.dir/src/node.c.o.provides: CMakeFiles/clibraries.dir/src/n
 CMakeFiles/clibraries.dir/src/node.c.o.provides.build: CMakeFiles/clibraries.dir/src/node.c.o
 
 
+CMakeFiles/clibraries.dir/src/shader.c.o: CMakeFiles/clibraries.dir/flags.make
+CMakeFiles/clibraries.dir/src/shader.c.o: src/shader.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/clibraries.dir/src/shader.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/clibraries.dir/src/shader.c.o   -c /home/manh/Documents/mclib/src/shader.c
+
+CMakeFiles/clibraries.dir/src/shader.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/clibraries.dir/src/shader.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/manh/Documents/mclib/src/shader.c > CMakeFiles/clibraries.dir/src/shader.c.i
+
+CMakeFiles/clibraries.dir/src/shader.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/clibraries.dir/src/shader.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/manh/Documents/mclib/src/shader.c -o CMakeFiles/clibraries.dir/src/shader.c.s
+
+CMakeFiles/clibraries.dir/src/shader.c.o.requires:
+
+.PHONY : CMakeFiles/clibraries.dir/src/shader.c.o.requires
+
+CMakeFiles/clibraries.dir/src/shader.c.o.provides: CMakeFiles/clibraries.dir/src/shader.c.o.requires
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/shader.c.o.provides.build
+.PHONY : CMakeFiles/clibraries.dir/src/shader.c.o.provides
+
+CMakeFiles/clibraries.dir/src/shader.c.o.provides.build: CMakeFiles/clibraries.dir/src/shader.c.o
+
+
 CMakeFiles/clibraries.dir/src/utils.c.o: CMakeFiles/clibraries.dir/flags.make
 CMakeFiles/clibraries.dir/src/utils.c.o: src/utils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/clibraries.dir/src/utils.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/clibraries.dir/src/utils.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/clibraries.dir/src/utils.c.o   -c /home/manh/Documents/mclib/src/utils.c
 
 CMakeFiles/clibraries.dir/src/utils.c.i: cmake_force
@@ -203,7 +227,7 @@ CMakeFiles/clibraries.dir/src/utils.c.o.provides.build: CMakeFiles/clibraries.di
 
 CMakeFiles/clibraries.dir/src/math.c.o: CMakeFiles/clibraries.dir/flags.make
 CMakeFiles/clibraries.dir/src/math.c.o: src/math.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/clibraries.dir/src/math.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/clibraries.dir/src/math.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/clibraries.dir/src/math.c.o   -c /home/manh/Documents/mclib/src/math.c
 
 CMakeFiles/clibraries.dir/src/math.c.i: cmake_force
@@ -227,7 +251,7 @@ CMakeFiles/clibraries.dir/src/math.c.o.provides.build: CMakeFiles/clibraries.dir
 
 CMakeFiles/clibraries.dir/src/base.c.o: CMakeFiles/clibraries.dir/flags.make
 CMakeFiles/clibraries.dir/src/base.c.o: src/base.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/clibraries.dir/src/base.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/clibraries.dir/src/base.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/clibraries.dir/src/base.c.o   -c /home/manh/Documents/mclib/src/base.c
 
 CMakeFiles/clibraries.dir/src/base.c.i: cmake_force
@@ -251,7 +275,7 @@ CMakeFiles/clibraries.dir/src/base.c.o.provides.build: CMakeFiles/clibraries.dir
 
 CMakeFiles/clibraries.dir/src/list.c.o: CMakeFiles/clibraries.dir/flags.make
 CMakeFiles/clibraries.dir/src/list.c.o: src/list.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/clibraries.dir/src/list.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/clibraries.dir/src/list.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/clibraries.dir/src/list.c.o   -c /home/manh/Documents/mclib/src/list.c
 
 CMakeFiles/clibraries.dir/src/list.c.i: cmake_force
@@ -280,6 +304,7 @@ clibraries_OBJECTS = \
 "CMakeFiles/clibraries.dir/src/string.c.o" \
 "CMakeFiles/clibraries.dir/src/serialize.c.o" \
 "CMakeFiles/clibraries.dir/src/node.c.o" \
+"CMakeFiles/clibraries.dir/src/shader.c.o" \
 "CMakeFiles/clibraries.dir/src/utils.c.o" \
 "CMakeFiles/clibraries.dir/src/math.c.o" \
 "CMakeFiles/clibraries.dir/src/base.c.o" \
@@ -293,13 +318,14 @@ libclibraries.so: CMakeFiles/clibraries.dir/src/map.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/string.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/serialize.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/node.c.o
+libclibraries.so: CMakeFiles/clibraries.dir/src/shader.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/utils.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/math.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/base.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/src/list.c.o
 libclibraries.so: CMakeFiles/clibraries.dir/build.make
 libclibraries.so: CMakeFiles/clibraries.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C shared library libclibraries.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/manh/Documents/mclib/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C shared library libclibraries.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/clibraries.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -312,6 +338,7 @@ CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/map.c.o.requir
 CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/string.c.o.requires
 CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/serialize.c.o.requires
 CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/node.c.o.requires
+CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/shader.c.o.requires
 CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/utils.c.o.requires
 CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/math.c.o.requires
 CMakeFiles/clibraries.dir/requires: CMakeFiles/clibraries.dir/src/base.c.o.requires

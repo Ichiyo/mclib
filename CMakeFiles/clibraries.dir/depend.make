@@ -42,6 +42,14 @@ CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector4.h
 CMakeFiles/clibraries.dir/src/serialize.c.o: src/serialize.c
 CMakeFiles/clibraries.dir/src/serialize.c.o: include/serialize/serialize.h
 
+CMakeFiles/clibraries.dir/src/shader.c.o: src/shader.c
+CMakeFiles/clibraries.dir/src/shader.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/shader.c.o: include/graphic/graphic.h
+CMakeFiles/clibraries.dir/src/shader.c.o: include/graphic/shader.h
+CMakeFiles/clibraries.dir/src/shader.c.o: include/mstr/data.h
+CMakeFiles/clibraries.dir/src/shader.c.o: include/mstr/string.h
+CMakeFiles/clibraries.dir/src/shader.c.o: include/utils/file_utils.h
+
 CMakeFiles/clibraries.dir/src/string.c.o: src/string.c
 CMakeFiles/clibraries.dir/src/string.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/string.c.o: include/mstr/string.h

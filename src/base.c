@@ -56,10 +56,19 @@ static void ref_retain(ref* obj)
 static void ref_release(ref* obj)
 {
   obj->ref_count--;
-  if(obj->ref_count == 0 && obj->free)
+  if(obj->ref_count == 0)
   {
     try_release_ref(obj);
-    obj->free(obj);
+    if(obj->free)
+    {
+      obj->free(obj);
+    }
+    #ifdef APP_DEBUG
+    else
+    {      
+        printf("not set free funciton - please fix!!!\n");
+    }
+    #endif
     #ifdef APP_DEBUG
       printf("ref freed!\n");
     #endif
