@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <mstr/string.h>
+#include <mstr/data.h>
 #include <mstr/map.h>
 #include <mstr/list.h>
 #include <string.h>
@@ -8,6 +9,7 @@
 #include <graphic/node.h>
 #include <graphic/sprite2d.h>
 #include <math/math.h>
+#include <utils/file_utils.h>
 
 static void traverse(unsigned long key, void* data)
 {
@@ -19,20 +21,22 @@ main (int argc, char *argv[])
 {
 	m_string* str = new_string();
 	m_string* str2 = new_string();
-	mstr_char(str, "Welcome");
-	mstr_char(str, " ");
-	mstr_char(str, "To");
-	mstr_char(str, " Viet Nam");
-	mstr_mstr(str2, str);
-	mstr_char(str2, " :)!");
+	str->cat_char(str, "Welcome");
+	str->cat_char(str, " ");
+	str->cat_char(str, "To");
+	str->cat_char(str, " Viet Nam");
+	str2->cat_str(str2, str);
+	str2->cat_char(str2, " :)!");
+	m_data* str3 = read_data_from_file("name.txt");
 	printf("%s\n", str->content);
 	printf("%s\n", str2->content);
+	printf("%s\n", str3->bytes);
 	//----
-	struct g_node* node = sprite2d_new();
+	g_node* node = sprite2d_new();
 	node->visit(node);
 	//----
 
-	struct m_map* map = create_map();
+	m_map* map = create_map();
 	insert_to_map(map, 0, "Hello !!!", 0);
 	traverse_map(map, traverse);
 
@@ -40,7 +44,7 @@ main (int argc, char *argv[])
 	list->push(list, str, 1);
 	list->push(list, str2, 1);
 	list->push(list, "texting!!!", 0);
-
+	list->push(list, node, 1);
 	m_string* ddd = (m_string*)list->get_index(list, 1);
 	printf("%s\n",ddd->content);
 

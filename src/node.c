@@ -7,22 +7,21 @@
 extern "C" {
 #endif
 
-static void free_node(struct g_node* node)
+static void free_node(g_node* node)
 {
 	if(node->free_render_data) node->free_render_data(node, node->render_data);
 	free(node);
 }
 
-static void visit_node(struct g_node* node)
+static void visit_node(g_node* node)
 {
 	if(node->draw) node->draw(node, node->render_data);
 }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
-static void init_node(struct g_node* node)
+static void init_node(g_node* node)
 {
-	ref_init(node);
 	// default attributes
 	node->quat = quaternion_identity;
 	node->model = matrix4_identity;
@@ -30,33 +29,31 @@ static void init_node(struct g_node* node)
 	node->visit = visit_node;
 	node->free = free_node;
 }
-#pragma GCC diagnostic pop
 
-struct g_node* node_new()
+g_node* node_new()
 {
-	struct g_node* node = calloc(1, sizeof(struct g_node));
+	REF_NEW_AUTO_RELEASE(g_node, node)
 	init_node(node);
-	node->auto_release(node);
 	return node;
 }
-
+#pragma GCC diagnostic pop
 /*
 *	implement sprite 2d
 */
 
-static void sprite2d_draw(struct g_node* node, sprite2d_render_data* data)
+static void sprite2d_draw(g_node* node, sprite2d_render_data* data)
 {
 	printf("Hi sprite is drawing %d\n", data->data);
 }
 
-static void sprite2d_free_render_data(struct g_node* node, sprite2d_render_data* data)
+static void sprite2d_free_render_data(g_node* node, sprite2d_render_data* data)
 {
 	free(data);
 }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
-static void init_sprite2d(struct g_node* node)
+static void init_sprite2d(g_node* node)
 {
 	sprite2d_render_data* data = calloc(1, sizeof(sprite2d_render_data));
 	data->data = 123;
@@ -66,9 +63,9 @@ static void init_sprite2d(struct g_node* node)
 }
 #pragma GCC diagnostic pop
 
-struct g_node* sprite2d_new()
+g_node* sprite2d_new()
 {
-	struct g_node* node = node_new();
+	g_node* node = node_new();
 	init_sprite2d(node);
 	return node;
 }

@@ -13,8 +13,10 @@ CMakeFiles/test.dir/test.c.o
  ../include/math/vector2.h
  ../include/math/vector3.h
  ../include/math/vector4.h
+ ../include/mstr/data.h
  ../include/mstr/list.h
  ../include/mstr/map.h
  ../include/mstr/string.h
  ../include/serialize/serialize.h
+ ../include/utils/file_utils.h
  /home/manh/Documents/mclib/test/test.c

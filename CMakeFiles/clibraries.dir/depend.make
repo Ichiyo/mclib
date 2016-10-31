@@ -4,6 +4,10 @@
 CMakeFiles/clibraries.dir/src/base.c.o: src/base.c
 CMakeFiles/clibraries.dir/src/base.c.o: include/base/ref.h
 
+CMakeFiles/clibraries.dir/src/data.c.o: src/data.c
+CMakeFiles/clibraries.dir/src/data.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/data.c.o: include/mstr/data.h
+
 CMakeFiles/clibraries.dir/src/list.c.o: src/list.c
 CMakeFiles/clibraries.dir/src/list.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/list.c.o: include/mstr/list.h
@@ -41,4 +45,10 @@ CMakeFiles/clibraries.dir/src/serialize.c.o: include/serialize/serialize.h
 CMakeFiles/clibraries.dir/src/string.c.o: src/string.c
 CMakeFiles/clibraries.dir/src/string.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/string.c.o: include/mstr/string.h
+
+CMakeFiles/clibraries.dir/src/utils.c.o: src/utils.c
+CMakeFiles/clibraries.dir/src/utils.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/utils.c.o: include/mstr/data.h
+CMakeFiles/clibraries.dir/src/utils.c.o: include/mstr/string.h
+CMakeFiles/clibraries.dir/src/utils.c.o: include/utils/file_utils.h
 

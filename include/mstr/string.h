@@ -10,16 +10,14 @@ extern "C" {
 struct _m_string
 {
 	REF_MACRO
-	unsigned char*	content;
+	char*	content;
 	long	length;
+	void(*cat_str)(struct _m_string*, struct _m_string*);
+	void(*cat_char)(struct _m_string*, char* src);
 };
 typedef struct _m_string m_string;
 
 m_string* new_string();
-
-void mstr_mstr(m_string* des, m_string* src);
-
-void mstr_char(m_string* des, unsigned char* src);
 
 #ifdef __cplusplus
 }

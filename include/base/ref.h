@@ -31,6 +31,15 @@ struct autoreleasenode
 void ref_init(ref* obj);
 void ref_update_auto_release_pool();
 
+#define REF_NEW(__TYPE__, val) \
+  __TYPE__* val = calloc(1, sizeof(__TYPE__)); \
+  ref_init(val);
+
+#define REF_NEW_AUTO_RELEASE(__TYPE__, val) \
+  __TYPE__* val = calloc(1, sizeof(__TYPE__)); \
+  ref_init(val); \
+  val->auto_release(val);
+
 #ifdef __cplusplus
 }
 #endif

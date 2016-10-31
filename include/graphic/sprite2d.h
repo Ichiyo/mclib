@@ -13,7 +13,7 @@ struct _Sprite2dRenderData
 };
 typedef struct _Sprite2dRenderData sprite2d_render_data;
 
-struct g_node* sprite2d_new();
+g_node* sprite2d_new();
 
 #ifdef __cplusplus
 }

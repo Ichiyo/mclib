@@ -15,6 +15,16 @@ stdlib.h
 -
 pthread.h
 -
+stdio.h
+-
+
+/home/manh/Documents/mclib/src/data.c
+mstr/data.h
+-
+stdlib.h
+-
+string.h
+-
 
 /home/manh/Documents/mclib/src/list.c
 mstr/list.h
@@ -54,6 +64,12 @@ mstr/string.h
 stdlib.h
 -
 string.h
+-
+
+/home/manh/Documents/mclib/src/utils.c
+utils/file_utils.h
+-
+stdio.h
 -
 
 include/base/ref.h
@@ -142,6 +158,10 @@ math/types.h
 math.h
 -
 
+include/mstr/data.h
+base/ref.h
+-
+
 include/mstr/list.h
 base/ref.h
 -
@@ -156,5 +176,11 @@ base/ref.h
 
 include/serialize/serialize.h
 inttypes.h
+-
+
+include/utils/file_utils.h
+mstr/string.h
+-
+mstr/data.h
 -
 

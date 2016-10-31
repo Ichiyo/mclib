@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-static void free_map(struct m_map* map)
+static void free_map(m_map* map)
 {
 	for(unsigned long i = 0; i < map->size; ++i)
 	{
@@ -25,7 +25,7 @@ static void free_map(struct m_map* map)
 	free(map);
 }
 
-static void resize(struct m_map* map, unsigned long new_size)
+static void resize(m_map* map, unsigned long new_size)
 {
 	map->table = realloc(map->table, new_size * sizeof(struct m_map_node*));
 	map->size = new_size;
@@ -38,19 +38,17 @@ static unsigned long hash(unsigned long key)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
-struct m_map* create_map()
+m_map* create_map()
 {
-	struct m_map* m = malloc(sizeof(struct m_map));
+	REF_NEW_AUTO_RELEASE(m_map, m)
 	m->table = calloc(10 ,sizeof(struct m_map_node*));
 	m->size = 10;
-	ref_init(m);
-	m->auto_release(m);
 	m->free = free_map;
 	return m;
 }
 #pragma GCC diagnostic pop
 
-void insert_to_map(struct m_map* map, unsigned long key, void* data, int is_ref)
+void insert_to_map(m_map* map, unsigned long key, void* data, int is_ref)
 {
 	if(is_ref)
 	{
@@ -96,7 +94,7 @@ void insert_to_map(struct m_map* map, unsigned long key, void* data, int is_ref)
 	exit:;
 }
 
-void* get_from_map(struct m_map* map, unsigned long key)
+void* get_from_map(m_map* map, unsigned long key)
 {
 	unsigned long h = hash(key);
 	if(h < map->size)
@@ -112,7 +110,7 @@ void* get_from_map(struct m_map* map, unsigned long key)
 	return 0;
 }
 
-void remove_from_map(struct m_map* map, unsigned long key)
+void remove_from_map(m_map* map, unsigned long key)
 {
 	unsigned long h = hash(key);
 	if(h < map->size)
@@ -146,7 +144,7 @@ void remove_from_map(struct m_map* map, unsigned long key)
 	exit:;
 }
 
-void traverse_map(struct m_map* map, void(*callback)(unsigned long, void*))
+void traverse_map(m_map* map, void(*callback)(unsigned long, void*))
 {
 	for(unsigned long i = 0; i < map->size; ++i)
 	{

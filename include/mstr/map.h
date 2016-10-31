@@ -15,18 +15,19 @@ struct m_map_node
 	int has_ref;
 };
 
-struct m_map
+struct _m_map
 {
 	REF_MACRO
 	struct m_map_node** table;
 	unsigned long size;
 };
+typedef struct _m_map m_map;
 
-struct m_map* create_map();
-void insert_to_map(struct m_map* map, unsigned long key, void* data, int is_ref);
-void* get_from_map(struct m_map* map, unsigned long key);
-void remove_from_map(struct m_map* map, unsigned long key);
-void traverse_map(struct m_map* map, void(*)(unsigned long, void*));
+m_map* create_map();
+void insert_to_map(m_map* map, unsigned long key, void* data, int is_ref);
+void* get_from_map(m_map* map, unsigned long key);
+void remove_from_map(m_map* map, unsigned long key);
+void traverse_map(m_map* map, void(*)(unsigned long, void*));
 
 #ifdef __cplusplus
 }

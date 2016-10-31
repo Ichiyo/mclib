@@ -12,9 +12,11 @@ CMakeFiles/test.dir/test.c.o: ../include/math/types.h
 CMakeFiles/test.dir/test.c.o: ../include/math/vector2.h
 CMakeFiles/test.dir/test.c.o: ../include/math/vector3.h
 CMakeFiles/test.dir/test.c.o: ../include/math/vector4.h
+CMakeFiles/test.dir/test.c.o: ../include/mstr/data.h
 CMakeFiles/test.dir/test.c.o: ../include/mstr/list.h
 CMakeFiles/test.dir/test.c.o: ../include/mstr/map.h
 CMakeFiles/test.dir/test.c.o: ../include/mstr/string.h
 CMakeFiles/test.dir/test.c.o: ../include/serialize/serialize.h
+CMakeFiles/test.dir/test.c.o: ../include/utils/file_utils.h
 CMakeFiles/test.dir/test.c.o: test.c
 

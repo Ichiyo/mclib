@@ -28,6 +28,7 @@ static void linked_list_remove_node(m_list* list, m_linked_list_node* node);
 static void linked_list_push(m_list* list, void* data, int is_ref);
 static void linked_list_remove(m_list* list, void* data);
 static void* linked_list_last(m_list* list);
+static void* linked_list_first(m_list* list);
 
 static void linked_list_free(m_list* list)
 {
@@ -164,18 +165,28 @@ static void* linked_list_last(m_list* list)
   else return 0;
 }
 
+static void* linked_list_first(m_list* list)
+{
+  m_list_linked_content* content = (m_list_linked_content*)list->content;
+  if(content->first)
+  {
+    return content->first->data;
+  }
+  else return 0;
+}
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 m_list* linked_list_new()
 {
-  m_list* ret = calloc(1, sizeof(m_list));
-  ref_init(ret);
+  REF_NEW(m_list, ret)
   ret->auto_release(ret);
   ret->content = calloc(1, sizeof(m_list_linked_content));
   ret->free = linked_list_free;
   ret->push = linked_list_push;
   ret->pop = linked_list_pop;
   ret->get_last = linked_list_last;
+  ret->get_first = linked_list_first;
   ret->get_index = linked_list_index;
   ret->remove = linked_list_remove;
   return ret;
@@ -268,6 +279,13 @@ static void* array_list_last(m_list* list)
   else return 0;
 }
 
+static void* array_list_first(m_list* list)
+{
+  m_array_list_content* content = (m_array_list_content*)list->content;
+  if(list->size > 0) return content->elements[0]->data;
+  else return 0;
+}
+
 static void array_list_remove(m_list* list, void* data)
 {
   m_array_list_content* content = (m_array_list_content*)list->content;
@@ -293,14 +311,14 @@ static void array_list_remove(m_list* list, void* data)
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 m_list* array_list_new()
 {
-  m_list* ret = calloc(1, sizeof(m_list));
-  ref_init(ret);
+  REF_NEW(m_list, ret)
   ret->auto_release(ret);
   ret->content = calloc(1, sizeof(m_array_list_content));
   ret->free = array_list_free;
   ret->push = array_list_push;
   ret->pop = array_list_pop;
   ret->get_last = array_list_last;
+  ret->get_first = array_list_first;
   ret->get_index = array_list_index;
   ret->remove = array_list_remove;
   return ret;

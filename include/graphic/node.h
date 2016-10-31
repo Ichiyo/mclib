@@ -8,7 +8,7 @@ extern "C" {
 #include <math/math.h>
 #include <base/ref.h>
 
-struct g_node
+struct _g_node
 {
 	REF_MACRO
 	vector3 position;
@@ -18,16 +18,17 @@ struct g_node
 	matrix4 model;
 	void* render_data;
 
-	struct g_node* parent;
-	struct g_node* child;
-	struct g_node* next_sibling;
+	struct _g_node* parent;
+	struct _g_node* child;
+	struct _g_node* next_sibling;
 
-	void(*visit)(struct g_node*);
-	void(*draw)(struct g_node*, void*);
-	void(*free_render_data)(struct g_node*, void*);
+	void(*visit)(struct _g_node*);
+	void(*draw)(struct _g_node*, void*);
+	void(*free_render_data)(struct _g_node*, void*);
 };
+typedef struct _g_node g_node;
 
-struct g_node* node_new();
+g_node* node_new();
 
 #ifdef __cplusplus
 }
