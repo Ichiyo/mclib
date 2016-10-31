@@ -4,6 +4,7 @@
 CMakeFiles/clibraries.dir/src/base.c.o
  /home/manh/Documents/mclib/src/base.c
  include/base/ref.h
+ include/mstr/list.h
 CMakeFiles/clibraries.dir/src/data.c.o
  /home/manh/Documents/mclib/src/data.c
  include/base/ref.h

@@ -3,6 +3,7 @@
 
 CMakeFiles/clibraries.dir/src/base.c.o: src/base.c
 CMakeFiles/clibraries.dir/src/base.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/base.c.o: include/mstr/list.h
 
 CMakeFiles/clibraries.dir/src/data.c.o: src/data.c
 CMakeFiles/clibraries.dir/src/data.c.o: include/base/ref.h

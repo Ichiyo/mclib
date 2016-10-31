@@ -34,7 +34,6 @@ main (int argc, char *argv[])
 	m_data* str3 = read_data_from_file("name.txt");
 	printf("%s\n", str->content);
 	printf("%s\n", str2->content);
-	printf("%s\n", str3->bytes);
 	//----
 	g_node* node = sprite2d_new();
 	node->visit(node);
@@ -62,6 +61,10 @@ main (int argc, char *argv[])
 
 	printf("f = %.7f, fi = %lu, f2 = %.7f\n",f, fi, f2);
 
+	weak_ref* weak_image = image->new_weak_ref(image);
+	weak_image->retain(weak_image);
 	ref_update_auto_release_pool();
+	printf("check image valid : %d\n", weak_image->valid);
+	weak_image->release(weak_image);
 	return 0;
 }

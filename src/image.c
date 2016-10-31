@@ -16,9 +16,9 @@ extern "C" {
 struct _sdl_image
 {
   REF_MACRO
-  int(*get_width)(struct _g_image*);
-  int(*get_height)(struct _g_image*);
-  void*(*get_pixels)(struct _g_image*);
+  int(*get_width)(void*);
+  int(*get_height)(void*);
+  void*(*get_pixels)(void*);
   SDL_Surface* _image;
 };
 typedef struct _sdl_image sdl_image;

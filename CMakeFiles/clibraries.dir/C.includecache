@@ -17,6 +17,8 @@ pthread.h
 -
 stdio.h
 -
+mstr/list.h
+-
 
 /home/manh/Documents/mclib/src/data.c
 mstr/data.h
