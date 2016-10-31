@@ -91,6 +91,8 @@ g_shader* shader_new_from_file(const char* vertex_file, const char* fragment_fil
   m_string* vertex = read_string_from_file(vertex_file);
   m_string* fragment = read_string_from_file(fragment_file);
   init_shader(ret, vertex->content, fragment->content);
+  vertex->release(vertex);
+  fragment->release(fragment);
   return ret;
 }
 
