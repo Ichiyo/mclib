@@ -37,8 +37,8 @@ main (int argc, char *argv[])
 	//----
 
 	m_map* map = create_map();
-	insert_to_map(map, 0, "Hello !!!", 0);
-	traverse_map(map, traverse);
+	map->insert(map, 0, "Hello !!!", 0);
+	map->traverse(map, traverse);
 
 	m_list* list = linked_list_new();
 	list->push(list, str, 1);
