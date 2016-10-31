@@ -8,7 +8,15 @@
 extern "C" {
 #endif
 
-static void free_shader(g_shader* shader)
+struct _opengl_shader
+{
+  REF_MACRO
+  void(*use)(void*);
+  GLuint id;
+};
+typedef struct _opengl_shader opengl_shader;
+
+static void free_shader(opengl_shader* shader)
 {
   if(shader->id)
   {
@@ -17,7 +25,12 @@ static void free_shader(g_shader* shader)
   free(shader);
 }
 
-static void init_shader(g_shader* ret, const char* vertex_source, const char* fragment_source)
+static void shader_use(opengl_shader* shader)
+{
+  glUseProgram(shader->id);
+}
+
+static void init_shader(opengl_shader* ret, const char* vertex_source, const char* fragment_source)
 {
   GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertexShader, 1, &vertex_source, NULL);
@@ -63,16 +76,18 @@ static void init_shader(g_shader* ret, const char* vertex_source, const char* fr
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 g_shader* shader_new(const char* vertex_source, const char* fragment_source)
 {
-  REF_NEW_AUTO_RELEASE(g_shader, ret)
+  REF_NEW_AUTO_RELEASE(opengl_shader, ret)
   ret->free = free_shader;
+  ret->use = shader_use;
   init_shader(ret, vertex_source, fragment_source);
   return ret;
 }
 
 g_shader* shader_new_from_file(const char* vertex_file, const char* fragment_file)
 {
-  REF_NEW_AUTO_RELEASE(g_shader, ret)
+  REF_NEW_AUTO_RELEASE(opengl_shader, ret)
   ret->free = free_shader;
+  ret->use = shader_use;
   m_string* vertex = read_string_from_file(vertex_file);
   m_string* fragment = read_string_from_file(fragment_file);
   init_shader(ret, vertex->content, fragment->content);

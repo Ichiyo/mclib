@@ -11,7 +11,7 @@ extern "C" {
 struct _g_shader
 {
   REF_MACRO
-  GLuint id;
+  void(*use)(void*);
 };
 typedef struct _g_shader g_shader;
 
