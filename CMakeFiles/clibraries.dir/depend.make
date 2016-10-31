@@ -59,6 +59,15 @@ CMakeFiles/clibraries.dir/src/string.c.o: src/string.c
 CMakeFiles/clibraries.dir/src/string.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/string.c.o: include/mstr/string.h
 
+CMakeFiles/clibraries.dir/src/texture.c.o: src/texture.c
+CMakeFiles/clibraries.dir/src/texture.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/graphic/graphic.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/graphic/image.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/graphic/texture.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/list.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/map.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/string.h
+
 CMakeFiles/clibraries.dir/src/utils.c.o: src/utils.c
 CMakeFiles/clibraries.dir/src/utils.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/utils.c.o: include/mstr/data.h

@@ -24,6 +24,14 @@ base/ref.h
 graphic/node.h
 -
 
+../include/graphic/texture.h
+base/ref.h
+-
+graphic/image.h
+-
+mstr/string.h
+-
+
 ../include/math/math.h
 math/types.h
 -
@@ -148,5 +156,7 @@ math/math.h
 utils/file_utils.h
 -
 graphic/image.h
+-
+graphic/texture.h
 -
 

@@ -11,6 +11,7 @@
 #include <math/math.h>
 #include <utils/file_utils.h>
 #include <graphic/image.h>
+#include <graphic/texture.h>
 
 static void traverse(unsigned long key, void* data)
 {
@@ -20,9 +21,10 @@ static void traverse(unsigned long key, void* data)
 int
 main (int argc, char *argv[])
 {
-
 	g_image* image = image_new_from_file("wolf.jpg");
-	printf("w = %d | h = %d\n", image->get_width(image), image->get_height(image));
+	g_texture* tex = texture_new_from_file_char("wolf.jpg");
+	g_texture* tex2 = texture_new_from_file_char("wolf.jpg");
+	printf("%p | %p\n", tex, tex2);
 	m_string* str = new_string();
 	m_string* str2 = new_string();
 	str->cat_char(str, "Welcome");
@@ -63,6 +65,7 @@ main (int argc, char *argv[])
 
 	weak_ref* weak_image = image->new_weak_ref(image);
 	weak_image->retain(weak_image);
+	texture_free_cache();
 	ref_update_auto_release_pool();
 	printf("check image valid : %d\n", weak_image->valid);
 	weak_image->release(weak_image);

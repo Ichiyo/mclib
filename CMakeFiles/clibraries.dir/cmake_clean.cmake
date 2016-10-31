@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/clibraries.dir/src/texture.c.o"
   "CMakeFiles/clibraries.dir/src/data.c.o"
   "CMakeFiles/clibraries.dir/src/map.c.o"
   "CMakeFiles/clibraries.dir/src/string.c.o"

@@ -5,6 +5,7 @@ CMakeFiles/test.dir/test.c.o: ../include/base/ref.h
 CMakeFiles/test.dir/test.c.o: ../include/graphic/image.h
 CMakeFiles/test.dir/test.c.o: ../include/graphic/node.h
 CMakeFiles/test.dir/test.c.o: ../include/graphic/sprite2d.h
+CMakeFiles/test.dir/test.c.o: ../include/graphic/texture.h
 CMakeFiles/test.dir/test.c.o: ../include/math/math.h
 CMakeFiles/test.dir/test.c.o: ../include/math/matrix3.h
 CMakeFiles/test.dir/test.c.o: ../include/math/matrix4.h

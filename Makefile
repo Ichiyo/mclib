@@ -393,6 +393,33 @@ src/string.c.s:
 	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/string.c.s
 .PHONY : src/string.c.s
 
+src/texture.o: src/texture.c.o
+
+.PHONY : src/texture.o
+
+# target to build an object file
+src/texture.c.o:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/texture.c.o
+.PHONY : src/texture.c.o
+
+src/texture.i: src/texture.c.i
+
+.PHONY : src/texture.i
+
+# target to preprocess a source file
+src/texture.c.i:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/texture.c.i
+.PHONY : src/texture.c.i
+
+src/texture.s: src/texture.c.s
+
+.PHONY : src/texture.s
+
+# target to generate assembly for a file
+src/texture.c.s:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/texture.c.s
+.PHONY : src/texture.c.s
+
 src/utils.o: src/utils.c.o
 
 .PHONY : src/utils.o
@@ -459,6 +486,9 @@ help:
 	@echo "... src/string.o"
 	@echo "... src/string.i"
 	@echo "... src/string.s"
+	@echo "... src/texture.o"
+	@echo "... src/texture.i"
+	@echo "... src/texture.s"
 	@echo "... src/utils.o"
 	@echo "... src/utils.i"
 	@echo "... src/utils.s"
