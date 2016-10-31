@@ -15,8 +15,8 @@ static void free_data(m_data* d)
 static void data_put(m_data* des, char* src, long count)
 {
   des->bytes = realloc(des->bytes, (des->size + count) * sizeof(char));
-	memcpy(des->bytes + des->size, src, count);
-	des->size = des->size + count;
+  memcpy(des->bytes + des->size, src, count);
+  des->size = des->size + count;
 }
 
 #pragma GCC diagnostic push
