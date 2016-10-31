@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/home/manh/Documents/mclib/src/base.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/base.c.o"
   "/home/manh/Documents/mclib/src/data.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/data.c.o"
+  "/home/manh/Documents/mclib/src/image.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/image.c.o"
   "/home/manh/Documents/mclib/src/list.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/list.c.o"
   "/home/manh/Documents/mclib/src/map.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/map.c.o"
   "/home/manh/Documents/mclib/src/math.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/math.c.o"
@@ -20,6 +21,7 @@ set(CMAKE_C_COMPILER_ID "GNU")
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_C
   "APP_DEBUG"
+  "USE_SDL"
   )
 
 # The include file search paths:

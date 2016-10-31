@@ -10,6 +10,7 @@
 #include <graphic/sprite2d.h>
 #include <math/math.h>
 #include <utils/file_utils.h>
+#include <graphic/image.h>
 
 static void traverse(unsigned long key, void* data)
 {
@@ -19,6 +20,9 @@ static void traverse(unsigned long key, void* data)
 int
 main (int argc, char *argv[])
 {
+
+	g_image* image = image_new_from_file("wolf.jpg");
+	printf("w = %d | h = %d\n", image->get_width(image), image->get_height(image));
 	m_string* str = new_string();
 	m_string* str2 = new_string();
 	str->cat_char(str, "Welcome");

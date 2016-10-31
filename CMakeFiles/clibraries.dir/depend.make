@@ -8,6 +8,10 @@ CMakeFiles/clibraries.dir/src/data.c.o: src/data.c
 CMakeFiles/clibraries.dir/src/data.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/data.c.o: include/mstr/data.h
 
+CMakeFiles/clibraries.dir/src/image.c.o: src/image.c
+CMakeFiles/clibraries.dir/src/image.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/image.c.o: include/graphic/image.h
+
 CMakeFiles/clibraries.dir/src/list.c.o: src/list.c
 CMakeFiles/clibraries.dir/src/list.c.o: include/base/ref.h
 CMakeFiles/clibraries.dir/src/list.c.o: include/mstr/list.h

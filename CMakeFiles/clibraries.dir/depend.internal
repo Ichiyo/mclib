@@ -8,6 +8,10 @@ CMakeFiles/clibraries.dir/src/data.c.o
  /home/manh/Documents/mclib/src/data.c
  include/base/ref.h
  include/mstr/data.h
+CMakeFiles/clibraries.dir/src/image.c.o
+ /home/manh/Documents/mclib/src/image.c
+ include/base/ref.h
+ include/graphic/image.h
 CMakeFiles/clibraries.dir/src/list.c.o
  /home/manh/Documents/mclib/src/list.c
  include/base/ref.h

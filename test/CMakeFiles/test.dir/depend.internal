@@ -3,6 +3,7 @@
 
 CMakeFiles/test.dir/test.c.o
  ../include/base/ref.h
+ ../include/graphic/image.h
  ../include/graphic/node.h
  ../include/graphic/sprite2d.h
  ../include/math/math.h

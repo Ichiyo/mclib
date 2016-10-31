@@ -3,7 +3,7 @@ project (clibraries C)
 set(CMAKE_BUILD_TYPE Release)
 
 # remove this to prevent log
-add_definitions(-DAPP_DEBUG)
+add_definitions(-DAPP_DEBUG -DUSE_SDL)
 
 include_directories(include)
 

@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_FLAGS = -O3 -DNDEBUG -fPIC  
 
-C_DEFINES = -DAPP_DEBUG -Dclibraries_EXPORTS
+C_DEFINES = -DAPP_DEBUG -DUSE_SDL -Dclibraries_EXPORTS
 
 C_INCLUDES = -I/home/manh/Documents/mclib/include 
 

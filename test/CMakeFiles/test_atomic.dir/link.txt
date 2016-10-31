@@ -1,1 +1,1 @@
-/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/test_atomic.dir/test_atomic.c.o  -o test_atomic  -L/home/manh/Documents/mclib/test/.. -rdynamic -lclibraries -lm -lpthread -lGL -lGLU -lglut -Wl,-rpath,/home/manh/Documents/mclib/test/.. 
+/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/test_atomic.dir/test_atomic.c.o  -o test_atomic  -L/home/manh/Documents/mclib/test/.. -rdynamic -lclibraries -lm -lpthread -lGL -lGLU -lglut -lSDL2 -lSDL2_image -Wl,-rpath,/home/manh/Documents/mclib/test/.. 

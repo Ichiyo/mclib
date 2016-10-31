@@ -26,6 +26,16 @@ stdlib.h
 string.h
 -
 
+/home/manh/Documents/mclib/src/image.c
+graphic/image.h
+-
+stdlib.h
+-
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
+
 /home/manh/Documents/mclib/src/list.c
 mstr/list.h
 -
@@ -94,6 +104,10 @@ GLUT/glut.h
 GL/glut.h
 -
 GLES3/gl3.h
+-
+
+include/graphic/image.h
+base/ref.h
 -
 
 include/graphic/node.h

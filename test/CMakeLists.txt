@@ -9,7 +9,7 @@ add_custom_command(
 	COMMAND make
 )
 
-set(PROJECT_LINK_LIBS clibraries m pthread GL GLU glut)
+set(PROJECT_LINK_LIBS clibraries m pthread GL GLU glut SDL2 SDL2_image)
 
 link_directories(${PROJECT_SOURCE_DIR}/..)
 

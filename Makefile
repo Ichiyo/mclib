@@ -177,6 +177,33 @@ src/data.c.s:
 	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/data.c.s
 .PHONY : src/data.c.s
 
+src/image.o: src/image.c.o
+
+.PHONY : src/image.o
+
+# target to build an object file
+src/image.c.o:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/image.c.o
+.PHONY : src/image.c.o
+
+src/image.i: src/image.c.i
+
+.PHONY : src/image.i
+
+# target to preprocess a source file
+src/image.c.i:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/image.c.i
+.PHONY : src/image.c.i
+
+src/image.s: src/image.c.s
+
+.PHONY : src/image.s
+
+# target to generate assembly for a file
+src/image.c.s:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/image.c.s
+.PHONY : src/image.c.s
+
 src/list.o: src/list.c.o
 
 .PHONY : src/list.o
@@ -408,6 +435,9 @@ help:
 	@echo "... src/data.o"
 	@echo "... src/data.i"
 	@echo "... src/data.s"
+	@echo "... src/image.o"
+	@echo "... src/image.i"
+	@echo "... src/image.s"
 	@echo "... src/list.o"
 	@echo "... src/list.i"
 	@echo "... src/list.s"
