@@ -139,7 +139,8 @@ static g_texture* texture_new_from_file_char_length(const char* path, long lengt
   {
     g_image* image = image_new_from_file(path);
     g_texture* tex = texture_new_from_image(image);
-
+    image->release(image);
+    
     m_list* list = linked_list_new();
     texture_cache->insert(texture_cache, key, list, 1);
 
