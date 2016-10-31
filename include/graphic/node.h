@@ -7,7 +7,6 @@ extern "C" {
 
 #include <math/math.h>
 #include <base/ref.h>
-#include <mstr/string.h>
 
 struct g_node
 {

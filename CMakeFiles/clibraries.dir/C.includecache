@@ -21,6 +21,8 @@ mstr/list.h
 -
 stdlib.h
 -
+string.h
+-
 
 /home/manh/Documents/mclib/src/map.c
 mstr/map.h
@@ -62,8 +64,6 @@ include/graphic/node.h
 math/math.h
 -
 base/ref.h
--
-mstr/string.h
 -
 
 include/graphic/sprite2d.h

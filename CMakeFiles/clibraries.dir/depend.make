@@ -34,7 +34,6 @@ CMakeFiles/clibraries.dir/src/node.c.o: include/math/types.h
 CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector2.h
 CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector3.h
 CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector4.h
-CMakeFiles/clibraries.dir/src/node.c.o: include/mstr/string.h
 
 CMakeFiles/clibraries.dir/src/serialize.c.o: src/serialize.c
 CMakeFiles/clibraries.dir/src/serialize.c.o: include/serialize/serialize.h

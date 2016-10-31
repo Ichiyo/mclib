@@ -15,8 +15,6 @@ math/math.h
 -
 base/ref.h
 -
-mstr/string.h
--
 
 ../include/graphic/sprite2d.h
 graphic/node.h

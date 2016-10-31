@@ -7,18 +7,19 @@
 extern "C" {
 #endif
 
-struct m_string
+struct _m_string
 {
 	REF_MACRO
 	unsigned char*	content;
 	long	length;
 };
+typedef struct _m_string m_string;
 
-struct m_string* new_string();
+m_string* new_string();
 
-void mstr_mstr(struct m_string* des, struct m_string* src);
+void mstr_mstr(m_string* des, m_string* src);
 
-void mstr_char(struct m_string* des, unsigned char* src);
+void mstr_char(m_string* des, unsigned char* src);
 
 #ifdef __cplusplus
 }

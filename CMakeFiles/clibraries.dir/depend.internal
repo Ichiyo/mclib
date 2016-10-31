@@ -35,7 +35,6 @@ CMakeFiles/clibraries.dir/src/node.c.o
  include/math/vector2.h
  include/math/vector3.h
  include/math/vector4.h
- include/mstr/string.h
 CMakeFiles/clibraries.dir/src/serialize.c.o
  /home/manh/Documents/mclib/src/serialize.c
  include/serialize/serialize.h

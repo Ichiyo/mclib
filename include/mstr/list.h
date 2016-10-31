@@ -14,8 +14,9 @@ struct _m_list
   long size;
   void(*push)(struct _m_list*, void*, int);
   void(*pop)(struct _m_list*);
-  void(*get_last)(struct _m_list*);
+  void*(*get_last)(struct _m_list*);
   void(*remove)(struct _m_list*, void*);
+  void*(*get_index)(struct _m_list*, long);
 };
 typedef struct _m_list m_list;
 

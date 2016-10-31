@@ -16,9 +16,9 @@ static void traverse(unsigned long key, void* data)
 
 int
 main (int argc, char *argv[])
-{ 
-	struct m_string* str = new_string();
-	struct m_string* str2 = new_string();
+{
+	m_string* str = new_string();
+	m_string* str2 = new_string();
 	mstr_char(str, "Welcome");
 	mstr_char(str, " ");
 	mstr_char(str, "To");
@@ -40,6 +40,11 @@ main (int argc, char *argv[])
 	list->push(list, str, 1);
 	list->push(list, str2, 1);
 	list->push(list, "texting!!!", 0);
+
+	m_string* ddd = (m_string*)list->get_index(list, 1);
+	printf("%s\n",ddd->content);
+
+	list->remove(list, str2);
 	float f = 3.1415926;
 	float f2;
 	uint32_t fi;
