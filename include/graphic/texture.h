@@ -9,18 +9,11 @@
 extern "C" {
 #endif
 
-struct _g_texture_func
-{
-  REF_FUNC_MACRO
+EXTEND_REF_FUNC(g_texture_func,
   void(*bind)(void*,int);
-};
-typedef struct _g_texture_func g_texture_func;
+)
 
-struct _g_texture
-{
-  CONSTRUCT_REF(g_texture_func)
-};
-typedef struct _g_texture g_texture;
+EXTEND_REF(g_texture, g_texture_func,)
 
 g_texture* texture_new_from_image(g_image*);
 g_texture* texture_new_from_file_char(const char*);

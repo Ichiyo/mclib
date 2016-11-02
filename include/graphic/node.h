@@ -8,30 +8,25 @@ extern "C" {
 #include <math/math.h>
 #include <base/ref.h>
 
-struct _g_node_func
-{
-	REF_FUNC_MACRO
+EXTEND_REF_FUNC(g_node_func,
 	void(*visit)(void*);
 	void(*draw)(void*);
-};
-typedef struct _g_node_func g_node_func;
+)
 
-#define CONSTRUCT_G_NODE(func) \
-	CONSTRUCT_REF(func) \
-	vector3 position; \
-	vector3 anchor; \
-	vector2 size; \
-	quaternion quat; \
-	matrix4 model; \
-	struct _g_node* parent; \
-	struct _g_node* child; \
-	struct _g_node* next_sibling; \
+#define EXTEND_NODE(struct_type, func, content) \
+	EXTEND_REF(struct_type, func, \
+		vector3 position; \
+		vector3 anchor; \
+		vector2 size; \
+		quaternion quat; \
+		matrix4 model; \
+		struct _g_node* parent; \
+		struct _g_node* child; \
+		struct _g_node* next_sibling; \
+		content \
+	)
 
-struct _g_node
-{
-	CONSTRUCT_G_NODE(g_node_func)
-};
-typedef struct _g_node g_node;
+EXTEND_NODE(g_node, g_node_func,)
 
 g_node* node_new();
 

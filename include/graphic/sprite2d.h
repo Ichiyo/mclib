@@ -7,12 +7,9 @@
 extern "C" {
 #endif
 
-struct _g_sprite2d
-{
-  CONSTRUCT_G_NODE(g_node_func)
+EXTEND_NODE(g_sprite2d, g_node_func,
   int data;
-};
-typedef struct _g_sprite2d g_sprite2d;
+)
 
 g_node* sprite2d_new();
 
