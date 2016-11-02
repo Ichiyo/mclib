@@ -11,6 +11,8 @@ extern "C" {
 
 EXTEND_REF_FUNC(g_texture_func,
   void(*bind)(void*,int);
+  int(*get_width)(void*);
+  int(*get_height)(void*);
 );
 
 EXTEND_REF(g_texture, g_texture_func,);

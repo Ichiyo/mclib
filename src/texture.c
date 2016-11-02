@@ -3,13 +3,18 @@
 #include <mstr/map.h>
 #include <string.h>
 #include <mstr/list.h>
+#include <mstr/primitive.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+static m_map* texture_active_id_map = 0;
+
 EXTEND_REF(opengl_texture, g_texture_func,
   GLuint id;
+  int width;
+  int height;
 );
 
 static void free_texture(opengl_texture* tex)
@@ -25,22 +30,44 @@ static void init_texture(opengl_texture* tex, g_image* image)
 {
   glGenTextures(1, &tex->id);
   glBindTexture(GL_TEXTURE_2D, tex->id);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, image->func->get_type(image), image->func->get_width(image), image->func->get_height(image), 0, image->func->get_type(image), GL_UNSIGNED_BYTE, image->func->get_pixels(image));
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->func->get_width(image), image->func->get_height(image), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->func->get_pixels(image));
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glGenerateMipmap(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D, 0);
+  tex->width = image->func->get_width(image);
+  tex->height = image->func->get_height(image);
 }
 
-static void texture_bind(opengl_texture* tex)
+static void texture_bind(opengl_texture* tex, int id)
 {
   if(tex->id)
   {
-    glActiveTexture(GL_TEXTURE0);
+    if(!texture_active_id_map)
+    {
+      texture_active_id_map = create_map();
+      texture_active_id_map->func->retain(texture_active_id_map);
+      for(int i = 0; i < 30; i++)
+      {
+          texture_active_id_map->func->insert(texture_active_id_map, i, new_int(GL_TEXTURE0 + i), 1);
+      }
+    }
+    int glID = ((m_int*)texture_active_id_map->func->get(texture_active_id_map, id))->data;
+    glActiveTexture(glID);
     glBindTexture(GL_TEXTURE_2D, tex->id);
   }
+}
+
+static int texture_get_width(opengl_texture* tex)
+{
+  return tex->width;
+}
+
+static int texture_get_height(opengl_texture* tex)
+{
+  return tex->height;
 }
 
 //-----------------------------------------------------
@@ -48,7 +75,7 @@ static void texture_bind(opengl_texture* tex)
 EXTEND_REF(texture_cache_value, ref_func,
   m_string* name;
   weak_ref* texture_ref;
-)
+);
 
 static void texture_cache_value_free(texture_cache_value* value)
 {
@@ -99,7 +126,9 @@ static g_texture_func base_g_texture_func =
 {
   BASE_REF_FUNC_INHERIT,
   .free = free_texture,
-  .bind = texture_bind
+  .bind = texture_bind,
+  .get_width = texture_get_width,
+  .get_height = texture_get_height
 };
 
 g_texture* texture_new_from_image(g_image* image)
@@ -179,7 +208,12 @@ void texture_free_cache()
   {
     texture_cache->func->release(texture_cache);
   }
+  if(texture_active_id_map)
+  {
+    texture_active_id_map->func->release(texture_active_id_map);
+  }
   texture_cache = 0;
+  texture_active_id_map = 0;
 }
 
 #pragma GCC diagnostic pop
