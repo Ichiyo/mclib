@@ -15,7 +15,7 @@ static void free_map(m_map* map)
 			struct m_map_node* next = node->next;
 			if(node->has_ref)
 			{
-				((ref*)node->data)->release(node->data);
+				((ref*)node->data)->func->release(node->data);
 			}
 			free(node);
 			node = next;
@@ -40,7 +40,7 @@ static void insert_to_map(m_map* map, unsigned long key, void* data, int is_ref)
 {
 	if(is_ref)
 	{
-		((ref*)data)->retain(data);
+		((ref*)data)->func->retain(data);
 	}
 	unsigned long h = hash(key);
 	if(h >= map->size)
@@ -64,7 +64,7 @@ static void insert_to_map(m_map* map, unsigned long key, void* data, int is_ref)
 			{
 				if(node->has_ref)
 				{
-					((ref*)node->data)->release(node->data);
+					((ref*)node->data)->func->release(node->data);
 				}
 				node->data = data;
 				node->has_ref = is_ref;
@@ -120,7 +120,7 @@ static void remove_from_map(m_map* map, unsigned long key)
 				}
 				if(node->has_ref)
 				{
-					((ref*)node->data)->release(node->data);
+					((ref*)node->data)->func->release(node->data);
 				}
 				free(node);
 				goto exit;
@@ -147,16 +147,23 @@ static void traverse_map(m_map* map, void(*callback)(unsigned long, void*))
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static m_map_func base_m_map_func =
+{
+	BASE_REF_FUNC_INHERIT,
+	.free = free_map,
+	.insert = insert_to_map,
+	.get = get_from_map,
+	.remove = remove_from_map,
+	.traverse = traverse_map
+};
+
 m_map* create_map()
 {
 	REF_NEW_AUTO_RELEASE(m_map, m)
 	m->table = calloc(10 ,sizeof(struct m_map_node*));
 	m->size = 10;
-	m->free = free_map;
-	m->insert = insert_to_map;
-	m->get = get_from_map;
-	m->remove = remove_from_map;
-	m->traverse = traverse_map;
+	m->func = &base_m_map_func;
 	return m;
 }
 #pragma GCC diagnostic pop

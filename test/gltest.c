@@ -43,7 +43,7 @@ display(void)
   glClear(GL_COLOR_BUFFER_BIT);
 
   // Draw our first triangle
-  shader->use(shader);
+  shader->func->use(shader);
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
@@ -73,7 +73,7 @@ kbd(unsigned char key, int x, int y)
   switch((char)key) {
   case 'q':
   case 27:    /* ESC */
-    shader->release(shader);
+    shader->func->release(shader);
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
@@ -128,7 +128,7 @@ main(int argc, char *argv[])
   //-----------------------------------------------
   // Build and compile our shader program
   shader = shader_new(vertexShaderSource, fragmentShaderSource);
-  shader->retain(shader);
+  shader->func->retain(shader);
 
   GLfloat vertices[] = {
        0.5f,  0.5f, 0.0f,  // Top Right

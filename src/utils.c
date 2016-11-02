@@ -14,7 +14,7 @@ m_string* read_string_from_file(const char* path)
  char buff[1024];
  while(fgets(buff, 1024, file))
  {
-   ret->cat_char(ret, buff);
+   ret->func->cat_char(ret, buff);
  }
  fclose(file);
  return ret;
@@ -30,7 +30,7 @@ m_data* read_data_from_file(const char* path)
   unsigned int count = 0;
   while(count = fread(buff, 1, 1024, file))
   {
-    ret->put(ret, buff, count);
+    ret->func->put(ret, buff, count);
   }
 
   fclose(file);

@@ -10,8 +10,7 @@ extern "C" {
 
 struct _opengl_shader
 {
-  REF_MACRO
-  void(*use)(void*);
+  CONSTRUCT_REF(g_shader_func)
   GLuint id;
 };
 typedef struct _opengl_shader opengl_shader;
@@ -74,11 +73,18 @@ static void init_shader(opengl_shader* ret, const char* vertex_source, const cha
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static g_shader_func base_g_shader_func =
+{
+  BASE_REF_FUNC_INHERIT,
+  .free = free_shader,
+  .use = shader_use
+};
+
 g_shader* shader_new(const char* vertex_source, const char* fragment_source)
 {
   REF_NEW_AUTO_RELEASE(opengl_shader, ret)
-  ret->free = free_shader;
-  ret->use = shader_use;
+  ret->func = &base_g_shader_func;
   init_shader(ret, vertex_source, fragment_source);
   return ret;
 }
@@ -86,13 +92,12 @@ g_shader* shader_new(const char* vertex_source, const char* fragment_source)
 g_shader* shader_new_from_file(const char* vertex_file, const char* fragment_file)
 {
   REF_NEW_AUTO_RELEASE(opengl_shader, ret)
-  ret->free = free_shader;
-  ret->use = shader_use;
+  ret->func = &base_g_shader_func;
   m_string* vertex = read_string_from_file(vertex_file);
   m_string* fragment = read_string_from_file(fragment_file);
   init_shader(ret, vertex->content, fragment->content);
-  vertex->release(vertex);
-  fragment->release(fragment);
+  vertex->func->release(vertex);
+  fragment->func->release(fragment);
   return ret;
 }
 

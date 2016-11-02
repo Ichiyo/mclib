@@ -9,10 +9,16 @@
 extern "C" {
 #endif
 
+struct _g_texture_func
+{
+  REF_FUNC_MACRO
+  void(*bind)(void*,int);
+};
+typedef struct _g_texture_func g_texture_func;
+
 struct _g_texture
 {
-  REF_MACRO
-  void(*bind)(void*,int);
+  CONSTRUCT_REF(g_texture_func)
 };
 typedef struct _g_texture g_texture;
 

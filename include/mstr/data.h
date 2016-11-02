@@ -7,12 +7,18 @@
 extern "C" {
 #endif
 
+struct _m_data_func
+{
+  REF_FUNC_MACRO
+  void(*put)(void*, char*, long);
+};
+typedef struct _m_data_func m_data_func;
+
 struct _m_data
 {
-  REF_MACRO
+  CONSTRUCT_REF(m_data_func)
   char* bytes;
   long size;
-  void(*put)(struct _m_data*, char*, long);
 };
 typedef struct _m_data m_data;
 

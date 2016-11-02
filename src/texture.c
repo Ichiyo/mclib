@@ -10,8 +10,7 @@ extern "C" {
 
 struct _opengl_texture
 {
-  REF_MACRO
-  void(*bind)(void*,int);
+  CONSTRUCT_REF(g_texture_func)
   GLuint id;
 };
 typedef struct _opengl_texture opengl_texture;
@@ -33,7 +32,7 @@ static void init_texture(opengl_texture* tex, g_image* image)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->get_width(image), image->get_height(image), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->get_pixels(image));
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->func->get_width(image), image->func->get_height(image), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->func->get_pixels(image));
   glGenerateMipmap(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -51,7 +50,7 @@ static void texture_bind(opengl_texture* tex)
 
 struct _texture_cache_value
 {
-  REF_MACRO
+  CONSTRUCT_REF(ref_func)
   m_string* name;
   weak_ref* texture_ref;
 };
@@ -61,21 +60,27 @@ static void texture_cache_value_free(texture_cache_value* value)
 {
   if(value->name)
   {
-    value->name->release(value->name);
+    value->name->func->release(value->name);
   }
   if(value->texture_ref)
   {
-    value->texture_ref->release(value->texture_ref);
+    value->texture_ref->func->release(value->texture_ref);
   }
   free(value);
 }
+
+static ref_func texture_cache_value_func =
+{
+  BASE_REF_FUNC_INHERIT,
+  .free = texture_cache_value_free
+};
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 texture_cache_value* new_texture_cache_value()
 {
   REF_NEW_AUTO_RELEASE(texture_cache_value, ret)
-  ret->free = texture_cache_value_free;
+  ret->func = &texture_cache_value_func;
   return ret;
 }
 #pragma GCC diagnostic pop
@@ -95,12 +100,19 @@ static unsigned long hash_string_to_int(const char* str, long length)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static g_texture_func base_g_texture_func =
+{
+  BASE_REF_FUNC_INHERIT,
+  .free = free_texture,
+  .bind = texture_bind
+};
+
 g_texture* texture_new_from_image(g_image* image)
 {
   REF_NEW_AUTO_RELEASE(opengl_texture, ret)
   init_texture(ret, image);
-  ret->free = free_texture;
-  ret->bind = texture_bind;
+  ret->func = &base_g_texture_func;
   return ret;
 }
 
@@ -109,16 +121,16 @@ static g_texture* texture_new_from_file_char_length(const char* path, long lengt
   if(!texture_cache)
   {
     texture_cache = create_map();
-    texture_cache->retain(texture_cache);
+    texture_cache->func->retain(texture_cache);
   }
 
   unsigned long key = hash_string_to_int(path, length);
-  m_list* list = (m_list*)texture_cache->get(texture_cache, key);
+  m_list* list = (m_list*)texture_cache->func->get(texture_cache, key);
   if(list)
   {
     for(long i = 0; i < list->size; i++)
     {
-      texture_cache_value* value = list->get_index(list, i);
+      texture_cache_value* value = list->func->get_index(list, i);
       if(strcmp(value->name->content, path) == 0)
       {
         if(value->texture_ref->valid)
@@ -129,7 +141,7 @@ static g_texture* texture_new_from_file_char_length(const char* path, long lengt
         else
         {
           // texture created from path no longer exists
-          list->remove(list, value);
+          list->func->remove(list, value);
         }
         break;
       }
@@ -139,19 +151,19 @@ static g_texture* texture_new_from_file_char_length(const char* path, long lengt
   {
     g_image* image = image_new_from_file(path);
     g_texture* tex = texture_new_from_image(image);
-    image->release(image);
-    
+    image->func->release(image);
+
     m_list* list = linked_list_new();
-    texture_cache->insert(texture_cache, key, list, 1);
+    texture_cache->func->insert(texture_cache, key, list, 1);
 
     texture_cache_value* val = new_texture_cache_value();
     val->name = new_string();
-    val->name->cat_char(val->name, (char*)path);
-    val->name->retain(val->name);
-    val->texture_ref = tex->new_weak_ref(tex);
-    val->texture_ref->retain(val->texture_ref);
+    val->name->func->cat_char(val->name, (char*)path);
+    val->name->func->retain(val->name);
+    val->texture_ref = tex->func->new_weak_ref(tex);
+    val->texture_ref->func->retain(val->texture_ref);
 
-    list->push(list, val, 1);
+    list->func->push(list, val, 1);
 
     return tex;
   }
@@ -171,7 +183,7 @@ void texture_free_cache()
 {
   if(texture_cache)
   {
-    texture_cache->release(texture_cache);
+    texture_cache->func->release(texture_cache);
   }
   texture_cache = 0;
 }

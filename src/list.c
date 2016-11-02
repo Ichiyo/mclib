@@ -69,7 +69,7 @@ static void linked_list_remove_node(m_list* list, m_linked_list_node* node)
   }
   if(node->has_ref)
   {
-    ((ref*)node->data)->release(node->data);
+    ((ref*)node->data)->func->release(node->data);
   }
   free(node);
 }
@@ -80,7 +80,7 @@ static void linked_list_push(m_list* list, void* data, int is_ref)
   list->size++;
   if(is_ref)
   {
-    ((ref*)data)->retain(data);
+    ((ref*)data)->func->retain(data);
   }
   m_linked_list_node* node = calloc(1, sizeof(m_linked_list_node));
   node->data = data;
@@ -177,18 +177,24 @@ static void* linked_list_first(m_list* list)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static m_list_func base_linked_list_func =
+{
+  BASE_REF_FUNC_INHERIT,
+  .free = linked_list_free,
+  .push = linked_list_push,
+  .pop = linked_list_pop,
+  .get_last = linked_list_last,
+  .get_first = linked_list_first,
+  .get_index = linked_list_index,
+  .remove = linked_list_remove
+};
+
 m_list* linked_list_new()
 {
-  REF_NEW(m_list, ret)
-  ret->auto_release(ret);
+  REF_NEW_AUTO_RELEASE(m_list, ret)
   ret->content = calloc(1, sizeof(m_list_linked_content));
-  ret->free = linked_list_free;
-  ret->push = linked_list_push;
-  ret->pop = linked_list_pop;
-  ret->get_last = linked_list_last;
-  ret->get_first = linked_list_first;
-  ret->get_index = linked_list_index;
-  ret->remove = linked_list_remove;
+  ret->func = &base_linked_list_func;
   return ret;
 }
 #pragma GCC diagnostic pop
@@ -216,7 +222,7 @@ static void array_list_free(m_list* list)
   m_array_list_content* content = (m_array_list_content*)list->content;
   while(list->size)
   {
-    list->pop(list);
+    list->func->pop(list);
   }
   free(content->elements);
   free(content);
@@ -227,7 +233,7 @@ static void array_list_push(m_list* list, void* data, int is_ref)
 {
   if(is_ref)
   {
-    ((ref*)data)->retain(data);
+    ((ref*)data)->func->retain(data);
   }
   m_array_list_node* node = calloc(1, sizeof(m_array_list_node));
   node->data = data;
@@ -258,7 +264,7 @@ static void array_list_pop(m_list* list)
     m_array_list_node* last = content->elements[list->size-1];
     if(last->has_ref)
     {
-      ((ref*)last->data)->release(last->data);
+      ((ref*)last->data)->func->release(last->data);
     }
     free(last);
     list->size--;
@@ -296,7 +302,7 @@ static void array_list_remove(m_list* list, void* data)
       m_array_list_node* node = content->elements[i];
       if(node->has_ref)
       {
-        ((ref*)node->data)->release(node->data);
+        ((ref*)node->data)->func->release(node->data);
       }
       free(node);
 
@@ -309,18 +315,24 @@ static void array_list_remove(m_list* list, void* data)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static m_list_func base_array_list_func =
+{
+  BASE_REF_FUNC_INHERIT,
+  .free = array_list_free,
+  .push = array_list_push,
+  .pop = array_list_pop,
+  .get_last = array_list_last,
+  .get_first = array_list_first,
+  .get_index = array_list_index,
+  .remove = array_list_remove
+};
+
 m_list* array_list_new()
 {
-  REF_NEW(m_list, ret)
-  ret->auto_release(ret);
+  REF_NEW_AUTO_RELEASE(m_list, ret)
   ret->content = calloc(1, sizeof(m_array_list_content));
-  ret->free = array_list_free;
-  ret->push = array_list_push;
-  ret->pop = array_list_pop;
-  ret->get_last = array_list_last;
-  ret->get_first = array_list_first;
-  ret->get_index = array_list_index;
-  ret->remove = array_list_remove;
+  ret->func = &base_array_list_func;
   return ret;
 }
 #pragma GCC diagnostic pop

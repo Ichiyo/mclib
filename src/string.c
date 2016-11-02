@@ -30,13 +30,20 @@ static void mstr_char(m_string* des, char* src)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static m_string_func base_m_string_func =
+{
+	BASE_REF_FUNC_INHERIT,
+	.free = free_string,
+	.cat_str = mstr_mstr,
+	.cat_char = mstr_char
+};
+
 m_string* new_string()
 {
 	REF_NEW_AUTO_RELEASE(m_string, str)
 	mstr_char(str, "");
-	str->free = free_string;
-	str->cat_str = mstr_mstr;
-	str->cat_char = mstr_char;
+	str->func = &base_m_string_func;
 	return str;
 }
 #pragma GCC diagnostic pop

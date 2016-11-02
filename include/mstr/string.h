@@ -7,13 +7,19 @@
 extern "C" {
 #endif
 
+struct _m_string_func
+{
+	REF_FUNC_MACRO
+	void(*cat_str)(void*, void*);
+	void(*cat_char)(void*, void*src);
+};
+typedef struct _m_string_func m_string_func;
+
 struct _m_string
 {
-	REF_MACRO
+	CONSTRUCT_REF(m_string_func)
 	char*	content;
 	long	length;
-	void(*cat_str)(struct _m_string*, struct _m_string*);
-	void(*cat_char)(struct _m_string*, char* src);
 };
 typedef struct _m_string m_string;
 

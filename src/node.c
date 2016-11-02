@@ -9,25 +9,34 @@ extern "C" {
 
 static void free_node(g_node* node)
 {
-	if(node->free_render_data) node->free_render_data(node, node->render_data);
+	if(node->func->free_render_data) node->func->free_render_data(node, node->render_data);
 	free(node);
 }
 
 static void visit_node(g_node* node)
 {
-	if(node->draw) node->draw(node, node->render_data);
+	if(node->func->draw) node->func->draw(node, node->render_data);
 }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static g_node_func base_g_node_func =
+{
+	BASE_REF_FUNC_INHERIT,
+	.visit = visit_node,
+	.free = free_node,
+	.draw = 0,
+	.free_render_data = 0
+};
+
 static void init_node(g_node* node)
 {
 	// default attributes
 	node->quat = quaternion_identity;
 	node->model = matrix4_identity;
 	// default behaviors
-	node->visit = visit_node;
-	node->free = free_node;
+	node->func = &base_g_node_func;
 }
 
 g_node* node_new()
@@ -53,13 +62,22 @@ static void sprite2d_free_render_data(g_node* node, sprite2d_render_data* data)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static g_node_func base_g_sprite_func =
+{
+	BASE_REF_FUNC_INHERIT,
+	.visit = visit_node,
+	.free = free_node,
+	.draw = sprite2d_draw,
+	.free_render_data = sprite2d_free_render_data
+};
+
 static void init_sprite2d(g_node* node)
 {
 	sprite2d_render_data* data = calloc(1, sizeof(sprite2d_render_data));
 	data->data = 123;
 	node->render_data = data;
-	node->draw = sprite2d_draw;
-	node->free_render_data = sprite2d_free_render_data;
+	node->func = &base_g_sprite_func;
 }
 #pragma GCC diagnostic pop
 

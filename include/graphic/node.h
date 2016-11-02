@@ -8,9 +8,18 @@ extern "C" {
 #include <math/math.h>
 #include <base/ref.h>
 
+struct _g_node_func
+{
+	REF_FUNC_MACRO
+	void(*visit)(void*);
+	void(*draw)(void*, void*);
+	void(*free_render_data)(void*, void*);
+};
+typedef struct _g_node_func g_node_func;
+
 struct _g_node
 {
-	REF_MACRO
+	CONSTRUCT_REF(g_node_func)
 	vector3 position;
 	vector3 anchor;
 	vector2 size;
@@ -21,10 +30,6 @@ struct _g_node
 	struct _g_node* parent;
 	struct _g_node* child;
 	struct _g_node* next_sibling;
-
-	void(*visit)(struct _g_node*);
-	void(*draw)(struct _g_node*, void*);
-	void(*free_render_data)(struct _g_node*, void*);
 };
 typedef struct _g_node g_node;
 

@@ -13,12 +13,10 @@ extern "C" {
 #endif
 
 #if defined(USE_SDL)
+
 struct _sdl_image
 {
-  REF_MACRO
-  int(*get_width)(void*);
-  int(*get_height)(void*);
-  void*(*get_pixels)(void*);
+  CONSTRUCT_REF(g_image_func)
   SDL_Surface* _image;
 };
 typedef struct _sdl_image sdl_image;
@@ -58,6 +56,16 @@ static void* image_get_pixels(sdl_image* image)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static g_image_func base_g_image_func =
+{
+    BASE_REF_FUNC_INHERIT,
+    .free = free_image,
+    .get_width = image_get_width,
+    .get_height = image_get_height,
+    .get_pixels = image_get_pixels
+};
+
 g_image* image_new_from_file(const char* file)
 {
   g_image* ret = 0;
@@ -65,10 +73,7 @@ g_image* image_new_from_file(const char* file)
   #if defined(USE_SDL)
   REF_NEW_AUTO_RELEASE(sdl_image, image)
   init_image(image, file);
-  image->free = free_image;
-  image->get_width = image_get_width;
-  image->get_height = image_get_height;
-  image->get_pixels = image_get_pixels;
+  image->func = &base_g_image_func;
   ret = (g_image*)image;
   #endif
 

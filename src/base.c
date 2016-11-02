@@ -49,12 +49,12 @@ static __inline__ void try_release_ref(ref* obj)
   pthread_mutex_unlock(&autorelease_lock);
 }
 
-static void ref_retain(ref* obj)
+void base_ref_retain(ref* obj)
 {
   obj->ref_count++;
 }
 
-static void ref_release(ref* obj)
+void base_ref_release(ref* obj)
 {
   obj->ref_count--;
   if(obj->ref_count == 0)
@@ -62,19 +62,19 @@ static void ref_release(ref* obj)
     try_release_ref(obj);
     if(obj->weak_list)
     {
-      weak_ref* wr = obj->weak_list->get_last(obj->weak_list);
+      weak_ref* wr = obj->weak_list->func->get_last(obj->weak_list);
       while(wr)
       {
         wr->valid = 0;
-        obj->weak_list->pop(obj->weak_list);
-        wr = obj->weak_list->get_last(obj->weak_list);
+        obj->weak_list->func->pop(obj->weak_list);
+        wr = obj->weak_list->func->get_last(obj->weak_list);
       }
-      obj->weak_list->release(obj->weak_list);
+      obj->weak_list->func->release(obj->weak_list);
       obj->weak_list = 0;
     }
-    if(obj->free)
+    if(obj->func->free)
     {
-      obj->free(obj);
+      obj->func->free(obj);
     }
     #ifdef APP_DEBUG
     else
@@ -89,7 +89,7 @@ static void ref_release(ref* obj)
   }
 }
 
-static void ref_auto_release(ref* obj)
+void base_ref_auto_release(ref* obj)
 {
   pthread_mutex_lock(&autorelease_lock);
   if(!obj->pool_ref)
@@ -127,27 +127,29 @@ static void free_weak_ref(weak_ref* r)
   free(r);
 }
 
-static weak_ref* new_weak_ref(ref* r)
+weak_ref* base_ref_new_weak_ref(ref* r)
 {
   REF_NEW_AUTO_RELEASE(weak_ref, ret)
-  ret->free = free_weak_ref;
+  ret->func->free = free_weak_ref;
   ret->owner = r; // weak assignment
   ret->valid = 1;
   if(!r->weak_list)
   {
     r->weak_list = array_list_new();
-    r->weak_list->retain(r->weak_list);
+    r->weak_list->func->retain(r->weak_list);
   }
-  r->weak_list->push(r->weak_list, ret, 1);
+  r->weak_list->func->push(r->weak_list, ret, 1);
   return ret;
 }
 
+ref_func __base_ref_func = {
+  BASE_REF_FUNC_INHERIT,
+  .free = 0
+};
+
 void ref_init(ref* obj)
 {
-  obj->retain = ref_retain;
-  obj->release = ref_release;
-  obj->auto_release = ref_auto_release;
-  obj->new_weak_ref = new_weak_ref;
+  obj->func = &__base_ref_func;
   obj->ref_count = 1;
   obj->pool_ref = NULL;
 }
@@ -159,10 +161,11 @@ void ref_update_auto_release_pool()
   {
     ref* obj = begin->rc;
     try_release_ref(obj);
-    obj->release(obj);
+    obj->func->release(obj);
   }
 }
 
 #ifdef __cplusplus
 }
+
 #endif

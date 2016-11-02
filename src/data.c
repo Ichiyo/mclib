@@ -21,11 +21,18 @@ static void data_put(m_data* des, char* src, long count)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+static m_data_func base_m_data_func =
+{
+  BASE_REF_FUNC_INHERIT,
+  .free = free_data,
+  .put = data_put
+};
+
 m_data* data_new()
 {
   REF_NEW_AUTO_RELEASE(m_data, d)
-  d->free = free_data;
-  d->put = data_put;
+  d->func = &base_m_data_func;
   return d;
 }
 #pragma GCC diagnostic pop

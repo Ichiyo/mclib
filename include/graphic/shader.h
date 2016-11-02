@@ -8,10 +8,16 @@
 extern "C" {
 #endif
 
+struct _g_shader_func
+{
+  REF_FUNC_MACRO
+  void(*use)(void*);
+};
+typedef struct _g_shader_func g_shader_func;
+
 struct _g_shader
 {
-  REF_MACRO
-  void(*use)(void*);
+  CONSTRUCT_REF(g_shader_func)
 };
 typedef struct _g_shader g_shader;
 
