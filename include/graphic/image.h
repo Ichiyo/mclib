@@ -11,6 +11,7 @@ EXTEND_REF_FUNC(g_image_func,
   int(*get_width)(void*);
   int(*get_height)(void*);
   void*(*get_pixels)(void*);
+  int(*get_type)(void*);
 );
 
 EXTEND_REF(g_image, g_image_func,);
