@@ -5,6 +5,7 @@
 /*
 
   force disable warning incompatible pointer types
+  expansion of BASE_REF_FUNC_INHERIT will assign ref* to void* pointer
 
 */
 #pragma GCC diagnostic push

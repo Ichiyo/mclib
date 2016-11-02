@@ -12,24 +12,24 @@ struct _g_node_func
 {
 	REF_FUNC_MACRO
 	void(*visit)(void*);
-	void(*draw)(void*, void*);
-	void(*free_render_data)(void*, void*);
+	void(*draw)(void*);
 };
 typedef struct _g_node_func g_node_func;
 
+#define CONSTRUCT_G_NODE(func) \
+	CONSTRUCT_REF(func) \
+	vector3 position; \
+	vector3 anchor; \
+	vector2 size; \
+	quaternion quat; \
+	matrix4 model; \
+	struct _g_node* parent; \
+	struct _g_node* child; \
+	struct _g_node* next_sibling; \
+
 struct _g_node
 {
-	CONSTRUCT_REF(g_node_func)
-	vector3 position;
-	vector3 anchor;
-	vector2 size;
-	quaternion quat;
-	matrix4 model;
-	void* render_data;
-
-	struct _g_node* parent;
-	struct _g_node* child;
-	struct _g_node* next_sibling;
+	CONSTRUCT_G_NODE(g_node_func)
 };
 typedef struct _g_node g_node;
 

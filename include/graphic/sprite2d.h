@@ -7,11 +7,12 @@
 extern "C" {
 #endif
 
-struct _Sprite2dRenderData
+struct _g_sprite2d
 {
+  CONSTRUCT_G_NODE(g_node_func)
   int data;
 };
-typedef struct _Sprite2dRenderData sprite2d_render_data;
+typedef struct _g_sprite2d g_sprite2d;
 
 g_node* sprite2d_new();
 
