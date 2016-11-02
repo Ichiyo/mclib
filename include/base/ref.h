@@ -31,6 +31,14 @@ weak_ref* base_ref_new_weak_ref(ref*);
   void(*free)(void*); \
   weak_ref*(*new_weak_ref)(void*);
 
+#define EXTEND_REF_FUNC(struct_type, content) \
+  struct _##struct_type \
+  { \
+     REF_FUNC_MACRO \
+     content \
+  };\
+  typedef struct _##struct_type struct_type;
+
 #define REF_FIELD_MACRO \
   atomic_int ref_count; \
   struct autoreleasenode* pool_ref; \
@@ -73,6 +81,14 @@ extern ref_func __base_ref_func;
 #define CONSTRUCT_REF(__FUNC__) \
   __FUNC__* func; \
   REF_FIELD_MACRO
+
+#define EXTEND_REF(struct_type, func, content) \
+  struct _##struct_type \
+  { \
+    CONSTRUCT_REF(func) \
+    content \
+  }; \
+  typedef struct _##struct_type struct_type;
 
 struct _Ref
 {
