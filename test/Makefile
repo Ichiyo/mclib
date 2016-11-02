@@ -124,6 +124,19 @@ test/fast:
 .PHONY : test/fast
 
 #=============================================================================
+# Target rules for targets named test_atomic
+
+# Build rule for target.
+test_atomic: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_atomic
+.PHONY : test_atomic
+
+# fast build rule for target.
+test_atomic/fast:
+	$(MAKE) -f CMakeFiles/test_atomic.dir/build.make CMakeFiles/test_atomic.dir/build
+.PHONY : test_atomic/fast
+
+#=============================================================================
 # Target rules for targets named gltest
 
 # Build rule for target.
@@ -137,17 +150,17 @@ gltest/fast:
 .PHONY : gltest/fast
 
 #=============================================================================
-# Target rules for targets named test_atomic
+# Target rules for targets named sdl_test
 
 # Build rule for target.
-test_atomic: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_atomic
-.PHONY : test_atomic
+sdl_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sdl_test
+.PHONY : sdl_test
 
 # fast build rule for target.
-test_atomic/fast:
-	$(MAKE) -f CMakeFiles/test_atomic.dir/build.make CMakeFiles/test_atomic.dir/build
-.PHONY : test_atomic/fast
+sdl_test/fast:
+	$(MAKE) -f CMakeFiles/sdl_test.dir/build.make CMakeFiles/sdl_test.dir/build
+.PHONY : sdl_test/fast
 
 gltest.o: gltest.c.o
 
@@ -175,6 +188,33 @@ gltest.s: gltest.c.s
 gltest.c.s:
 	$(MAKE) -f CMakeFiles/gltest.dir/build.make CMakeFiles/gltest.dir/gltest.c.s
 .PHONY : gltest.c.s
+
+sdl_test.o: sdl_test.c.o
+
+.PHONY : sdl_test.o
+
+# target to build an object file
+sdl_test.c.o:
+	$(MAKE) -f CMakeFiles/sdl_test.dir/build.make CMakeFiles/sdl_test.dir/sdl_test.c.o
+.PHONY : sdl_test.c.o
+
+sdl_test.i: sdl_test.c.i
+
+.PHONY : sdl_test.i
+
+# target to preprocess a source file
+sdl_test.c.i:
+	$(MAKE) -f CMakeFiles/sdl_test.dir/build.make CMakeFiles/sdl_test.dir/sdl_test.c.i
+.PHONY : sdl_test.c.i
+
+sdl_test.s: sdl_test.c.s
+
+.PHONY : sdl_test.s
+
+# target to generate assembly for a file
+sdl_test.c.s:
+	$(MAKE) -f CMakeFiles/sdl_test.dir/build.make CMakeFiles/sdl_test.dir/sdl_test.c.s
+.PHONY : sdl_test.c.s
 
 test.o: test.c.o
 
@@ -238,12 +278,16 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... gltest"
-	@echo "... test_atomic"
 	@echo "... rebuild_cache"
+	@echo "... test_atomic"
+	@echo "... gltest"
+	@echo "... sdl_test"
 	@echo "... gltest.o"
 	@echo "... gltest.i"
 	@echo "... gltest.s"
+	@echo "... sdl_test.o"
+	@echo "... sdl_test.i"
+	@echo "... sdl_test.s"
 	@echo "... test.o"
 	@echo "... test.i"
 	@echo "... test.s"

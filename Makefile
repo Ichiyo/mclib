@@ -312,6 +312,33 @@ src/node.c.s:
 	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/node.c.s
 .PHONY : src/node.c.s
 
+src/primitive.o: src/primitive.c.o
+
+.PHONY : src/primitive.o
+
+# target to build an object file
+src/primitive.c.o:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/primitive.c.o
+.PHONY : src/primitive.c.o
+
+src/primitive.i: src/primitive.c.i
+
+.PHONY : src/primitive.i
+
+# target to preprocess a source file
+src/primitive.c.i:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/primitive.c.i
+.PHONY : src/primitive.c.i
+
+src/primitive.s: src/primitive.c.s
+
+.PHONY : src/primitive.s
+
+# target to generate assembly for a file
+src/primitive.c.s:
+	$(MAKE) -f CMakeFiles/clibraries.dir/build.make CMakeFiles/clibraries.dir/src/primitive.c.s
+.PHONY : src/primitive.c.s
+
 src/serialize.o: src/serialize.c.o
 
 .PHONY : src/serialize.o
@@ -477,6 +504,9 @@ help:
 	@echo "... src/node.o"
 	@echo "... src/node.i"
 	@echo "... src/node.s"
+	@echo "... src/primitive.o"
+	@echo "... src/primitive.i"
+	@echo "... src/primitive.s"
 	@echo "... src/serialize.o"
 	@echo "... src/serialize.i"
 	@echo "... src/serialize.s"

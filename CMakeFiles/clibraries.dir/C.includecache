@@ -31,6 +31,8 @@ string.h
 /home/manh/Documents/mclib/src/image.c
 graphic/image.h
 -
+graphic/graphic.h
+-
 stdlib.h
 -
 SDL2/SDL.h
@@ -64,6 +66,12 @@ graphic/sprite2d.h
 stdlib.h
 -
 stdio.h
+-
+
+/home/manh/Documents/mclib/src/primitive.c
+mstr/primitive.h
+-
+stdlib.h
 -
 
 /home/manh/Documents/mclib/src/serialize.c
@@ -100,6 +108,8 @@ mstr/map.h
 string.h
 -
 mstr/list.h
+-
+mstr/primitive.h
 -
 
 /home/manh/Documents/mclib/src/utils.c
@@ -162,6 +172,8 @@ math/matrix3.h
 math/matrix4.h
 -
 math/quaternion.h
+-
+math.h
 -
 
 include/math/matrix3.h
@@ -229,6 +241,10 @@ base/ref.h
 -
 
 include/mstr/map.h
+base/ref.h
+-
+
+include/mstr/primitive.h
 base/ref.h
 -
 

@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/clibraries.dir/src/shader.c.o"
   "CMakeFiles/clibraries.dir/src/utils.c.o"
   "CMakeFiles/clibraries.dir/src/math.c.o"
+  "CMakeFiles/clibraries.dir/src/primitive.c.o"
   "CMakeFiles/clibraries.dir/src/image.c.o"
   "CMakeFiles/clibraries.dir/src/base.c.o"
   "CMakeFiles/clibraries.dir/src/list.c.o"

@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/manh/Documents/mclib/src/map.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/map.c.o"
   "/home/manh/Documents/mclib/src/math.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/math.c.o"
   "/home/manh/Documents/mclib/src/node.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/node.c.o"
+  "/home/manh/Documents/mclib/src/primitive.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/primitive.c.o"
   "/home/manh/Documents/mclib/src/serialize.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/serialize.c.o"
   "/home/manh/Documents/mclib/src/shader.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/shader.c.o"
   "/home/manh/Documents/mclib/src/string.c" "/home/manh/Documents/mclib/CMakeFiles/clibraries.dir/src/string.c.o"

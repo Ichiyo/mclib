@@ -23,3 +23,6 @@ target_link_libraries(test_atomic ${PROJECT_LINK_LIBS})
 
 add_executable(gltest gltest.c temp)
 target_link_libraries(gltest ${PROJECT_LINK_LIBS})
+
+add_executable(sdl_test sdl_test.c temp)
+target_link_libraries(sdl_test ${PROJECT_LINK_LIBS})

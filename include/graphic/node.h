@@ -20,9 +20,8 @@ EXTEND_REF_FUNC(g_node_func,
 		vector2 size; \
 		quaternion quat; \
 		matrix4 model; \
-		struct _g_node* parent; \
-		struct _g_node* child; \
-		struct _g_node* next_sibling; \
+		weak_ref* parent; \
+		m_list* children; \
 		content \
 	);
 

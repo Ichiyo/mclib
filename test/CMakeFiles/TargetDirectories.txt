@@ -1,5 +1,6 @@
 /home/manh/Documents/mclib/test/CMakeFiles/edit_cache.dir
 /home/manh/Documents/mclib/test/CMakeFiles/test.dir
-/home/manh/Documents/mclib/test/CMakeFiles/gltest.dir
-/home/manh/Documents/mclib/test/CMakeFiles/test_atomic.dir
 /home/manh/Documents/mclib/test/CMakeFiles/rebuild_cache.dir
+/home/manh/Documents/mclib/test/CMakeFiles/test_atomic.dir
+/home/manh/Documents/mclib/test/CMakeFiles/gltest.dir
+/home/manh/Documents/mclib/test/CMakeFiles/sdl_test.dir

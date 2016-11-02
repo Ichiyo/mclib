@@ -12,6 +12,7 @@ CMakeFiles/clibraries.dir/src/data.c.o
 CMakeFiles/clibraries.dir/src/image.c.o
  /home/manh/Documents/mclib/src/image.c
  include/base/ref.h
+ include/graphic/graphic.h
  include/graphic/image.h
 CMakeFiles/clibraries.dir/src/list.c.o
  /home/manh/Documents/mclib/src/list.c
@@ -44,6 +45,10 @@ CMakeFiles/clibraries.dir/src/node.c.o
  include/math/vector2.h
  include/math/vector3.h
  include/math/vector4.h
+CMakeFiles/clibraries.dir/src/primitive.c.o
+ /home/manh/Documents/mclib/src/primitive.c
+ include/base/ref.h
+ include/mstr/primitive.h
 CMakeFiles/clibraries.dir/src/serialize.c.o
  /home/manh/Documents/mclib/src/serialize.c
  include/serialize/serialize.h
@@ -67,6 +72,7 @@ CMakeFiles/clibraries.dir/src/texture.c.o
  include/graphic/texture.h
  include/mstr/list.h
  include/mstr/map.h
+ include/mstr/primitive.h
  include/mstr/string.h
 CMakeFiles/clibraries.dir/src/utils.c.o
  /home/manh/Documents/mclib/src/utils.c

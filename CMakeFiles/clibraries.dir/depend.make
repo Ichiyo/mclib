@@ -11,6 +11,7 @@ CMakeFiles/clibraries.dir/src/data.c.o: include/mstr/data.h
 
 CMakeFiles/clibraries.dir/src/image.c.o: src/image.c
 CMakeFiles/clibraries.dir/src/image.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/image.c.o: include/graphic/graphic.h
 CMakeFiles/clibraries.dir/src/image.c.o: include/graphic/image.h
 
 CMakeFiles/clibraries.dir/src/list.c.o: src/list.c
@@ -44,6 +45,10 @@ CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector2.h
 CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector3.h
 CMakeFiles/clibraries.dir/src/node.c.o: include/math/vector4.h
 
+CMakeFiles/clibraries.dir/src/primitive.c.o: src/primitive.c
+CMakeFiles/clibraries.dir/src/primitive.c.o: include/base/ref.h
+CMakeFiles/clibraries.dir/src/primitive.c.o: include/mstr/primitive.h
+
 CMakeFiles/clibraries.dir/src/serialize.c.o: src/serialize.c
 CMakeFiles/clibraries.dir/src/serialize.c.o: include/serialize/serialize.h
 
@@ -66,6 +71,7 @@ CMakeFiles/clibraries.dir/src/texture.c.o: include/graphic/image.h
 CMakeFiles/clibraries.dir/src/texture.c.o: include/graphic/texture.h
 CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/list.h
 CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/map.h
+CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/primitive.h
 CMakeFiles/clibraries.dir/src/texture.c.o: include/mstr/string.h
 
 CMakeFiles/clibraries.dir/src/utils.c.o: src/utils.c
