@@ -8,12 +8,9 @@
 extern "C" {
 #endif
 
-struct _opengl_texture
-{
-  CONSTRUCT_REF(g_texture_func)
+EXTEND_REF(opengl_texture, g_texture_func,
   GLuint id;
-};
-typedef struct _opengl_texture opengl_texture;
+);
 
 static void free_texture(opengl_texture* tex)
 {
@@ -48,13 +45,10 @@ static void texture_bind(opengl_texture* tex)
 
 //-----------------------------------------------------
 
-struct _texture_cache_value
-{
-  CONSTRUCT_REF(ref_func)
+EXTEND_REF(texture_cache_value, ref_func,
   m_string* name;
   weak_ref* texture_ref;
-};
-typedef struct _texture_cache_value texture_cache_value;
+)
 
 static void texture_cache_value_free(texture_cache_value* value)
 {

@@ -11,9 +11,9 @@ extern "C" {
 
 EXTEND_REF_FUNC(g_texture_func,
   void(*bind)(void*,int);
-)
+);
 
-EXTEND_REF(g_texture, g_texture_func,)
+EXTEND_REF(g_texture, g_texture_func,);
 
 g_texture* texture_new_from_image(g_image*);
 g_texture* texture_new_from_file_char(const char*);

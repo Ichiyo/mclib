@@ -7,21 +7,15 @@
 extern "C" {
 #endif
 
-struct _m_string_func
-{
-	REF_FUNC_MACRO
+EXTEND_REF_FUNC(m_string_func,
 	void(*cat_str)(void*, void*);
 	void(*cat_char)(void*, void*src);
-};
-typedef struct _m_string_func m_string_func;
+);
 
-struct _m_string
-{
-	CONSTRUCT_REF(m_string_func)
+EXTEND_REF(m_string, m_string_func,
 	char*	content;
 	long	length;
-};
-typedef struct _m_string m_string;
+);
 
 m_string* new_string();
 

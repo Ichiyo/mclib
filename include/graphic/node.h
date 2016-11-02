@@ -11,7 +11,7 @@ extern "C" {
 EXTEND_REF_FUNC(g_node_func,
 	void(*visit)(void*);
 	void(*draw)(void*);
-)
+);
 
 #define EXTEND_NODE(struct_type, func, content) \
 	EXTEND_REF(struct_type, func, \
@@ -24,9 +24,9 @@ EXTEND_REF_FUNC(g_node_func,
 		struct _g_node* child; \
 		struct _g_node* next_sibling; \
 		content \
-	)
+	);
 
-EXTEND_NODE(g_node, g_node_func,)
+EXTEND_NODE(g_node, g_node_func,);
 
 g_node* node_new();
 

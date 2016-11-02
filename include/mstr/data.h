@@ -7,20 +7,14 @@
 extern "C" {
 #endif
 
-struct _m_data_func
-{
-  REF_FUNC_MACRO
+EXTEND_REF_FUNC(m_data_func,
   void(*put)(void*, char*, long);
-};
-typedef struct _m_data_func m_data_func;
+);
 
-struct _m_data
-{
-  CONSTRUCT_REF(m_data_func)
+EXTEND_REF(m_data, m_data_func,
   char* bytes;
   long size;
-};
-typedef struct _m_data m_data;
+);
 
 m_data* data_new();
 

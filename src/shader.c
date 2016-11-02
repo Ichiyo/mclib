@@ -8,12 +8,9 @@
 extern "C" {
 #endif
 
-struct _opengl_shader
-{
-  CONSTRUCT_REF(g_shader_func)
+EXTEND_REF(opengl_shader, g_shader_func,
   GLuint id;
-};
-typedef struct _opengl_shader opengl_shader;
+);
 
 static void free_shader(opengl_shader* shader)
 {

@@ -9,7 +9,7 @@ extern "C" {
 
 EXTEND_NODE(g_sprite2d, g_node_func,
   int data;
-)
+);
 
 g_node* sprite2d_new();
 

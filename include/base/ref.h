@@ -16,8 +16,8 @@ extern "C" {
 #endif
 
 typedef struct _m_list m_list;
-typedef struct _Ref ref;
-typedef struct _Weak_Ref weak_ref;
+typedef struct _ref ref;
+typedef struct _weak_ref weak_ref;
 
 void base_ref_retain(ref*);
 void base_ref_release(ref*);
@@ -31,28 +31,43 @@ weak_ref* base_ref_new_weak_ref(ref*);
   void(*free)(void*); \
   weak_ref*(*new_weak_ref)(void*);
 
-#define EXTEND_REF_FUNC(struct_type, content) \
-  struct _##struct_type \
-  { \
-     REF_FUNC_MACRO \
-     content \
-  };\
-  typedef struct _##struct_type struct_type;
-
 #define REF_FIELD_MACRO \
   atomic_int ref_count; \
   struct autoreleasenode* pool_ref; \
   m_list* weak_list;
 
-struct _ref_func
-{
-  REF_FUNC_MACRO
-};
-typedef struct _ref_func ref_func;
+/* base ref functions will be inherited
+  e.g :
 
-extern ref_func __base_ref_func;
+  // base ref functions
+  ref_func __base_ref_func = {
+    BASE_REF_FUNC_INHERIT,
+    .free = 0
+  };
+  //-----------------------------------
+  //other data function
+  EXTEND_REF_FUNC(data_func,
+    void(*dosmt)();
+  );
 
-/* base ref functions will be inherited */
+  static void free_data(data* d)
+  {
+    free(d);
+  }
+
+  static void data_dosmt()
+  {
+    // you do what you do !
+  }
+
+  static data_func base_data_func =
+  {
+    BASE_REF_FUNC_INHERIT,
+    .free = free_data,
+    .dosmt = data_dosmt
+  };
+
+*/
 #define BASE_REF_FUNC_INHERIT \
   .retain = base_ref_retain, \
   .release = base_ref_release, \
@@ -82,6 +97,26 @@ extern ref_func __base_ref_func;
   __FUNC__* func; \
   REF_FIELD_MACRO
 
+/*
+  quick inherit from ref
+  e.g:
+  EXTEND_REF_FUNC(object_func,
+    void(*next_func_1)(void*);
+    void(*next_func_2)(void*);
+  );
+  EXTEND_REF(object, object_func,
+    int next_field_1;
+    long next_field_2;
+  );
+*/
+#define EXTEND_REF_FUNC(struct_type, content) \
+  struct _##struct_type \
+  { \
+     REF_FUNC_MACRO \
+     content \
+  };\
+  typedef struct _##struct_type struct_type;
+
 #define EXTEND_REF(struct_type, func, content) \
   struct _##struct_type \
   { \
@@ -90,20 +125,26 @@ extern ref_func __base_ref_func;
   }; \
   typedef struct _##struct_type struct_type;
 
-struct _Ref
-{
-  CONSTRUCT_REF(ref_func)
-};
-typedef struct _Ref ref;
+/*
+  declare ref and weak_ref use quick declaration type
+  ref_func is a ref_func
+  ref is a ref
+  weak_ref is a ref
+  a ha!
+*/
+EXTEND_REF_FUNC(ref_func,);
+extern ref_func __base_ref_func;
 
-struct _Weak_Ref
-{
-  CONSTRUCT_REF(ref_func)
+EXTEND_REF(ref, ref_func,);
+EXTEND_REF(weak_ref,ref_func,
   ref* owner;
   int valid;
-};
-typedef struct _Weak_Ref weak_ref;
+);
 
+/*
+  autorelease pool is designed with linked list to remove object quickly
+  a ref need to keep track about it in release pool
+*/
 struct autoreleasenode
 {
   ref* rc;
