@@ -8,9 +8,9 @@
 extern "C" {
 #endif
 
-EXTEND_REF_FUNC(
-  g_shader_func,
+EXTEND_REF_FUNC(g_shader_func,
   void(*use)(void*);
+  int(*get_id)(void*);
 );
 
 EXTEND_REF(g_shader, g_shader_func,);

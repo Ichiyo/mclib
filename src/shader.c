@@ -26,6 +26,11 @@ static void shader_use(opengl_shader* shader)
   glUseProgram(shader->id);
 }
 
+static int shader_get_id(opengl_shader* shader)
+{
+  return shader->id;
+}
+
 static void init_shader(opengl_shader* ret, const char* vertex_source, const char* fragment_source)
 {
   GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -75,7 +80,8 @@ static g_shader_func base_g_shader_func =
 {
   BASE_REF_FUNC_INHERIT,
   .free = free_shader,
-  .use = shader_use
+  .use = shader_use,
+  .get_id = shader_get_id
 };
 
 g_shader* shader_new(const char* vertex_source, const char* fragment_source)
