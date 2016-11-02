@@ -68,11 +68,6 @@ weak_ref* base_ref_new_weak_ref(ref*);
   };
 
 */
-#define BASE_REF_FUNC_INHERIT \
-  .retain = base_ref_retain, \
-  .release = base_ref_release, \
-  .auto_release = base_ref_auto_release, \
-  .new_weak_ref = base_ref_new_weak_ref
 
 /*
   quick assign ref type to struct
@@ -141,6 +136,12 @@ EXTEND_REF(weak_ref,ref_func,
   int valid;
 );
 
+#define BASE_REF_FUNC_INHERIT \
+  .retain = base_ref_retain, \
+  .release = base_ref_release, \
+  .auto_release = base_ref_auto_release, \
+  .new_weak_ref = base_ref_new_weak_ref
+  
 /*
   autorelease pool is designed with linked list to remove object quickly
   a ref need to keep track about it in release pool
