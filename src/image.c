@@ -7,6 +7,11 @@
   #include <SDL2/SDL.h>
   #include <SDL2/SDL_image.h>
   #endif
+#else
+  #if defined(USE_SDL)
+  #include <SDL2/SDL.h>
+  #include <SDL2/SDL_image.h>
+  #endif
 #endif
 
 #ifdef __cplusplus

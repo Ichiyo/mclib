@@ -9,6 +9,6 @@ include_directories(include)
 
 file(GLOB SOURCES "src/*.c")
 
-add_library(clibraries SHARED ${SOURCES})
+add_library(clibraries STATIC ${SOURCES})
 
 #install(TARGETS clibraries DESTINATION ${PROJECT_SOURCE_DIR}/build)

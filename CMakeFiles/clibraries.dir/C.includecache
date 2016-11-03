@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/manh/Documents/mclib/src/base.c
+/Users/manhtran/Documents/mclib/src/base.c
 base/ref.h
 -
 stddef.h
@@ -20,7 +20,7 @@ stdio.h
 mstr/list.h
 -
 
-/home/manh/Documents/mclib/src/data.c
+/Users/manhtran/Documents/mclib/src/data.c
 mstr/data.h
 -
 stdlib.h
@@ -28,7 +28,7 @@ stdlib.h
 string.h
 -
 
-/home/manh/Documents/mclib/src/image.c
+/Users/manhtran/Documents/mclib/src/image.c
 graphic/image.h
 -
 graphic/graphic.h
@@ -39,8 +39,12 @@ SDL2/SDL.h
 -
 SDL2/SDL_image.h
 -
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
 
-/home/manh/Documents/mclib/src/list.c
+/Users/manhtran/Documents/mclib/src/list.c
 mstr/list.h
 -
 stdlib.h
@@ -48,17 +52,17 @@ stdlib.h
 string.h
 -
 
-/home/manh/Documents/mclib/src/map.c
+/Users/manhtran/Documents/mclib/src/map.c
 mstr/map.h
-/home/manh/Documents/mclib/src/mstr/map.h
+/Users/manhtran/Documents/mclib/src/mstr/map.h
 stdlib.h
 -
 
-/home/manh/Documents/mclib/src/math.c
+/Users/manhtran/Documents/mclib/src/math.c
 math/math.h
 -
 
-/home/manh/Documents/mclib/src/node.c
+/Users/manhtran/Documents/mclib/src/node.c
 graphic/node.h
 -
 graphic/sprite2d.h
@@ -68,17 +72,17 @@ stdlib.h
 stdio.h
 -
 
-/home/manh/Documents/mclib/src/primitive.c
+/Users/manhtran/Documents/mclib/src/primitive.c
 mstr/primitive.h
 -
 stdlib.h
 -
 
-/home/manh/Documents/mclib/src/serialize.c
+/Users/manhtran/Documents/mclib/src/serialize.c
 serialize/serialize.h
-/home/manh/Documents/mclib/src/serialize/serialize.h
+/Users/manhtran/Documents/mclib/src/serialize/serialize.h
 
-/home/manh/Documents/mclib/src/shader.c
+/Users/manhtran/Documents/mclib/src/shader.c
 graphic/shader.h
 -
 stdio.h
@@ -90,15 +94,15 @@ mstr/string.h
 utils/file_utils.h
 -
 
-/home/manh/Documents/mclib/src/string.c
+/Users/manhtran/Documents/mclib/src/string.c
 mstr/string.h
-/home/manh/Documents/mclib/src/mstr/string.h
+/Users/manhtran/Documents/mclib/src/mstr/string.h
 stdlib.h
 -
 string.h
 -
 
-/home/manh/Documents/mclib/src/texture.c
+/Users/manhtran/Documents/mclib/src/texture.c
 graphic/texture.h
 -
 graphic/graphic.h
@@ -112,7 +116,7 @@ mstr/list.h
 mstr/primitive.h
 -
 
-/home/manh/Documents/mclib/src/utils.c
+/Users/manhtran/Documents/mclib/src/utils.c
 utils/file_utils.h
 -
 stdio.h
@@ -123,6 +127,12 @@ stdatomic.h
 -
 
 include/graphic/graphic.h
+OpenGL/gl.h
+-
+OpenGL/glu.h
+-
+OpenGL/glext.h
+-
 GLUT/glut.h
 -
 GL/glut.h

@@ -1,10 +1,10 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdatomic.h>
+// #include <stdatomic.h>
 #define NUM_THREADS	10
 
-atomic_int acnt;
+int acnt;
 int cnt;
 
 void *PrintHello(void *threadid)

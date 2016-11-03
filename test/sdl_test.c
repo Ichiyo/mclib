@@ -116,7 +116,6 @@ int main(int argc, char *argv[])
   glUniform1i(glGetUniformLocation(shader->func->get_id(shader), "tex"), 0);
   glUniform1i(glGetUniformLocation(shader->func->get_id(shader), "tex2"), 1);
 
-  GLint uniColor = glGetUniformLocation(shader->func->get_id(shader), "overrideColor");
   GLint uniModel = glGetUniformLocation(shader->func->get_id(shader), "model");
 
   tex->func->bind(tex, 0);
@@ -125,14 +124,13 @@ int main(int argc, char *argv[])
   tex2->func->retain(tex2);
   float blend = 0;
   float sig = 1;
-  float time = 0;
+  float time = 0; 
 
   glEnable(GL_DEPTH_TEST);
   // glDepthFunc(GL_LESS);
   // glEnable(GL_STENCIL_TEST);
   // glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
   // glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
 
   while (1)
   {
@@ -175,7 +173,7 @@ int main(int argc, char *argv[])
     //   blend = MAX(0, MIN(1, blend));
     // }
     blend = 0.5;
-    glUniform1f(glGetUniformLocation(shader->func->get_id(shader), "blend"), blend);
+    glUniform1fv(glGetUniformLocation(shader->func->get_id(shader), "blend"), 1, &blend);
     // Clear the screen to black
 
     //
@@ -194,6 +192,9 @@ int main(int argc, char *argv[])
     // glEnable(GL_DEPTH_TEST);
 
     //      Draw Grass
+    GLint uniColor = glGetUniformLocation(shader->func->get_id(shader), "overrideColor");
+    vector3 color = vector3_new(1, 1, 1);
+    glUniform3fv(uniColor, 1, color.v);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     //      Draw floor
     glEnable(GL_STENCIL_TEST);
@@ -216,9 +217,9 @@ int main(int argc, char *argv[])
     );
     glUniformMatrix4fv(uniModel, 1, GL_FALSE, model.m);
 
-    glUniform3f(uniColor, 0.3f, 0.3f, 0.3f);
+    color = vector3_new(0.3, 0.3, 0.3);
+    glUniform3fv(uniColor, 1, color.v);
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
 
     glDisable(GL_STENCIL_TEST);
     // glDisable(GL_DEPTH_TEST);

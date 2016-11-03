@@ -6,6 +6,9 @@ extern "C" {
 #endif
 
 #if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <OpenGL/glext.h>
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>

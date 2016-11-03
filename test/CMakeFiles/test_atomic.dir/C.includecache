@@ -6,13 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/manh/Documents/mclib/test/test_atomic.c
+/Users/manhtran/Documents/mclib/test/test_atomic.c
 pthread.h
 -
 stdio.h
 -
 stdlib.h
--
-stdatomic.h
 -
 

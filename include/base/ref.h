@@ -1,7 +1,10 @@
 #ifndef _M_REF_H
 #define _M_REF_H
 
+#ifdef linux
 #include <stdatomic.h>
+#endif
+
 /*
 
   force disable warning incompatible pointer types
@@ -31,10 +34,17 @@ weak_ref* base_ref_new_weak_ref(ref*);
   void(*free)(void*); \
   weak_ref*(*new_weak_ref)(void*);
 
+#ifdef linux
 #define REF_FIELD_MACRO \
   atomic_int ref_count; \
   struct autoreleasenode* pool_ref; \
   m_list* weak_list;
+#else
+#define REF_FIELD_MACRO \
+  int ref_count; \
+  struct autoreleasenode* pool_ref; \
+  m_list* weak_list;
+#endif
 
 /* base ref functions will be inherited
   e.g :
@@ -141,7 +151,7 @@ EXTEND_REF(weak_ref,ref_func,
   .release = base_ref_release, \
   .auto_release = base_ref_auto_release, \
   .new_weak_ref = base_ref_new_weak_ref
-  
+
 /*
   autorelease pool is designed with linked list to remove object quickly
   a ref need to keep track about it in release pool

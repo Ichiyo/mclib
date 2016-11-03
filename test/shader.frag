@@ -6,7 +6,9 @@ uniform sampler2D tex;
 uniform sampler2D tex2;
 uniform float blend;
 uniform float time;
+
 void main()
 {
-    outColor = vec4(Color, 1.0) * mix(texture(tex, Texcoord), texture(tex2, Texcoord), blend);
+  vec4 c = vec4(Color, 1.0);
+  outColor =  c * mix(texture(tex, Texcoord), texture(tex2, Texcoord), blend);
 }
