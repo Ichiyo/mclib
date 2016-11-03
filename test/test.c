@@ -21,9 +21,9 @@ static void traverse(unsigned long key, void* data)
 int
 main (int argc, char *argv[])
 {
-	g_image* image = image_new_from_file("wolf.jpg");
-	g_texture* tex = texture_new_from_file_char("wolf.jpg");
-	g_texture* tex2 = texture_new_from_file_char("wolf.jpg");
+	g_image* image = image_new_from_file("res/wolf.jpg");
+	g_texture* tex = texture_new_from_file_char("res/wolf.jpg");
+	g_texture* tex2 = texture_new_from_file_char("res/wolf.jpg");
 	printf("%p | %p\n", tex, tex2);
 	m_string* str = new_string();
 	m_string* str2 = new_string();
@@ -33,7 +33,7 @@ main (int argc, char *argv[])
 	str->func->cat_char(str, " Viet Nam");
 	str2->func->cat_str(str2, str);
 	str2->func->cat_char(str2, " :)!");
-	m_data* str3 = read_data_from_file("name.txt");
+	m_data* str3 = read_data_from_file("res/name.txt");
 	printf("%s\n", str->content);
 	printf("%s\n", str2->content);
 	//----

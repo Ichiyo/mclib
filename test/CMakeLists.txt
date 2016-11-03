@@ -5,8 +5,9 @@ set(CMAKE_BUILD_TYPE Release)
 add_custom_command(
 	OUTPUT temp
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/..
-	COMMAND ${CMAKE_COMMAND} .
-	COMMAND make
+	COMMAND mkdir -p build
+	COMMAND ${CMAKE_COMMAND} -Bbuild -H.
+	COMMAND make -C build
 )
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(WINDOWS TRUE)
@@ -30,7 +31,7 @@ set(PROJECT_LINK_LIBS clibraries m pthread GL GLU glut SDL2 SDL2_image)
 
 endif()
 
-link_directories(${PROJECT_SOURCE_DIR}/..)
+link_directories(${PROJECT_SOURCE_DIR}/../build)
 
 include_directories(${PROJECT_SOURCE_DIR}/../include)
 
@@ -45,3 +46,6 @@ target_link_libraries(gltest ${PROJECT_LINK_LIBS})
 
 add_executable(sdl_test sdl_test.c temp)
 target_link_libraries(sdl_test ${PROJECT_LINK_LIBS})
+
+add_executable(test_lambda test_lambda.c temp)
+target_link_libraries(test_lambda ${PROJECT_LINK_LIBS})

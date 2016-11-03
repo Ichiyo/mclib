@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../../include/base/ref.h
+stdatomic.h
+-
+
+../../include/mstr/lambda.h
+base/ref.h
+-
+mstr/list.h
+-
+
+../../include/mstr/list.h
+base/ref.h
+-
+
+../../include/mstr/primitive.h
+base/ref.h
+-
+
+/home/manh/Documents/mclib/test/test_lambda.c
+stdio.h
+-
+mstr/primitive.h
+-
+mstr/list.h
+-
+stdlib.h
+-
+mstr/lambda.h
+-
+

@@ -13,6 +13,10 @@ EXTEND_REF_FUNC(g_node_func,
 	void(*draw)(void*);
 );
 
+/*
+	note :
+	- define parent by weak_ref to prevent circular dependency
+*/
 #define EXTEND_NODE(struct_type, func, content) \
 	EXTEND_REF(struct_type, func, \
 		vector3 position; \

@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
   SDL_Event windowEvent;
 
   //-------------------------------
-  g_texture* tex = texture_new_from_file_char("nature.jpg");
-  g_texture* tex2 = texture_new_from_file_char("Silent-Morning.png");
+  g_texture* tex = texture_new_from_file_char("res/nature.jpg");
+  g_texture* tex2 = texture_new_from_file_char("res/Silent-Morning.png");
   // Create Vertex Array Object
   GLuint vao;
   glGenVertexArrays(1, &vao);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
   // Create and compile the vertex shader
-  g_shader* shader = shader_new_from_file("shader.vert", "shader.frag");
+  g_shader* shader = shader_new_from_file("res/shader.vert", "res/shader.frag");
   shader->func->retain(shader);
   shader->func->use(shader);
 
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
   tex2->func->retain(tex2);
   float blend = 0;
   float sig = 1;
-  float time = 0; 
+  float time = 0;
 
   glEnable(GL_DEPTH_TEST);
   // glDepthFunc(GL_LESS);

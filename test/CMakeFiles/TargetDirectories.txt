@@ -1,6 +1,0 @@
-/Users/manhtran/Documents/mclib/test/CMakeFiles/edit_cache.dir
-/Users/manhtran/Documents/mclib/test/CMakeFiles/sdl_test.dir
-/Users/manhtran/Documents/mclib/test/CMakeFiles/test_atomic.dir
-/Users/manhtran/Documents/mclib/test/CMakeFiles/rebuild_cache.dir
-/Users/manhtran/Documents/mclib/test/CMakeFiles/gltest.dir
-/Users/manhtran/Documents/mclib/test/CMakeFiles/test.dir

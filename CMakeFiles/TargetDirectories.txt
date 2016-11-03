@@ -1,3 +1,0 @@
-/Users/manhtran/Documents/mclib/CMakeFiles/edit_cache.dir
-/Users/manhtran/Documents/mclib/CMakeFiles/rebuild_cache.dir
-/Users/manhtran/Documents/mclib/CMakeFiles/clibraries.dir
