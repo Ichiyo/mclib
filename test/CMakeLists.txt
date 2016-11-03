@@ -35,17 +35,22 @@ link_directories(${PROJECT_SOURCE_DIR}/../build)
 
 include_directories(${PROJECT_SOURCE_DIR}/../include)
 
-add_executable(test test.c temp)
-target_link_libraries(test ${PROJECT_LINK_LIBS})
-
-add_executable(test_atomic test_atomic.c temp)
-target_link_libraries(test_atomic ${PROJECT_LINK_LIBS})
+add_executable(main_test test.c temp)
+set_property(TARGET main_test PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(main_test clibraries)
+target_link_libraries(main_test ${PROJECT_LINK_LIBS})
 
 add_executable(gltest gltest.c temp)
+set_property(TARGET gltest PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(gltest clibraries)
 target_link_libraries(gltest ${PROJECT_LINK_LIBS})
 
 add_executable(sdl_test sdl_test.c temp)
+set_property(TARGET sdl_test PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(sdl_test clibraries)
 target_link_libraries(sdl_test ${PROJECT_LINK_LIBS})
 
 add_executable(test_lambda test_lambda.c temp)
+set_property(TARGET test_lambda PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(test_lambda clibraries)
 target_link_libraries(test_lambda ${PROJECT_LINK_LIBS})
