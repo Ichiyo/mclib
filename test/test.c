@@ -62,7 +62,7 @@ main (int argc, char *argv[])
 
 	printf("f = %.7f, fi = %lu, f2 = %.7f\n",f, fi, f2);
 
-	weak_ref* weak_image = tex->func->new_weak_ref(image);
+	weak_ref* weak_image = tex->func->new_weak_ref(tex);
 	weak_image->func->retain(weak_image);
 	texture_free_cache();
 	ref_update_auto_release_pool();
