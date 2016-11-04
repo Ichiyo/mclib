@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 static m_map* texture_active_id_map = 0;
+static m_map* texture_binding_map = 0;
 
 EXTEND_REF(opengl_texture, g_texture_func,
   GLuint id;
@@ -43,18 +44,43 @@ static void init_texture(opengl_texture* tex, g_image* image)
 
 static void texture_bind(opengl_texture* tex, int id)
 {
-  if(tex->id)
+  if(!tex->id) return;
+  /*
+  create map to get target GL_TEXTURE value by id passed : i -> GL_TEXTUREi
+  */
+  if(!texture_active_id_map)
   {
-    if(!texture_active_id_map)
+    texture_active_id_map = create_map();
+    texture_active_id_map->func->retain(texture_active_id_map);
+    for(int i = 0; i < 30; i++)
     {
-      texture_active_id_map = create_map();
-      texture_active_id_map->func->retain(texture_active_id_map);
-      for(int i = 0; i < 30; i++)
-      {
-          texture_active_id_map->func->insert(texture_active_id_map, i, new_int(GL_TEXTURE0 + i), 1);
-      }
+        texture_active_id_map->func->insert(texture_active_id_map, i, new_int(GL_TEXTURE0 + i), 1);
     }
-    int glID = ((m_int*)texture_active_id_map->func->get(texture_active_id_map, id))->data;
+  }
+  /*
+  create map to remember last texture binded to GL_TEXTUREid
+  */
+  if(!texture_binding_map)
+  {
+    texture_binding_map = create_map();
+    texture_binding_map->func->retain(texture_binding_map);
+  }
+
+  int glID = ((m_int*)texture_active_id_map->func->get(texture_active_id_map, id))->data;
+  m_int* current_mapped_texture = (m_int*)texture_binding_map->func->get(texture_binding_map, glID);
+  if(current_mapped_texture)
+  {
+    int current_tex_id = current_mapped_texture->data;
+    if(current_tex_id != tex->id)
+    {
+      current_mapped_texture->data = tex->id;
+      glActiveTexture(glID);
+      glBindTexture(GL_TEXTURE_2D, tex->id);
+    }
+  }
+  else
+  {
+    texture_binding_map->func->insert(texture_binding_map, glID, new_int(tex->id), 1);
     glActiveTexture(glID);
     glBindTexture(GL_TEXTURE_2D, tex->id);
   }
@@ -212,8 +238,13 @@ void texture_free_cache()
   {
     texture_active_id_map->func->release(texture_active_id_map);
   }
+  if(texture_binding_map)
+  {
+    texture_binding_map->func->release(texture_binding_map);
+  }
   texture_cache = 0;
   texture_active_id_map = 0;
+  texture_binding_map = 0;
 }
 
 #pragma GCC diagnostic pop
