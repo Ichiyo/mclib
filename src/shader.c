@@ -11,11 +11,14 @@ extern "C" {
 EXTEND_REF(opengl_shader, g_shader_func,
   GLuint id;
 );
+static GLuint last_shader_used = 0;
 
 static void free_shader(opengl_shader* shader)
 {
   if(shader->id)
   {
+    if(last_shader_used == shader->id) last_shader_used = 0;
+
     glDeleteProgram(shader->id);
   }
   free(shader);
@@ -23,7 +26,11 @@ static void free_shader(opengl_shader* shader)
 
 static void shader_use(opengl_shader* shader)
 {
-  glUseProgram(shader->id);
+  if(last_shader_used != shader->id)
+  {
+    glUseProgram(shader->id);
+    last_shader_used = shader->id;
+  }
 }
 
 static int shader_get_id(opengl_shader* shader)
