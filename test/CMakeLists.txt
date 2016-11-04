@@ -54,3 +54,8 @@ add_executable(test_lambda test_lambda.c temp)
 set_property(TARGET test_lambda PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
 add_dependencies(test_lambda clibraries)
 target_link_libraries(test_lambda ${PROJECT_LINK_LIBS})
+
+add_executable(test_2d test_2d.c temp)
+set_property(TARGET test_2d PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(test_2d clibraries)
+target_link_libraries(test_2d ${PROJECT_LINK_LIBS})
