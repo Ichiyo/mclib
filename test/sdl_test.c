@@ -3,6 +3,7 @@
 #include <graphic/graphic.h>
 #include <graphic/texture.h>
 #include <graphic/shader.h>
+#include <graphic/sprite2d.h>
 #include <base/ref.h>
 #include <math/math.h>
 
@@ -231,7 +232,7 @@ int main(int argc, char *argv[])
     glDrawArrays(GL_TRIANGLES, 36, 6);
 
     // glDisable(GL_STENCIL_TEST);
-    // 
+    //
     ref_update_auto_release_pool();
     SDL_GL_SwapWindow(window);
   }

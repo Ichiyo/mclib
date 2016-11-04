@@ -38,7 +38,9 @@ main (int argc, char *argv[])
 	printf("%s\n", str2->content);
 	//----
 	g_node* node = sprite2d_new();
-	node->func->visit(node);
+	g_node* node2 = sprite2d_new();
+	node->func->add_child(node, node2);
+	node->func->visit(node, matrix4_identity, 0);
 	//----
 
 	m_map* map = create_map();

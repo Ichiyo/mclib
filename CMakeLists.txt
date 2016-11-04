@@ -7,6 +7,6 @@ add_definitions(-DAPP_DEBUG -DUSE_SDL)
 
 include_directories(include)
 
-file(GLOB SOURCES "src/*.c")
+file(GLOB SOURCES "src/*.c" "src/node/*.c")
 
 add_library(clibraries STATIC ${SOURCES})

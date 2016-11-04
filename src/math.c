@@ -228,6 +228,7 @@ float quaternion_to_angle(quaternion quat)
   quat = quaternion_normalize(quat);
   float cos_angle = quat.q[3];
   float angle = acos(cos_angle) * 2;
+  
   return angle;
 }
 
@@ -236,7 +237,6 @@ vector3 quaternion_to_axis(quaternion quat)
   vector3 ret;
   quat = quaternion_normalize(quat);
   float cos_angle = quat.q[3];
-  float angle = acos(cos_angle) * 2;
   float s = sqrt(1 - cos_angle * cos_angle);
   if(s < 0.001)
   {

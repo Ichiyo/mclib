@@ -30,6 +30,8 @@ static __inline__ quaternion quaternion_invert(quaternion quat);
 static __inline__ quaternion quaternion_normalize(quaternion quat);
 static __inline__ vector3 quaternion_rotate_vector3(quaternion quat, vector3 vector);
 static __inline__ vector4 quaternion_rotate_vector4(quaternion quat, vector4 vector);
+static __inline__ quaternion quaternion_new_euler_angle(float pitch, float roll, float yaw);
+static __inline__ quaternion quaternion_new_vector3_euler_angle(vector3 vector);
 quaternion quaternion_new_matrix3(matrix3 matrix);
 quaternion quaternion_new_matrix4(matrix4 matrix);
 float quaternion_to_angle(quaternion quat);
@@ -208,6 +210,43 @@ static __inline__ vector4 quaternion_rotate_vector4(quaternion quat, vector4 vec
     rotatedQuaternion = quaternion_mul(quaternion_mul(quat, rotatedQuaternion), quaternion_invert(quat));
 
     return vector4_new(rotatedQuaternion.q[0], rotatedQuaternion.q[1], rotatedQuaternion.q[2], vector.v[3]);
+}
+
+static __inline__ quaternion quaternion_new_euler_angle(float pitch, float roll, float yaw)
+{
+	quaternion q;
+	float t0 = cos(yaw * 0.5f);
+	float t1 = sin(yaw * 0.5f);
+	float t2 = cos(roll * 0.5f);
+	float t3 = sin(roll * 0.5f);
+	float t4 = cos(pitch * 0.5f);
+	float t5 = sin(pitch * 0.5f);
+
+	q.q[3] = t0 * t2 * t4 + t1 * t3 * t5;
+	q.q[0] = t0 * t3 * t4 - t1 * t2 * t5;
+	q.q[1] = t0 * t2 * t5 + t1 * t3 * t4;
+	q.q[2] = t1 * t2 * t4 - t0 * t3 * t5;
+	return q;
+}
+
+static __inline__ quaternion quaternion_new_vector3_euler_angle(vector3 vector)
+{
+  float pitch = vector.v[0];
+  float roll = vector.v[2];
+  float yaw = vector.v[1];
+  quaternion q;
+	float t0 = cos(yaw * 0.5f);
+	float t1 = sin(yaw * 0.5f);
+	float t2 = cos(roll * 0.5f);
+	float t3 = sin(roll * 0.5f);
+	float t4 = cos(pitch * 0.5f);
+	float t5 = sin(pitch * 0.5f);
+
+	q.q[3] = t0 * t2 * t4 + t1 * t3 * t5;
+	q.q[0] = t0 * t3 * t4 - t1 * t2 * t5;
+	q.q[1] = t0 * t2 * t5 + t1 * t3 * t4;
+	q.q[2] = t1 * t2 * t4 - t0 * t3 * t5;
+	return q;
 }
 
 #ifdef __cplusplus

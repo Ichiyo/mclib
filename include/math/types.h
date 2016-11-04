@@ -91,6 +91,7 @@ union _Vector3
 {
   struct {float x, y, z;};
   struct {float r, g, b;};
+  struct {float w, h, d;};
   float v[3];
 };
 typedef union _Vector3 vector3;
