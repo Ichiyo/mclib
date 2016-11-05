@@ -24,6 +24,8 @@ void free_node(g_node* node)
 
 void visit_node(g_node* node, matrix4 current_model, int flag)
 {
+	if(!node->visible) return;
+
 	flag = flag | node->transform_dirty;
 	if(flag)
 	{
@@ -68,6 +70,41 @@ void node_add_child(g_node* node, g_node* child)
 	child->parent->func->retain(child->parent);
 }
 
+void node_set_visible(g_node* node,int visible)
+{
+	node->visible = visible;
+}
+
+void node_set_scale(g_node* node,vector3 vector)
+{
+	node->scale = vector;
+	node->transform_dirty = 1;
+}
+
+void node_set_size(g_node* node,vector3 vector)
+{
+	node->size = vector;
+	node->transform_dirty = 1;
+}
+
+void node_set_position(g_node* node,vector3 vector)
+{
+	node->position = vector;
+	node->transform_dirty = 1;
+}
+
+void node_set_anchor(g_node* node, vector3 vector)
+{
+	node->anchor = vector;
+	node->transform_dirty = 1;
+}
+
+void node_set_quat(g_node* node,quaternion quat)
+{
+	node->quat = quat;
+	node->transform_dirty = 1;
+}
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 
@@ -88,6 +125,7 @@ void init_node(g_node* node)
 	node->scale = vector3_new(1, 1, 1);
 	node->transform_dirty = 1;
 	node->quat = quaternion_identity;
+	node->visible = 1;
 	// default behaviors
 	node->func = &base_g_node_func;
 }

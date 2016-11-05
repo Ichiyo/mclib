@@ -16,6 +16,12 @@ extern "C" {
 		void(*visit)(void*, matrix4, int); \
 		void(*draw)(void*); \
 		void(*add_child)(void*,void*); \
+		void(*set_visible)(void*,int); \
+		void(*set_scale)(void*,vector3); \
+		void(*set_size)(void*,vector3); \
+		void(*set_position)(void*,vector3); \
+		void(*set_anchor)(void*,vector3); \
+		void(*set_quat)(void*,quaternion); \
 		content \
 	);
 
@@ -47,6 +53,7 @@ extern "C" {
 		weak_ref* parent; \
 		m_list* children; \
 		int transform_dirty; \
+		int visible; \
 		content \
 	);
 
@@ -60,12 +67,24 @@ void free_node(g_node* node);
 void visit_node(g_node* node, matrix4, int);
 void node_add_child(g_node*, g_node*);
 void init_node(g_node* node);
+void node_set_visible(g_node* node,int);
+void node_set_scale(g_node* node,vector3);
+void node_set_size(g_node* node,vector3);
+void node_set_position(g_node* node,vector3);
+void node_set_anchor(g_node* node,vector3);
+void node_set_quat(g_node* node,quaternion);
 
 #define INHERIT_NODE_FUNC \
 	BASE_REF_FUNC_INHERIT, \
 	.free = free_node, \
 	.visit = visit_node, \
-	.add_child = node_add_child
+	.add_child = node_add_child, \
+	.set_visible = node_set_visible, \
+	.set_scale = node_set_scale, \
+	.set_size = node_set_size, \
+	.set_position = node_set_position, \
+	.set_anchor = node_set_anchor, \
+	.set_quat = node_set_quat
 
 g_node* node_new();
 
