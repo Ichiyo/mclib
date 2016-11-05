@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
   g_sprite2d* sprite = sprite2d_new();
   sprite->func->retain(sprite);
   sprite->size = vector3_new(50,50,0);
-  sprite->anchor = vector3_new(1,1,1);
 
   sprite->func->set_shader(sprite,shader);
   sprite->func->set_texture(sprite,tex);
@@ -37,7 +36,15 @@ int main(int argc, char *argv[])
   sprite2->func->set_shader(sprite2,shader);
   sprite2->func->set_texture(sprite2,tex);
   sprite->func->add_child(sprite, sprite2);
-  sprite2->position.v[2] = 0.01;
+  sprite2->func->set_position(sprite2, vector3_new(0,0,0.1));
+
+  g_sprite2d* sprite3 = sprite2d_new();
+  sprite3->size = vector3_new(50,50,0);
+  sprite3->func->set_shader(sprite3,shader);
+  sprite3->func->set_texture(sprite3,tex);
+  sprite2->func->add_child(sprite2, sprite3);
+  sprite3->func->set_position(sprite3, vector3_new(0,0,0.1));
+
 
   matrix4 view = matrix4_create_look_at(
     0.01f, 0.0f, 200.0f,
@@ -53,6 +60,10 @@ int main(int argc, char *argv[])
 
   glUniform1i(glGetUniformLocation(shader->func->get_id(shader), "tex"), 0);
   glEnable(GL_DEPTH_TEST);
+  quaternion offset_q = quaternion_identity;
+  float time = 0;
+  int touch = 0;
+  int key = 0;
   while (1)
   {
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -63,11 +74,41 @@ int main(int argc, char *argv[])
       if (windowEvent.type == SDL_QUIT) break;
       if (windowEvent.type == SDL_KEYUP &&
           windowEvent.key.keysym.sym == SDLK_ESCAPE) break;
-    }
+      if (windowEvent.type == SDL_KEYUP){
+        touch = 0;
+        continue;
+      }
 
-    quaternion offset_q = quaternion_new_angle_axis(0.01, -1, 1, 0);
-    sprite->quat = quaternion_mul(sprite->quat, offset_q);
-    sprite->transform_dirty = 1;
+      if(windowEvent.type == SDL_KEYDOWN)
+      {
+        touch = 1;
+        key = windowEvent.key.keysym.sym;
+      }
+    }
+    if(touch)
+    {
+      switch(key)
+      {
+        case SDLK_LEFT:
+          offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-50 * 0.016), 0, 1, 0);
+          sprite->func->set_quat(sprite, quaternion_mul(offset_q, sprite->quat));
+          break;
+        case SDLK_RIGHT:
+          offset_q = quaternion_new_angle_axis(DEG_TO_RAD(50 * 0.016), 0, 1, 0);
+          sprite->func->set_quat(sprite, quaternion_mul(offset_q, sprite->quat));
+          break;
+        case SDLK_DOWN:
+          offset_q = quaternion_new_angle_axis(DEG_TO_RAD(50 * 0.016), 1, 0, 0);
+          sprite->func->set_quat(sprite, quaternion_mul(offset_q, sprite->quat));
+          break;
+        case SDLK_UP:
+          offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-50 * 0.016), 1, 0, 0);
+          sprite->func->set_quat(sprite, quaternion_mul(offset_q, sprite->quat));
+          break;
+        default:
+            break;
+      }
+    }
     sprite->func->visit(sprite, matrix4_identity, 0);
 
     ref_update_auto_release_pool();
