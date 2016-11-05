@@ -32,6 +32,7 @@ static __inline__ vector3 quaternion_rotate_vector3(quaternion quat, vector3 vec
 static __inline__ vector4 quaternion_rotate_vector4(quaternion quat, vector4 vector);
 static __inline__ quaternion quaternion_new_euler_angle(float pitch, float roll, float yaw);
 static __inline__ quaternion quaternion_new_vector3_euler_angle(vector3 vector);
+static __inline__ quaternion quaternion_lerp(quaternion from, quaternion to, float time);
 quaternion quaternion_new_matrix3(matrix3 matrix);
 quaternion quaternion_new_matrix4(matrix4 matrix);
 float quaternion_to_angle(quaternion quat);
@@ -247,6 +248,23 @@ static __inline__ quaternion quaternion_new_vector3_euler_angle(vector3 vector)
 	q.q[1] = t0 * t2 * t5 + t1 * t3 * t4;
 	q.q[2] = t1 * t2 * t4 - t0 * t3 * t5;
 	return q;
+}
+
+static __inline__ quaternion quaternion_lerp(quaternion from, quaternion to, float t)
+{
+  #if defined(__ARM_NEON__)
+      float32x4_t vDiff = vsubq_f32(*(float32x4_t *)&to,
+                                    *(float32x4_t *)&from);
+      vDiff = vmulq_f32(vDiff, vdupq_n_f32((float32_t)t));
+      float32x4_t v = vaddq_f32(*(float32x4_t *)&from, vDiff);
+      return *(quaternion *)&v;
+  #else
+      quaternion q = { from.q[0] + ((to.q[0] - from.q[0]) * t),
+                    from.q[1] + ((to.q[1] - from.q[1]) * t),
+                    from.q[2] + ((to.q[2] - from.q[2]) * t),
+                    from.q[3] + ((to.q[3] - from.q[3]) * t) };
+      return q;
+  #endif
 }
 
 #ifdef __cplusplus
