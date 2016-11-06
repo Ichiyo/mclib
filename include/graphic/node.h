@@ -48,8 +48,9 @@ extern "C" {
 		vector3 size; \
 		vector3 scale; \
 		matrix4 model; \
-		quaternion quat; \
 		matrix4 render_model; \
+		matrix4 sub_model; \
+		quaternion quat; \
 		weak_ref* parent; \
 		m_list* children; \
 		int transform_dirty; \

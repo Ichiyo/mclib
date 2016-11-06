@@ -22,6 +22,7 @@ void sprite2d_set_shader(g_sprite2d* node, g_shader* shader)
 	if(node->shader) node->shader->func->release(node->shader);
 	node->shader = shader;
 	if(node->shader) node->shader->func->retain(node->shader);
+	node->shader->func->use(node->shader);
 
 	glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
 	glBindVertexArray(node->vao);
@@ -73,13 +74,13 @@ void init_sprite2d(g_sprite2d* node)
 	node->func = &base_g_sprite_func;
 	GLfloat vertices[] = {
 	// Pos      // Tex
-		0.0f, 1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 0.0f, 1.0f,
+		-0.5f, 0.5f, 0.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f, 1.0f,
 
-		0.0f, 1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 1.0f, 1.0f
+		-0.5f, 0.5f, 0.0f, 0.0f,
+		0.5f, 0.5f, 1.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 1.0f
 	};
 
 	glGenVertexArrays(1, &node->vao);

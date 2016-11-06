@@ -10,18 +10,26 @@
 extern "C" {
 #endif
 
-EXTEND_NODE_FUNC(g_sprite2d_func,
-  void(*set_shader)(void*,void*);
-  void(*set_texture)(void*,void*);
-);
+#define EXTEND_SPRITE2D_FUNC(type, content) \
+  EXTEND_NODE_FUNC(type, \
+    void(*set_shader)(void*,void*); \
+    void(*set_texture)(void*,void*); \
+    content \
+  );
 
-EXTEND_NODE(g_sprite2d, g_sprite2d_func,
-  GLuint vbo;
-  GLuint ebo;
-  GLuint vao;
-  g_shader* shader;
-  g_texture* texture;
-);
+#define EXTEND_SPRITE2D(type, func, content) \
+  EXTEND_NODE(type, func, \
+    GLuint vbo; \
+    GLuint ebo; \
+    GLuint vao; \
+    g_shader* shader; \
+    g_texture* texture; \
+    content \
+  );
+
+EXTEND_SPRITE2D_FUNC(g_sprite2d_func,);
+
+EXTEND_SPRITE2D(g_sprite2d, g_sprite2d_func,);
 
 void sprite2d_free(g_sprite2d* node);
 void sprite2d_set_shader(g_sprite2d* node, g_shader* shader);
