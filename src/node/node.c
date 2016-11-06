@@ -32,13 +32,13 @@ void visit_node(g_node* node, matrix4 current_model, int flag)
 		matrix4 model = matrix4_identity;
 		model = matrix4_translate_vector3(model, node->position);
 
-		// model = matrix4_translate_vector3(model, vector3_new(node->anchor.v[0] * node->size.v[0], node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
+		model = matrix4_translate_vector3(model, vector3_new(node->anchor.v[0] * node->size.v[0], node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
 		model = matrix4_mul(model, matrix4_create_quaternion(node->quat));
 		model = matrix4_translate_vector3(model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
 		model = matrix4_scale_vector3(model, node->scale);
 		model = matrix4_mul(current_model, model);
-		node->model = model;
-		node->render_model = matrix4_scale_vector3(node->model, node->size);
+		node->render_model = matrix4_scale_vector3(model, node->size);
+		node->model= matrix4_translate_vector3(model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
 		node->transform_dirty = 0;
 	}
 
