@@ -1,1 +1,0 @@
-/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/main_test.dir/test.c.o  -o main_test  -L/home/manh/Documents/mclib/test/../build -rdynamic -lclibraries -lm -lpthread -lGL -lGLU -lglut -lSDL2 -lSDL2_image -Wl,-rpath,/home/manh/Documents/mclib/test/../build 

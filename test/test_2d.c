@@ -21,37 +21,24 @@ int main(int argc, char *argv[])
 
   //-------------------------------
   g_texture* tex = texture_new_from_file_char("res/Silent-Morning.png");
-  g_texture* tex2 = texture_new_from_file_char("res/paper.jpg");
+  g_texture* tex2 = texture_new_from_file_char("res/floor/TexturesCom_FloorsCheckerboard0017_1_seamless_S.jpg");
   g_shader* shader = shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
   g_shader* shader2 = shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
   g_sprite2d* sprite = sprite2d_new();
   sprite->func->retain(sprite);
-  sprite->size = vector3_new(50,50,0);
-  sprite->func->set_shader(sprite,shader);
-  sprite->func->set_texture(sprite,tex);
 
-  g_sprite2d* sprite2 = sprite2d_new();
-  sprite2->size = vector3_new(50,50,0);
-  sprite2->func->set_shader(sprite2,shader);
-  sprite2->func->set_texture(sprite2,tex);
-  sprite->func->add_child(sprite, sprite2);
-  sprite2->func->set_position(sprite2, vector3_new(0,0,0.1));
-
-  g_sprite2d* sprite3 = sprite2d_new();
-  sprite3->size = vector3_new(50,50,0);
-  sprite3->func->set_shader(sprite3,shader);
-  sprite3->func->set_texture(sprite3,tex);
-  sprite2->func->add_child(sprite2, sprite3);
-  sprite3->func->set_position(sprite3, vector3_new(0,0,0.1));
-
-  g_node3d* sprite4 = node3d_new();
-  sprite4->size = vector3_new(30, 30, 30);
-  sprite4->func->set_shader(sprite4, shader2);
-  sprite4->func->set_texture(sprite4,tex2);
-  sprite->func->add_child(sprite, sprite4);
-  sprite4->func->set_position(sprite4, vector3_new(50, 0, 0));
-  sprite4->func->set_model_obj(sprite4, "res/model/monkey.obj");
+  {
+    g_node3d* sprite4 = node3d_new();
+    sprite4->size = vector3_new(30, 30, 30);
+    sprite4->func->set_shader(sprite4, shader2);
+    sprite4->func->set_texture(sprite4,tex2);
+    sprite->func->add_child(sprite, sprite4);
+    sprite4->func->set_model_obj(sprite4, "res/model/cube.obj");
+    sprite4->func->set_position(sprite4, vector3_new(30, 0, 0));
+    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(45), 0, 0, 1);
+    sprite4->func->set_quat(sprite4, quaternion_mul(sprite4->quat, offset_q));
+  }
 
   matrix4 view = matrix4_create_look_at(
     0.01f, 0.0f, 200.0f,
@@ -66,7 +53,16 @@ int main(int argc, char *argv[])
   shader2->func->use(shader2);
   glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "proj"), 1, GL_FALSE, proj.m);
   glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "view"), 1, GL_FALSE, view.m);
-  glUniform1i(glGetUniformLocation(shader2->func->get_id(shader2), "tex"), 0);
+  glUniform1i(glGetUniformLocation(shader2->func->get_id(shader2), "material.diffuse"), 0);
+
+  GLint lightDirLoc = glGetUniformLocation(shader2->func->get_id(shader2), "light.direction");
+  glUniform3f(lightDirLoc, -1, 0, -1);
+  glUniform3f(glGetUniformLocation(shader2->func->get_id(shader2), "light.ambient"),  0.5f, 0.5f, 0.5f);
+  glUniform3f(glGetUniformLocation(shader2->func->get_id(shader2), "light.diffuse"),  1.0f, 1.0f, 1.0f);
+  glUniform3f(glGetUniformLocation(shader2->func->get_id(shader2), "light.specular"), 1.0f, 1.0f, 1.0f);
+  // Set material properties
+  glUniform1f(glGetUniformLocation(shader2->func->get_id(shader2), "material.shininess"), 32.0f);
+
   glEnable(GL_DEPTH_TEST);
   quaternion offset_q = quaternion_identity;
   float time = 0;
@@ -74,7 +70,7 @@ int main(int argc, char *argv[])
   int key = 0;
   while (1)
   {
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClearStencil(0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     if (SDL_PollEvent(&windowEvent))
@@ -120,6 +116,14 @@ int main(int argc, char *argv[])
         case SDLK_x:
           offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-50 * 0.016), 0, 0, 1);
           sprite->func->set_quat(sprite, quaternion_mul(offset_q, sprite->quat));
+          break;
+        case SDLK_a:
+          offset_q = quaternion_new_angle_axis(DEG_TO_RAD(50 * 0.016), 0, 0, 1);
+          sprite->func->set_quat(sprite, quaternion_mul(sprite->quat, offset_q));
+          break;
+        case SDLK_s:
+          offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-50 * 0.016), 0, 0, 1);
+          sprite->func->set_quat(sprite, quaternion_mul(sprite->quat, offset_q));
           break;
         default:
             break;

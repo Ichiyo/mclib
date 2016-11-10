@@ -1,1 +1,0 @@
-/usr/bin/cc  -O3 -DNDEBUG   CMakeFiles/gltest.dir/gltest.c.o  -o gltest  -L/home/manh/Documents/mclib/test/../build -rdynamic -lclibraries -lm -lpthread -lGL -lGLU -lglut -lSDL2 -lSDL2_image -Wl,-rpath,/home/manh/Documents/mclib/test/../build 

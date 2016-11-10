@@ -31,11 +31,19 @@ void node3d_set_shader(g_node3d* node, g_shader* shader)
 
     GLint posAttrib = glGetAttribLocation(shader->func->get_id(shader), "position");
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), 0);
+
+		GLint norAttrib = glGetAttribLocation(shader->func->get_id(shader), "normal");
+		glEnableVertexAttribArray(norAttrib);
+		glVertexAttribPointer(norAttrib, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
     GLint texAttrib = glGetAttribLocation(shader->func->get_id(shader), "texcoord");
     glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
+
+		GLint modelAttrib = glGetAttribLocation(shader->func->get_id(shader), "model_index");
+    glEnableVertexAttribArray(modelAttrib);
+    glVertexAttribPointer(modelAttrib, 1, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)(8 * sizeof(GLfloat)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -56,7 +64,7 @@ void node3d_draw(g_node3d* node)
 	if(node->texture) node->texture->func->bind(node->texture, 0);
 	else return;
 
-	GLint uniModel = glGetUniformLocation(node->shader->func->get_id(node->shader), "model");
+	GLint uniModel = glGetUniformLocation(node->shader->func->get_id(node->shader), "model[1]");
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, node->render_model.m);
 
 	glBindVertexArray(node->vao);
@@ -74,6 +82,7 @@ void node3d_set_model_obj(g_node3d* node, char* path)
   GLfloat* uvs = 0;
   GLfloat* realvertices = 0;
 
+	int model_index = 1;
   int realcount = 0;
   int uvcount = 2;
   int count = 3;
@@ -120,6 +129,7 @@ void node3d_set_model_obj(g_node3d* node, char* path)
       char head;
       int v1,t1,n1,v2,t2,n2,v3,t3,n3;
       t1 = t2 = t3 = 1;
+			n1 = n2 = n3 = 1;
       if(has_texture)
         sscanf(buff,"%c %d/%d/%d %d/%d/%d %d/%d/%d",&head,&v1,&t1,&n1,&v2,&t2,&n2,&v3,&t3,&n3);
       else
@@ -130,43 +140,75 @@ void node3d_set_model_obj(g_node3d* node, char* path)
       t1 = (t1 - 1) * 2;
       t2 = (t2 - 1) * 2;
       t3 = (t3 - 1) * 2;
-      realcount += 15;
+			n1 = (n1 - 1) * 3;
+			n2 = (n2 - 1) * 3;
+			n3 = (n3 - 1) * 3;
+      realcount += 27; //(3 vertices + 3 normals + 2 uvs + 1 model) * 3
       realvertices = realloc(realvertices, realcount * sizeof(GLfloat));
+			GLint* tt = (GLint*)realvertices;
       if(has_texture)
       {
-        realvertices[realcount - 15] = vertices[v1];
-        realvertices[realcount - 14] = vertices[v1+1];
-        realvertices[realcount - 13] = vertices[v1+2];
-        realvertices[realcount - 12] = uvs[t1];
-        realvertices[realcount - 11] = uvs[t1+1];
-        realvertices[realcount - 10] = vertices[v2];
-        realvertices[realcount - 9] = vertices[v2+1];
-        realvertices[realcount - 8] = vertices[v2+2];
-        realvertices[realcount - 7] = uvs[t2];
-        realvertices[realcount - 6] = uvs[t2+1];
-        realvertices[realcount - 5] = vertices[v3];
-        realvertices[realcount - 4] = vertices[v3+1];
-        realvertices[realcount - 3] = vertices[v3+2];
-        realvertices[realcount - 2] = uvs[t3];
-        realvertices[realcount - 1] = uvs[t3+1];
+        realvertices[realcount - 27] = vertices[v1];
+        realvertices[realcount - 26] = vertices[v1+1];
+        realvertices[realcount - 25] = vertices[v1+2];
+				realvertices[realcount - 24] = normals[n1];
+				realvertices[realcount - 23] = normals[n1+1];
+				realvertices[realcount - 22] = normals[n1+2];
+				realvertices[realcount - 21] = uvs[t1];
+        realvertices[realcount - 20] = uvs[t1+1];
+				tt[realcount - 19] = model_index;
+
+				realvertices[realcount - 18] = vertices[v2];
+        realvertices[realcount - 17] = vertices[v2+1];
+        realvertices[realcount - 16] = vertices[v2+2];
+				realvertices[realcount - 15] = normals[n2];
+				realvertices[realcount - 14] = normals[n2+1];
+				realvertices[realcount - 13] = normals[n2+2];
+				realvertices[realcount - 12] = uvs[t2];
+        realvertices[realcount - 11] = uvs[t2+1];
+				tt[realcount - 10] = model_index;
+
+				realvertices[realcount - 9] = vertices[v3];
+        realvertices[realcount - 8] = vertices[v3+1];
+        realvertices[realcount - 7] = vertices[v3+2];
+				realvertices[realcount - 6] = normals[n3];
+				realvertices[realcount - 5] = normals[n3+1];
+				realvertices[realcount - 4] = normals[n3+2];
+				realvertices[realcount - 3] = uvs[t3];
+        realvertices[realcount - 2] = uvs[t3+1];
+				tt[realcount - 1] = model_index;
       }
       else
       {
-        realvertices[realcount - 15] = vertices[v1];
-        realvertices[realcount - 14] = vertices[v1+1];
-        realvertices[realcount - 13] = vertices[v1+2];
-        realvertices[realcount - 12] = 0;
+				realvertices[realcount - 27] = vertices[v1];
+        realvertices[realcount - 26] = vertices[v1+1];
+        realvertices[realcount - 25] = vertices[v1+2];
+				realvertices[realcount - 24] = normals[n1];
+				realvertices[realcount - 23] = normals[n1+1];
+				realvertices[realcount - 22] = normals[n1+2];
+				realvertices[realcount - 21] = 0;
+        realvertices[realcount - 20] = 0;
+				tt[realcount - 19] = model_index;
+
+				realvertices[realcount - 18] = vertices[v2];
+        realvertices[realcount - 17] = vertices[v2+1];
+        realvertices[realcount - 16] = vertices[v2+2];
+				realvertices[realcount - 15] = normals[n2];
+				realvertices[realcount - 14] = normals[n2+1];
+				realvertices[realcount - 13] = normals[n2+2];
+				realvertices[realcount - 12] = 0;
         realvertices[realcount - 11] = 0;
-        realvertices[realcount - 10] = vertices[v2];
-        realvertices[realcount - 9] = vertices[v2+1];
-        realvertices[realcount - 8] = vertices[v2+2];
-        realvertices[realcount - 7] = 0;
-        realvertices[realcount - 6] = 0;
-        realvertices[realcount - 5] = vertices[v3];
-        realvertices[realcount - 4] = vertices[v3+1];
-        realvertices[realcount - 3] = vertices[v3+2];
+				tt[realcount - 10] = model_index;
+
+				realvertices[realcount - 9] = vertices[v3];
+        realvertices[realcount - 8] = vertices[v3+1];
+        realvertices[realcount - 7] = vertices[v3+2];
+				realvertices[realcount - 6] = normals[n3];
+				realvertices[realcount - 5] = normals[n3+1];
+				realvertices[realcount - 4] = normals[n3+2];
+				realvertices[realcount - 3] = 0;
         realvertices[realcount - 2] = 0;
-        realvertices[realcount - 1] = 0;
+				tt[realcount - 1] = model_index;
       }
     }
   }
@@ -176,7 +218,7 @@ void node3d_set_model_obj(g_node3d* node, char* path)
   fclose(file);
   if(realvertices)
   {
-    node->count = realcount / 5;
+    node->count = realcount / 9;
     glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
   	glBufferData(GL_ARRAY_BUFFER, realcount * sizeof(GLfloat), realvertices, GL_STATIC_DRAW);
   	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -200,47 +242,47 @@ void init_node3d(g_node3d* node)
 {
 	node->func = &base_g_sprite_func;
 	GLfloat vertices[] = {
-    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
 
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
 
-    -0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
 
-     0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
 
-    -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
 
-    -0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f, 0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 0.0f, 1.0f
+    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f
 	};
   node->count = 36;
 	glGenVertexArrays(1, &node->vao);
@@ -252,7 +294,7 @@ void init_node3d(g_node3d* node)
 	glBindVertexArray(node->vao);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 5, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+	glVertexAttribPointer(0, 8, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
