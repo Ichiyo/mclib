@@ -17,7 +17,14 @@ include_directories(/Users/manhtran/Documents/lib/SDL2_image-2.0.1)
 include_directories(/Users/manhtran/Documents/lib/SDL2-2.0.4/include)
 endif()
 
+if (${USER_BUILD_IOS} MATCHES "true")
 
 file(GLOB SOURCES "src/*.c" "src/*.m" "src/node/*.c" "src/node/*.m")
-
 add_library(clibraries STATIC ${SOURCES})
+
+else()
+
+file(GLOB SOURCES "src/*.c" "src/node/*.c")
+add_library(clibraries STATIC ${SOURCES})
+
+endif()
