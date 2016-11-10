@@ -8,6 +8,11 @@ extern "C" {
 
 #if TARGET_PLATFORM != PLATFORM_IOS
 
+FILE* open_file(const char* path)
+{
+  return fopen(path, "r");
+}
+
 m_string* read_string_from_file(const char* path)
 {
  FILE* file = fopen(path, "r");

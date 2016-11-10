@@ -9,6 +9,14 @@ extern "C" {
 
 #if TARGET_PLATFORM == PLATFORM_IOS
 
+FILE* open_file(const char* path)
+{
+  FILE* file = fopen([[[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:path]
+                                                              ofType:nil inDirectory:nil] UTF8String], "r");
+  return file;                                                          
+}
+
+
 m_string* read_string_from_file(const char* path)
 {
  FILE* file = fopen([[[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:path]

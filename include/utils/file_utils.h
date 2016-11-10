@@ -3,11 +3,12 @@
 
 #include <mstr/string.h>
 #include <mstr/data.h>
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+FILE* open_file(const char* file);
 m_string* read_string_from_file(const char* file);
 m_data* read_data_from_file(const char* file);
 
