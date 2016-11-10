@@ -2,6 +2,7 @@
 #include <graphic/node3d.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <utils/file_utils.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +75,7 @@ void node3d_draw(g_node3d* node)
 
 void node3d_set_model_obj(g_node3d* node, char* path)
 {
-  FILE* file = fopen(path, "r");
+  FILE* file = open_file(path);
   if(!file) return;
 
   GLfloat* vertices = 0;
@@ -82,7 +83,7 @@ void node3d_set_model_obj(g_node3d* node, char* path)
   GLfloat* uvs = 0;
   GLfloat* realvertices = 0;
 
-	int model_index = 1;
+	float model_index = 1;
   int realcount = 0;
   int uvcount = 2;
   int count = 3;
@@ -145,7 +146,7 @@ void node3d_set_model_obj(g_node3d* node, char* path)
 			n3 = (n3 - 1) * 3;
       realcount += 27; //(3 vertices + 3 normals + 2 uvs + 1 model) * 3
       realvertices = realloc(realvertices, realcount * sizeof(GLfloat));
-			GLint* tt = (GLint*)realvertices;
+			GLfloat* tt = (GLfloat*)realvertices;
       if(has_texture)
       {
         realvertices[realcount - 27] = vertices[v1];
@@ -289,13 +290,13 @@ void init_node3d(g_node3d* node)
 	glGenBuffers(1, &node->vbo);
 
 	glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+	// glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//
 	glBindVertexArray(node->vao);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 8, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
-
+	//
+	// glEnableVertexAttribArray(0);
+	// glVertexAttribPointer(0, 8, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	//
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
