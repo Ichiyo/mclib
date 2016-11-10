@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     time += 0.016 / 10;
     // glUniform1f(glGetUniformLocation(shader->func->get_id(shader), "time"), time);
 
-    matrix4 view = matrix4_create_look_at(
+    m_matrix4 view = matrix4_create_look_at(
       2.5f, 2.5f, 2.0f,
       0.0f, 0.0f, 0.0f,
       0.0f, 0.0f, 1.0f
@@ -155,11 +155,11 @@ int main(int argc, char *argv[])
     GLint uniView = glGetUniformLocation(shader->func->get_id(shader), "view");
     glUniformMatrix4fv(uniView, 1, GL_FALSE, view.m);
 
-    matrix4 proj = matrix4_create_perspective(DEG_TO_RAD(45.0f), 800.0f / 600.0f, 1.0f, 10.0f);
+    m_matrix4 proj = matrix4_create_perspective(DEG_TO_RAD(45.0f), 800.0f / 600.0f, 1.0f, 10.0f);
     GLint uniProj = glGetUniformLocation(shader->func->get_id(shader), "proj");
     glUniformMatrix4fv(uniProj, 1, GL_FALSE, proj.m);
 
-    matrix4 model = matrix4_identity;
+    m_matrix4 model = matrix4_identity;
     model = matrix4_rotate(model, DEG_TO_RAD(180) * time, 0, 0, 1);
     // GLfloat s = sin(time * 5.0f) * 0.25f + 0.75f;
     // GLfloat s = 0.5f;
@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     GLint uniColor = glGetUniformLocation(shader->func->get_id(shader), "overrideColor");
-    vector4 color = vector4_new(1, 1, 1, 1);
+    m_vector4 color = vector4_new(1, 1, 1, 1);
     glUniform4fv(uniColor, 1, color.v);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     //      Draw floor
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
     // glStencilMask(0x00);
     // glDepthMask(GL_TRUE);
 
-    matrix4 model2 = matrix4_scale_vector3(
+    m_matrix4 model2 = matrix4_scale_vector3(
         matrix4_translate_vector3(model, vector3_new(0, 0, -1)),
         vector3_new(1, 1, -1)
     );

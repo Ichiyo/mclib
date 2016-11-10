@@ -4,6 +4,7 @@
 #include <string.h>
 #include <mstr/list.h>
 #include <mstr/primitive.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -117,7 +118,7 @@ static void texture_cache_value_free(texture_cache_value* value)
 }
 
 static ref_func texture_cache_value_func =
-{
+{ 
   BASE_REF_FUNC_INHERIT,
   .free = texture_cache_value_free
 };

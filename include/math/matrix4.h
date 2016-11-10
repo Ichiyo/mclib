@@ -14,117 +14,117 @@
 extern "C" {
 #endif
 
-extern const matrix4 matrix4_identity;
+extern const m_matrix4 matrix4_identity;
 
-static __inline__ matrix4 matrix4_create( float m00, float m01, float m02, float m03,
+static __inline__ m_matrix4 matrix4_create( float m00, float m01, float m02, float m03,
                                           float m10, float m11, float m12, float m13,
                                           float m20, float m21, float m22, float m23,
                                           float m30, float m31, float m32, float m33);
-static __inline__ matrix4 matrix4_create_transpose( float m00, float m01, float m02, float m03,
+static __inline__ m_matrix4 matrix4_create_transpose( float m00, float m01, float m02, float m03,
                                                   float m10, float m11, float m12, float m13,
                                                   float m20, float m21, float m22, float m23,
                                                   float m30, float m31, float m32, float m33);
-static __inline__ matrix4 matrix4_create_array(float values[16]);
-static __inline__ matrix4 matrix4_create_array_transpose(float values[16]);
-static __inline__ matrix4 matrix4_create_rows(vector4 row0,
-                                              vector4 row1,
-                                              vector4 row2,
-                                              vector4 row3);
-static __inline__ matrix4 matrix4_create_columns( vector4 column0,
-                                                  vector4 column1,
-                                                  vector4 column2,
-                                                  vector4 column3);
-static __inline__ matrix4 matrix4_create_quaternion(quaternion quaternion);
-static __inline__ matrix4 matrix4_create_translation(float tx, float ty, float tz);
-static __inline__ matrix4 matrix4_create_scale(float sx, float sy, float sz);
-static __inline__ matrix4 matrix4_create_rotation(float radians, float x, float y, float z);
-static __inline__ matrix4 matrix4_create_x_rotation(float radians);
-static __inline__ matrix4 matrix4_create_y_rotation(float radians);
-static __inline__ matrix4 matrix4_create_z_rotation(float radians);
-static __inline__ matrix4 matrix4_create_perspective(float fovyRadians, float aspect, float nearZ, float farZ);
-static __inline__ matrix4 matrix4_create_frustum( float left, float right,
+static __inline__ m_matrix4 matrix4_create_array(float values[16]);
+static __inline__ m_matrix4 matrix4_create_array_transpose(float values[16]);
+static __inline__ m_matrix4 matrix4_create_rows(m_vector4 row0,
+                                              m_vector4 row1,
+                                              m_vector4 row2,
+                                              m_vector4 row3);
+static __inline__ m_matrix4 matrix4_create_columns( m_vector4 column0,
+                                                  m_vector4 column1,
+                                                  m_vector4 column2,
+                                                  m_vector4 column3);
+static __inline__ m_matrix4 matrix4_create_quaternion(quaternion quaternion);
+static __inline__ m_matrix4 matrix4_create_translation(float tx, float ty, float tz);
+static __inline__ m_matrix4 matrix4_create_scale(float sx, float sy, float sz);
+static __inline__ m_matrix4 matrix4_create_rotation(float radians, float x, float y, float z);
+static __inline__ m_matrix4 matrix4_create_x_rotation(float radians);
+static __inline__ m_matrix4 matrix4_create_y_rotation(float radians);
+static __inline__ m_matrix4 matrix4_create_z_rotation(float radians);
+static __inline__ m_matrix4 matrix4_create_perspective(float fovyRadians, float aspect, float nearZ, float farZ);
+static __inline__ m_matrix4 matrix4_create_frustum( float left, float right,
                                                   float bottom, float top,
                                                   float nearZ, float farZ);
-static __inline__ matrix4 matrix4_create_ortho( float left, float right,
+static __inline__ m_matrix4 matrix4_create_ortho( float left, float right,
                                                 float bottom, float top,
                                                 float nearZ, float farZ);
-static __inline__ matrix4 matrix4_create_look_at( float eyeX, float eyeY, float eyeZ,
+static __inline__ m_matrix4 matrix4_create_look_at( float eyeX, float eyeY, float eyeZ,
                                                   float centerX, float centerY, float centerZ,
                                                   float upX, float upY, float upZ);
-static __inline__ matrix3 matrix4_to_matrix3(matrix4 matrix);
-static __inline__ matrix2 matrix4_to_matrix2(matrix4 matrix);
-static __inline__ vector4 matrix4_get_row(matrix4 matrix, int row);
-static __inline__ vector4 matrix4_get_column(matrix4 matrix, int column);
-static __inline__ matrix4 matrix4_set_row(matrix4 matrix, int row, vector4 vector);
-static __inline__ matrix4 matrix4_set_column(matrix4 matrix, int column, vector4 vector);
-static __inline__ matrix4 matrix4_transpose(matrix4 matrix);
-static __inline__ matrix4 matrix4_mul(matrix4 matrixLeft, matrix4 matrixRight);
-static __inline__ matrix4 matrix4_add(matrix4 matrixLeft, matrix4 matrixRight);
-static __inline__ matrix4 matrix4_sub(matrix4 matrixLeft, matrix4 matrixRight);
-static __inline__ matrix4 matrix4_translate(matrix4 matrix, float tx, float ty, float tz);
-static __inline__ matrix4 matrix4_translate_vector3(matrix4 matrix, vector3 translationVector);
-static __inline__ matrix4 matrix4_translate_vector4(matrix4 matrix, vector4 translationVector);
-static __inline__ matrix4 matrix4_scale(matrix4 matrix, float sx, float sy, float sz);
-static __inline__ matrix4 matrix4_scale_vector3(matrix4 matrix, vector3 scaleVector);
-static __inline__ matrix4 matrix4_scale_vector4(matrix4 matrix, vector4 scaleVector);
-static __inline__ matrix4 matrix4_rotate(matrix4 matrix, float radians, float x, float y, float z);
-static __inline__ matrix4 matrix4_rotate_vector3(matrix4 matrix, float radians, vector3 axisVector);
-static __inline__ matrix4 matrix4_rotate_vector4(matrix4 matrix, float radians, vector4 axisVector);
-static __inline__ matrix4 matrix4_rotate_x(matrix4 matrix, float radians);
-static __inline__ matrix4 matrix4_rotate_y(matrix4 matrix, float radians);
-static __inline__ matrix4 matrix4_rotate_z(matrix4 matrix, float radians);
-static __inline__ vector3 matrix4_mul_vector3(matrix4 matrixLeft, vector3 vectorRight);
-static __inline__ vector3 matrix4_mul_vector3_translation(matrix4 matrixLeft, vector3 vectorRight);
-static __inline__ vector3 matrix4_mul_project_vector3(matrix4 matrixLeft, vector3 vectorRight);
-static __inline__ void matrix4_mul_vector3_array(matrix4 matrix, vector3 *vectors, size_t vectorCount);
-static __inline__ void matrix4_mul_vector3_array_translation(matrix4 matrix, vector3 *vectors, size_t vectorCount);
-static __inline__ void matrix4_mul_project_vector3_array(matrix4 matrix, vector3 *vectors, size_t vectorCount);
-static __inline__ vector4 matrix4_mul_vector4(matrix4 matrixLeft, vector4 vectorRight);
-static __inline__ void matrix4_mul_vector4_array(matrix4 matrix, vector4 *vectors, size_t vectorCount);
+static __inline__ m_matrix3 matrix4_to_matrix3(m_matrix4 matrix);
+static __inline__ m_matrix2 matrix4_to_matrix2(m_matrix4 matrix);
+static __inline__ m_vector4 matrix4_get_row(m_matrix4 matrix, int row);
+static __inline__ m_vector4 matrix4_get_column(m_matrix4 matrix, int column);
+static __inline__ m_matrix4 matrix4_set_row(m_matrix4 matrix, int row, m_vector4 vector);
+static __inline__ m_matrix4 matrix4_set_column(m_matrix4 matrix, int column, m_vector4 vector);
+static __inline__ m_matrix4 matrix4_transpose(m_matrix4 matrix);
+static __inline__ m_matrix4 matrix4_mul(m_matrix4 matrixLeft, m_matrix4 matrixRight);
+static __inline__ m_matrix4 matrix4_add(m_matrix4 matrixLeft, m_matrix4 matrixRight);
+static __inline__ m_matrix4 matrix4_sub(m_matrix4 matrixLeft, m_matrix4 matrixRight);
+static __inline__ m_matrix4 matrix4_translate(m_matrix4 matrix, float tx, float ty, float tz);
+static __inline__ m_matrix4 matrix4_translate_vector3(m_matrix4 matrix, m_vector3 translationVector);
+static __inline__ m_matrix4 matrix4_translate_vector4(m_matrix4 matrix, m_vector4 translationVector);
+static __inline__ m_matrix4 matrix4_scale(m_matrix4 matrix, float sx, float sy, float sz);
+static __inline__ m_matrix4 matrix4_scale_vector3(m_matrix4 matrix, m_vector3 scaleVector);
+static __inline__ m_matrix4 matrix4_scale_vector4(m_matrix4 matrix, m_vector4 scaleVector);
+static __inline__ m_matrix4 matrix4_rotate(m_matrix4 matrix, float radians, float x, float y, float z);
+static __inline__ m_matrix4 matrix4_rotate_vector3(m_matrix4 matrix, float radians, m_vector3 axisVector);
+static __inline__ m_matrix4 matrix4_rotate_vector4(m_matrix4 matrix, float radians, m_vector4 axisVector);
+static __inline__ m_matrix4 matrix4_rotate_x(m_matrix4 matrix, float radians);
+static __inline__ m_matrix4 matrix4_rotate_y(m_matrix4 matrix, float radians);
+static __inline__ m_matrix4 matrix4_rotate_z(m_matrix4 matrix, float radians);
+static __inline__ m_vector3 matrix4_mul_vector3(m_matrix4 matrixLeft, m_vector3 vectorRight);
+static __inline__ m_vector3 matrix4_mul_vector3_translation(m_matrix4 matrixLeft, m_vector3 vectorRight);
+static __inline__ m_vector3 matrix4_mul_project_vector3(m_matrix4 matrixLeft, m_vector3 vectorRight);
+static __inline__ void matrix4_mul_vector3_array(m_matrix4 matrix, m_vector3 *vectors, size_t vectorCount);
+static __inline__ void matrix4_mul_vector3_array_translation(m_matrix4 matrix, m_vector3 *vectors, size_t vectorCount);
+static __inline__ void matrix4_mul_project_vector3_array(m_matrix4 matrix, m_vector3 *vectors, size_t vectorCount);
+static __inline__ m_vector4 matrix4_mul_vector4(m_matrix4 matrixLeft, m_vector4 vectorRight);
+static __inline__ void matrix4_mul_vector4_array(m_matrix4 matrix, m_vector4 *vectors, size_t vectorCount);
 
-matrix4 matrix4_invert(matrix4 matrix, int *isInvertible);
-matrix4 matrix4_invert_transpose(matrix4 matrix, int *isInvertible);
+m_matrix4 matrix4_invert(m_matrix4 matrix, int *isInvertible);
+m_matrix4 matrix4_invert_transpose(m_matrix4 matrix, int *isInvertible);
 
-static __inline__ matrix4 matrix4_create( float m00, float m01, float m02, float m03,
+static __inline__ m_matrix4 matrix4_create( float m00, float m01, float m02, float m03,
                                           float m10, float m11, float m12, float m13,
                                           float m20, float m21, float m22, float m23,
                                           float m30, float m31, float m32, float m33)
 {
-    matrix4 m = { m00, m01, m02, m03,
+    m_matrix4 m = { m00, m01, m02, m03,
                   m10, m11, m12, m13,
                   m20, m21, m22, m23,
                   m30, m31, m32, m33 };
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_transpose( float m00, float m01, float m02, float m03,
+static __inline__ m_matrix4 matrix4_create_transpose( float m00, float m01, float m02, float m03,
                                                   float m10, float m11, float m12, float m13,
                                                   float m20, float m21, float m22, float m23,
                                                   float m30, float m31, float m32, float m33)
 {
-    matrix4 m = { m00, m10, m20, m30,
+    m_matrix4 m = { m00, m10, m20, m30,
                   m01, m11, m21, m31,
                   m02, m12, m22, m32,
                   m03, m13, m23, m33 };
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_array(float values[16])
+static __inline__ m_matrix4 matrix4_create_array(float values[16])
 {
-    matrix4 m = { values[0], values[1], values[2], values[3],
+    m_matrix4 m = { values[0], values[1], values[2], values[3],
                   values[4], values[5], values[6], values[7],
                   values[8], values[9], values[10], values[11],
                   values[12], values[13], values[14], values[15] };
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_array_transpose(float values[16])
+static __inline__ m_matrix4 matrix4_create_array_transpose(float values[16])
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t m = vld4q_f32(values);
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m = { values[0], values[4], values[8], values[12],
+    m_matrix4 m = { values[0], values[4], values[8], values[12],
                   values[1], values[5], values[9], values[13],
                   values[2], values[6], values[10], values[14],
                   values[3], values[7], values[11], values[15] };
@@ -132,22 +132,22 @@ static __inline__ matrix4 matrix4_create_array_transpose(float values[16])
 #endif
 }
 
-static __inline__ matrix4 matrix4_create_rows(vector4 row0,
-                                              vector4 row1,
-                                              vector4 row2,
-                                              vector4 row3)
+static __inline__ m_matrix4 matrix4_create_rows(m_vector4 row0,
+                                              m_vector4 row1,
+                                              m_vector4 row2,
+                                              m_vector4 row3)
 {
-    matrix4 m = { row0.v[0], row1.v[0], row2.v[0], row3.v[0],
+    m_matrix4 m = { row0.v[0], row1.v[0], row2.v[0], row3.v[0],
                   row0.v[1], row1.v[1], row2.v[1], row3.v[1],
                   row0.v[2], row1.v[2], row2.v[2], row3.v[2],
                   row0.v[3], row1.v[3], row2.v[3], row3.v[3] };
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_columns( vector4 column0,
-                                                  vector4 column1,
-                                                  vector4 column2,
-                                                  vector4 column3)
+static __inline__ m_matrix4 matrix4_create_columns( m_vector4 column0,
+                                                  m_vector4 column1,
+                                                  m_vector4 column2,
+                                                  m_vector4 column3)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t m;
@@ -155,9 +155,9 @@ static __inline__ matrix4 matrix4_create_columns( vector4 column0,
     m.val[1] = vld1q_f32(column1.v);
     m.val[2] = vld1q_f32(column2.v);
     m.val[3] = vld1q_f32(column3.v);
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m = { column0.v[0], column0.v[1], column0.v[2], column0.v[3],
+    m_matrix4 m = { column0.v[0], column0.v[1], column0.v[2], column0.v[3],
                   column1.v[0], column1.v[1], column1.v[2], column1.v[3],
                   column2.v[0], column2.v[1], column2.v[2], column2.v[3],
                   column3.v[0], column3.v[1], column3.v[2], column3.v[3] };
@@ -165,7 +165,7 @@ static __inline__ matrix4 matrix4_create_columns( vector4 column0,
 #endif
 }
 
-static __inline__ matrix4 matrix4_create_quaternion(quaternion quat)
+static __inline__ m_matrix4 matrix4_create_quaternion(quaternion quat)
 {
     quat = quaternion_normalize(quat);
 
@@ -179,7 +179,7 @@ static __inline__ matrix4 matrix4_create_quaternion(quaternion quat)
     float _2z = z + z;
     float _2w = w + w;
 
-    matrix4 m = { 1.0f - _2y * y - _2z * z,
+    m_matrix4 m = { 1.0f - _2y * y - _2z * z,
                   _2x * y + _2w * z,
                   _2x * z - _2w * y,
                   0.0f,
@@ -199,32 +199,32 @@ static __inline__ matrix4 matrix4_create_quaternion(quaternion quat)
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_translation(float tx, float ty, float tz)
+static __inline__ m_matrix4 matrix4_create_translation(float tx, float ty, float tz)
 {
-    matrix4 m = matrix4_identity;
+    m_matrix4 m = matrix4_identity;
     m.m[12] = tx;
     m.m[13] = ty;
     m.m[14] = tz;
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_scale(float sx, float sy, float sz)
+static __inline__ m_matrix4 matrix4_create_scale(float sx, float sy, float sz)
 {
-    matrix4 m = matrix4_identity;
+    m_matrix4 m = matrix4_identity;
     m.m[0] = sx;
     m.m[5] = sy;
     m.m[10] = sz;
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_rotation(float radians, float x, float y, float z)
+static __inline__ m_matrix4 matrix4_create_rotation(float radians, float x, float y, float z)
 {
-    vector3 v = vector3_normalize(vector3_new(x, y, z));
+    m_vector3 v = vector3_normalize(vector3_new(x, y, z));
     float cos = cosf(radians);
     float cosp = 1.0f - cos;
     float sin = sinf(radians);
 
-    matrix4 m = { cos + cosp * v.v[0] * v.v[0],
+    m_matrix4 m = { cos + cosp * v.v[0] * v.v[0],
                      cosp * v.v[0] * v.v[1] + v.v[2] * sin,
                      cosp * v.v[0] * v.v[2] - v.v[1] * sin,
                      0.0f,
@@ -244,12 +244,12 @@ static __inline__ matrix4 matrix4_create_rotation(float radians, float x, float 
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_x_rotation(float radians)
+static __inline__ m_matrix4 matrix4_create_x_rotation(float radians)
 {
     float cos = cosf(radians);
     float sin = sinf(radians);
 
-    matrix4 m = { 1.0f, 0.0f, 0.0f, 0.0f,
+    m_matrix4 m = { 1.0f, 0.0f, 0.0f, 0.0f,
                   0.0f, cos, sin, 0.0f,
                   0.0f, -sin, cos, 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f };
@@ -257,12 +257,12 @@ static __inline__ matrix4 matrix4_create_x_rotation(float radians)
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_y_rotation(float radians)
+static __inline__ m_matrix4 matrix4_create_y_rotation(float radians)
 {
     float cos = cosf(radians);
     float sin = sinf(radians);
 
-    matrix4 m = { cos, 0.0f, -sin, 0.0f,
+    m_matrix4 m = { cos, 0.0f, -sin, 0.0f,
                   0.0f, 1.0f, 0.0f, 0.0f,
                   sin, 0.0f, cos, 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f };
@@ -270,12 +270,12 @@ static __inline__ matrix4 matrix4_create_y_rotation(float radians)
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_z_rotation(float radians)
+static __inline__ m_matrix4 matrix4_create_z_rotation(float radians)
 {
     float cos = cosf(radians);
     float sin = sinf(radians);
 
-    matrix4 m = { cos, sin, 0.0f, 0.0f,
+    m_matrix4 m = { cos, sin, 0.0f, 0.0f,
                   -sin, cos, 0.0f, 0.0f,
                   0.0f, 0.0f, 1.0f, 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f };
@@ -283,11 +283,11 @@ static __inline__ matrix4 matrix4_create_z_rotation(float radians)
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_perspective(float fovyRadians, float aspect, float nearZ, float farZ)
+static __inline__ m_matrix4 matrix4_create_perspective(float fovyRadians, float aspect, float nearZ, float farZ)
 {
     float cotan = 1.0f / tanf(fovyRadians / 2.0f);
 
-    matrix4 m = { cotan / aspect, 0.0f, 0.0f, 0.0f,
+    m_matrix4 m = { cotan / aspect, 0.0f, 0.0f, 0.0f,
                   0.0f, cotan, 0.0f, 0.0f,
                   0.0f, 0.0f, (farZ + nearZ) / (nearZ - farZ), -1.0f,
                   0.0f, 0.0f, (2.0f * farZ * nearZ) / (nearZ - farZ), 0.0f };
@@ -295,7 +295,7 @@ static __inline__ matrix4 matrix4_create_perspective(float fovyRadians, float as
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_frustum( float left, float right,
+static __inline__ m_matrix4 matrix4_create_frustum( float left, float right,
                                                   float bottom, float top,
                                                   float nearZ, float farZ)
 {
@@ -306,7 +306,7 @@ static __inline__ matrix4 matrix4_create_frustum( float left, float right,
     float fan = farZ + nearZ;
     float fsn = farZ - nearZ;
 
-    matrix4 m = { 2.0f * nearZ / rsl, 0.0f, 0.0f, 0.0f,
+    m_matrix4 m = { 2.0f * nearZ / rsl, 0.0f, 0.0f, 0.0f,
                   0.0f, 2.0f * nearZ / tsb, 0.0f, 0.0f,
                   ral / rsl, tab / tsb, -fan / fsn, -1.0f,
                   0.0f, 0.0f, (-2.0f * farZ * nearZ) / fsn, 0.0f };
@@ -314,7 +314,7 @@ static __inline__ matrix4 matrix4_create_frustum( float left, float right,
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_ortho( float left, float right,
+static __inline__ m_matrix4 matrix4_create_ortho( float left, float right,
                                                 float bottom, float top,
                                                 float nearZ, float farZ)
 {
@@ -325,7 +325,7 @@ static __inline__ matrix4 matrix4_create_ortho( float left, float right,
     float fan = farZ + nearZ;
     float fsn = farZ - nearZ;
 
-    matrix4 m = { 2.0f / rsl, 0.0f, 0.0f, 0.0f,
+    m_matrix4 m = { 2.0f / rsl, 0.0f, 0.0f, 0.0f,
                   0.0f, 2.0f / tsb, 0.0f, 0.0f,
                   0.0f, 0.0f, -2.0f / fsn, 0.0f,
                   -ral / rsl, -tab / tsb, -fan / fsn, 1.0f };
@@ -333,18 +333,18 @@ static __inline__ matrix4 matrix4_create_ortho( float left, float right,
     return m;
 }
 
-static __inline__ matrix4 matrix4_create_look_at( float eyeX, float eyeY, float eyeZ,
+static __inline__ m_matrix4 matrix4_create_look_at( float eyeX, float eyeY, float eyeZ,
                                                   float centerX, float centerY, float centerZ,
                                                   float upX, float upY, float upZ)
 {
-    vector3 ev = { eyeX, eyeY, eyeZ };
-    vector3 cv = { centerX, centerY, centerZ };
-    vector3 uv = { upX, upY, upZ };
-    vector3 n = vector3_normalize(vector3_add(ev, vector3_neg(cv)));
-    vector3 u = vector3_normalize(vector3_cross_product(uv, n));
-    vector3 v = vector3_cross_product(n, u);
+    m_vector3 ev = { eyeX, eyeY, eyeZ };
+    m_vector3 cv = { centerX, centerY, centerZ };
+    m_vector3 uv = { upX, upY, upZ };
+    m_vector3 n = vector3_normalize(vector3_add(ev, vector3_neg(cv)));
+    m_vector3 u = vector3_normalize(vector3_cross_product(uv, n));
+    m_vector3 v = vector3_cross_product(n, u);
 
-    matrix4 m = { u.v[0], v.v[0], n.v[0], 0.0f,
+    m_matrix4 m = { u.v[0], v.v[0], n.v[0], 0.0f,
                      u.v[1], v.v[1], n.v[1], 0.0f,
                      u.v[2], v.v[2], n.v[2], 0.0f,
                      vector3_dot_product(vector3_neg(u), ev),
@@ -355,39 +355,39 @@ static __inline__ matrix4 matrix4_create_look_at( float eyeX, float eyeY, float 
     return m;
 }
 
-static __inline__ matrix3 matrix4_to_matrix3(matrix4 matrix)
+static __inline__ m_matrix3 matrix4_to_matrix3(m_matrix4 matrix)
 {
-    matrix3 m = { matrix.m[0], matrix.m[1], matrix.m[2],
+    m_matrix3 m = { matrix.m[0], matrix.m[1], matrix.m[2],
                   matrix.m[4], matrix.m[5], matrix.m[6],
                   matrix.m[8], matrix.m[9], matrix.m[10] };
     return m;
 }
 
-static __inline__ matrix2 matrix4_to_matrix2(matrix4 matrix)
+static __inline__ m_matrix2 matrix4_to_matrix2(m_matrix4 matrix)
 {
-    matrix2 m = { matrix.m[0], matrix.m[1],
+    m_matrix2 m = { matrix.m[0], matrix.m[1],
                   matrix.m[4], matrix.m[5] };
     return m;
 }
 
-static __inline__ vector4 matrix4_get_row(matrix4 matrix, int row)
+static __inline__ m_vector4 matrix4_get_row(m_matrix4 matrix, int row)
 {
-    vector4 v = { matrix.m[row], matrix.m[4 + row], matrix.m[8 + row], matrix.m[12 + row] };
+    m_vector4 v = { matrix.m[row], matrix.m[4 + row], matrix.m[8 + row], matrix.m[12 + row] };
     return v;
 }
 
-static __inline__ vector4 matrix4_get_column(matrix4 matrix, int column)
+static __inline__ m_vector4 matrix4_get_column(m_matrix4 matrix, int column)
 {
 #if defined(__ARM_NEON__)
     float32x4_t v = vld1q_f32(&(matrix.m[column * 4]));
-    return *(vector4 *)&v;
+    return *(m_vector4 *)&v;
 #else
-    vector4 v = { matrix.m[column * 4 + 0], matrix.m[column * 4 + 1], matrix.m[column * 4 + 2], matrix.m[column * 4 + 3] };
+    m_vector4 v = { matrix.m[column * 4 + 0], matrix.m[column * 4 + 1], matrix.m[column * 4 + 2], matrix.m[column * 4 + 3] };
     return v;
 #endif
 }
 
-static __inline__ matrix4 matrix4_set_row(matrix4 matrix, int row, vector4 vector)
+static __inline__ m_matrix4 matrix4_set_row(m_matrix4 matrix, int row, m_vector4 vector)
 {
     matrix.m[row] = vector.v[0];
     matrix.m[row + 4] = vector.v[1];
@@ -397,7 +397,7 @@ static __inline__ matrix4 matrix4_set_row(matrix4 matrix, int row, vector4 vecto
     return matrix;
 }
 
-static __inline__ matrix4 matrix4_set_column(matrix4 matrix, int column, vector4 vector)
+static __inline__ m_matrix4 matrix4_set_column(m_matrix4 matrix, int column, m_vector4 vector)
 {
 #if defined(__ARM_NEON__)
     float *dst = &(matrix.m[column * 4]);
@@ -413,13 +413,13 @@ static __inline__ matrix4 matrix4_set_column(matrix4 matrix, int column, vector4
 #endif
 }
 
-static __inline__ matrix4 matrix4_transpose(matrix4 matrix)
+static __inline__ m_matrix4 matrix4_transpose(m_matrix4 matrix)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t m = vld4q_f32(matrix.m);
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m = { matrix.m[0], matrix.m[4], matrix.m[8], matrix.m[12],
+    m_matrix4 m = { matrix.m[0], matrix.m[4], matrix.m[8], matrix.m[12],
                   matrix.m[1], matrix.m[5], matrix.m[9], matrix.m[13],
                   matrix.m[2], matrix.m[6], matrix.m[10], matrix.m[14],
                   matrix.m[3], matrix.m[7], matrix.m[11], matrix.m[15] };
@@ -427,7 +427,7 @@ static __inline__ matrix4 matrix4_transpose(matrix4 matrix)
 #endif
 }
 
-static __inline__ matrix4 matrix4_mul(matrix4 matrixLeft, matrix4 matrixRight)
+static __inline__ m_matrix4 matrix4_mul(m_matrix4 matrixLeft, m_matrix4 matrixRight)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrixLeft = *(float32x4x4_t *)&matrixLeft;
@@ -454,9 +454,9 @@ static __inline__ matrix4 matrix4_mul(matrix4 matrixLeft, matrix4 matrixRight)
     m.val[2] = vmlaq_n_f32(m.val[2], iMatrixLeft.val[3], vgetq_lane_f32(iMatrixRight.val[2], 3));
     m.val[3] = vmlaq_n_f32(m.val[3], iMatrixLeft.val[3], vgetq_lane_f32(iMatrixRight.val[3], 3));
 
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m;
+    m_matrix4 m;
 
     m.m[0]  = matrixLeft.m[0] * matrixRight.m[0]  + matrixLeft.m[4] * matrixRight.m[1]  + matrixLeft.m[8] * matrixRight.m[2]   + matrixLeft.m[12] * matrixRight.m[3];
 	m.m[4]  = matrixLeft.m[0] * matrixRight.m[4]  + matrixLeft.m[4] * matrixRight.m[5]  + matrixLeft.m[8] * matrixRight.m[6]   + matrixLeft.m[12] * matrixRight.m[7];
@@ -482,7 +482,7 @@ static __inline__ matrix4 matrix4_mul(matrix4 matrixLeft, matrix4 matrixRight)
 #endif
 }
 
-static __inline__ matrix4 matrix4_add(matrix4 matrixLeft, matrix4 matrixRight)
+static __inline__ m_matrix4 matrix4_add(m_matrix4 matrixLeft, m_matrix4 matrixRight)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrixLeft = *(float32x4x4_t *)&matrixLeft;
@@ -494,9 +494,9 @@ static __inline__ matrix4 matrix4_add(matrix4 matrixLeft, matrix4 matrixRight)
     m.val[2] = vaddq_f32(iMatrixLeft.val[2], iMatrixRight.val[2]);
     m.val[3] = vaddq_f32(iMatrixLeft.val[3], iMatrixRight.val[3]);
 
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m;
+    m_matrix4 m;
 
     m.m[0] = matrixLeft.m[0] + matrixRight.m[0];
     m.m[1] = matrixLeft.m[1] + matrixRight.m[1];
@@ -522,7 +522,7 @@ static __inline__ matrix4 matrix4_add(matrix4 matrixLeft, matrix4 matrixRight)
 #endif
 }
 
-static __inline__ matrix4 matrix4_sub(matrix4 matrixLeft, matrix4 matrixRight)
+static __inline__ m_matrix4 matrix4_sub(m_matrix4 matrixLeft, m_matrix4 matrixRight)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrixLeft = *(float32x4x4_t *)&matrixLeft;
@@ -534,9 +534,9 @@ static __inline__ matrix4 matrix4_sub(matrix4 matrixLeft, matrix4 matrixRight)
     m.val[2] = vsubq_f32(iMatrixLeft.val[2], iMatrixRight.val[2]);
     m.val[3] = vsubq_f32(iMatrixLeft.val[3], iMatrixRight.val[3]);
 
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m;
+    m_matrix4 m;
 
     m.m[0] = matrixLeft.m[0] - matrixRight.m[0];
     m.m[1] = matrixLeft.m[1] - matrixRight.m[1];
@@ -562,9 +562,9 @@ static __inline__ matrix4 matrix4_sub(matrix4 matrixLeft, matrix4 matrixRight)
 #endif
 }
 
-static __inline__ matrix4 matrix4_translate(matrix4 matrix, float tx, float ty, float tz)
+static __inline__ m_matrix4 matrix4_translate(m_matrix4 matrix, float tx, float ty, float tz)
 {
-    matrix4 m = { matrix.m[0], matrix.m[1], matrix.m[2], matrix.m[3],
+    m_matrix4 m = { matrix.m[0], matrix.m[1], matrix.m[2], matrix.m[3],
                   matrix.m[4], matrix.m[5], matrix.m[6], matrix.m[7],
                   matrix.m[8], matrix.m[9], matrix.m[10], matrix.m[11],
                   matrix.m[0] * tx + matrix.m[4] * ty + matrix.m[8] * tz + matrix.m[12],
@@ -574,9 +574,9 @@ static __inline__ matrix4 matrix4_translate(matrix4 matrix, float tx, float ty, 
     return m;
 }
 
-static __inline__ matrix4 matrix4_translate_vector3(matrix4 matrix, vector3 translationVector)
+static __inline__ m_matrix4 matrix4_translate_vector3(m_matrix4 matrix, m_vector3 translationVector)
 {
-    matrix4 m = { matrix.m[0], matrix.m[1], matrix.m[2], matrix.m[3],
+    m_matrix4 m = { matrix.m[0], matrix.m[1], matrix.m[2], matrix.m[3],
                   matrix.m[4], matrix.m[5], matrix.m[6], matrix.m[7],
                   matrix.m[8], matrix.m[9], matrix.m[10], matrix.m[11],
                   matrix.m[0] * translationVector.v[0] + matrix.m[4] * translationVector.v[1] + matrix.m[8] * translationVector.v[2] + matrix.m[12],
@@ -586,9 +586,9 @@ static __inline__ matrix4 matrix4_translate_vector3(matrix4 matrix, vector3 tran
     return m;
 }
 
-static __inline__ matrix4 matrix4_translate_vector4(matrix4 matrix, vector4 translationVector)
+static __inline__ m_matrix4 matrix4_translate_vector4(m_matrix4 matrix, m_vector4 translationVector)
 {
-    matrix4 m = { matrix.m[0], matrix.m[1], matrix.m[2], matrix.m[3],
+    m_matrix4 m = { matrix.m[0], matrix.m[1], matrix.m[2], matrix.m[3],
                   matrix.m[4], matrix.m[5], matrix.m[6], matrix.m[7],
                   matrix.m[8], matrix.m[9], matrix.m[10], matrix.m[11],
                   matrix.m[0] * translationVector.v[0] + matrix.m[4] * translationVector.v[1] + matrix.m[8] * translationVector.v[2] + matrix.m[12],
@@ -598,7 +598,7 @@ static __inline__ matrix4 matrix4_translate_vector4(matrix4 matrix, vector4 tran
     return m;
 }
 
-static __inline__ matrix4 matrix4_scale(matrix4 matrix, float sx, float sy, float sz)
+static __inline__ m_matrix4 matrix4_scale(m_matrix4 matrix, float sx, float sy, float sz)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrix = *(float32x4x4_t *)&matrix;
@@ -609,9 +609,9 @@ static __inline__ matrix4 matrix4_scale(matrix4 matrix, float sx, float sy, floa
     m.val[2] = vmulq_n_f32(iMatrix.val[2], (float32_t)sz);
     m.val[3] = iMatrix.val[3];
 
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m = { matrix.m[0] * sx, matrix.m[1] * sx, matrix.m[2] * sx, matrix.m[3] * sx,
+    m_matrix4 m = { matrix.m[0] * sx, matrix.m[1] * sx, matrix.m[2] * sx, matrix.m[3] * sx,
                   matrix.m[4] * sy, matrix.m[5] * sy, matrix.m[6] * sy, matrix.m[7] * sy,
                   matrix.m[8] * sz, matrix.m[9] * sz, matrix.m[10] * sz, matrix.m[11] * sz,
                   matrix.m[12], matrix.m[13], matrix.m[14], matrix.m[15] };
@@ -619,7 +619,7 @@ static __inline__ matrix4 matrix4_scale(matrix4 matrix, float sx, float sy, floa
 #endif
 }
 
-static __inline__ matrix4 matrix4_scale_vector3(matrix4 matrix, vector3 scaleVector)
+static __inline__ m_matrix4 matrix4_scale_vector3(m_matrix4 matrix, m_vector3 scaleVector)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrix = *(float32x4x4_t *)&matrix;
@@ -630,9 +630,9 @@ static __inline__ matrix4 matrix4_scale_vector3(matrix4 matrix, vector3 scaleVec
     m.val[2] = vmulq_n_f32(iMatrix.val[2], (float32_t)scaleVector.v[2]);
     m.val[3] = iMatrix.val[3];
 
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0], matrix.m[3] * scaleVector.v[0],
+    m_matrix4 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0], matrix.m[3] * scaleVector.v[0],
                   matrix.m[4] * scaleVector.v[1], matrix.m[5] * scaleVector.v[1], matrix.m[6] * scaleVector.v[1], matrix.m[7] * scaleVector.v[1],
                   matrix.m[8] * scaleVector.v[2], matrix.m[9] * scaleVector.v[2], matrix.m[10] * scaleVector.v[2], matrix.m[11] * scaleVector.v[2],
                   matrix.m[12], matrix.m[13], matrix.m[14], matrix.m[15] };
@@ -640,7 +640,7 @@ static __inline__ matrix4 matrix4_scale_vector3(matrix4 matrix, vector3 scaleVec
 #endif
 }
 
-static __inline__ matrix4 matrix4_scale_vector4(matrix4 matrix, vector4 scaleVector)
+static __inline__ m_matrix4 matrix4_scale_vector4(m_matrix4 matrix, m_vector4 scaleVector)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrix = *(float32x4x4_t *)&matrix;
@@ -651,9 +651,9 @@ static __inline__ matrix4 matrix4_scale_vector4(matrix4 matrix, vector4 scaleVec
     m.val[2] = vmulq_n_f32(iMatrix.val[2], (float32_t)scaleVector.v[2]);
     m.val[3] = iMatrix.val[3];
 
-    return *(matrix4 *)&m;
+    return *(m_matrix4 *)&m;
 #else
-    matrix4 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0], matrix.m[3] * scaleVector.v[0],
+    m_matrix4 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0], matrix.m[3] * scaleVector.v[0],
                   matrix.m[4] * scaleVector.v[1], matrix.m[5] * scaleVector.v[1], matrix.m[6] * scaleVector.v[1], matrix.m[7] * scaleVector.v[1],
                   matrix.m[8] * scaleVector.v[2], matrix.m[9] * scaleVector.v[2], matrix.m[10] * scaleVector.v[2], matrix.m[11] * scaleVector.v[2],
                   matrix.m[12], matrix.m[13], matrix.m[14], matrix.m[15] };
@@ -661,82 +661,82 @@ static __inline__ matrix4 matrix4_scale_vector4(matrix4 matrix, vector4 scaleVec
 #endif
 }
 
-static __inline__ matrix4 matrix4_rotate(matrix4 matrix, float radians, float x, float y, float z)
+static __inline__ m_matrix4 matrix4_rotate(m_matrix4 matrix, float radians, float x, float y, float z)
 {
-    matrix4 rm = matrix4_create_rotation(radians, x, y, z);
+    m_matrix4 rm = matrix4_create_rotation(radians, x, y, z);
     return matrix4_mul(matrix, rm);
 }
 
-static __inline__ matrix4 matrix4_rotate_vector3(matrix4 matrix, float radians, vector3 axisVector)
+static __inline__ m_matrix4 matrix4_rotate_vector3(m_matrix4 matrix, float radians, m_vector3 axisVector)
 {
-    matrix4 rm = matrix4_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
+    m_matrix4 rm = matrix4_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
     return matrix4_mul(matrix, rm);
 }
 
-static __inline__ matrix4 matrix4_rotate_vector4(matrix4 matrix, float radians, vector4 axisVector)
+static __inline__ m_matrix4 matrix4_rotate_vector4(m_matrix4 matrix, float radians, m_vector4 axisVector)
 {
-    matrix4 rm = matrix4_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
+    m_matrix4 rm = matrix4_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
     return matrix4_mul(matrix, rm);
 }
 
-static __inline__ matrix4 matrix4_rotate_x(matrix4 matrix, float radians)
+static __inline__ m_matrix4 matrix4_rotate_x(m_matrix4 matrix, float radians)
 {
-    matrix4 rm = matrix4_create_x_rotation(radians);
+    m_matrix4 rm = matrix4_create_x_rotation(radians);
     return matrix4_mul(matrix, rm);
 }
 
-static __inline__ matrix4 matrix4_rotate_y(matrix4 matrix, float radians)
+static __inline__ m_matrix4 matrix4_rotate_y(m_matrix4 matrix, float radians)
 {
-    matrix4 rm = matrix4_create_y_rotation(radians);
+    m_matrix4 rm = matrix4_create_y_rotation(radians);
     return matrix4_mul(matrix, rm);
 }
 
-static __inline__ matrix4 matrix4_rotate_z(matrix4 matrix, float radians)
+static __inline__ m_matrix4 matrix4_rotate_z(m_matrix4 matrix, float radians)
 {
-    matrix4 rm = matrix4_create_z_rotation(radians);
+    m_matrix4 rm = matrix4_create_z_rotation(radians);
     return matrix4_mul(matrix, rm);
 }
 
-static __inline__ vector3 matrix4_mul_vector3(matrix4 matrixLeft, vector3 vectorRight)
+static __inline__ m_vector3 matrix4_mul_vector3(m_matrix4 matrixLeft, m_vector3 vectorRight)
 {
-    vector4 v4 = matrix4_mul_vector4(matrixLeft, vector4_new(vectorRight.v[0], vectorRight.v[1], vectorRight.v[2], 0.0f));
+    m_vector4 v4 = matrix4_mul_vector4(matrixLeft, vector4_new(vectorRight.v[0], vectorRight.v[1], vectorRight.v[2], 0.0f));
     return vector3_new(v4.v[0], v4.v[1], v4.v[2]);
 }
 
-static __inline__ vector3 matrix4_mul_vector3_translation(matrix4 matrixLeft, vector3 vectorRight)
+static __inline__ m_vector3 matrix4_mul_vector3_translation(m_matrix4 matrixLeft, m_vector3 vectorRight)
 {
-    vector4 v4 = matrix4_mul_vector4(matrixLeft, vector4_new(vectorRight.v[0], vectorRight.v[1], vectorRight.v[2], 1.0f));
+    m_vector4 v4 = matrix4_mul_vector4(matrixLeft, vector4_new(vectorRight.v[0], vectorRight.v[1], vectorRight.v[2], 1.0f));
     return vector3_new(v4.v[0], v4.v[1], v4.v[2]);
 }
 
-static __inline__ vector3 matrix4_mul_project_vector3(matrix4 matrixLeft, vector3 vectorRight)
+static __inline__ m_vector3 matrix4_mul_project_vector3(m_matrix4 matrixLeft, m_vector3 vectorRight)
 {
-    vector4 v4 = matrix4_mul_vector4(matrixLeft, vector4_new(vectorRight.v[0], vectorRight.v[1], vectorRight.v[2], 1.0f));
+    m_vector4 v4 = matrix4_mul_vector4(matrixLeft, vector4_new(vectorRight.v[0], vectorRight.v[1], vectorRight.v[2], 1.0f));
     return vector3_mul_scalar(vector3_new(v4.v[0], v4.v[1], v4.v[2]), 1.0f / v4.v[3]);
 }
 
-static __inline__ void matrix4_mul_vector3_array(matrix4 matrix, vector3 *vectors, size_t vectorCount)
+static __inline__ void matrix4_mul_vector3_array(m_matrix4 matrix, m_vector3 *vectors, size_t vectorCount)
 {
     int i;
     for (i=0; i < vectorCount; i++)
         vectors[i] = matrix4_mul_vector3(matrix, vectors[i]);
 }
 
-static __inline__ void matrix4_mul_vector3_array_translation(matrix4 matrix, vector3 *vectors, size_t vectorCount)
+static __inline__ void matrix4_mul_vector3_array_translation(m_matrix4 matrix, m_vector3 *vectors, size_t vectorCount)
 {
     int i;
     for (i=0; i < vectorCount; i++)
         vectors[i] = matrix4_mul_vector3_translation(matrix, vectors[i]);
 }
 
-static __inline__ void matrix4_mul_project_vector3_array(matrix4 matrix, vector3 *vectors, size_t vectorCount)
+static __inline__ void matrix4_mul_project_vector3_array(m_matrix4 matrix, m_vector3 *vectors, size_t vectorCount)
 {
     int i;
     for (i=0; i < vectorCount; i++)
         vectors[i] = matrix4_mul_project_vector3(matrix, vectors[i]);
 }
 
-static __inline__ vector4 matrix4_mul_vector4(matrix4 matrixLeft, vector4 vectorRight)
+static __inline__ m_vector4 matrix4_mul_vector4(m_matrix4 matrixLeft, m_vector4 vectorRight)
 {
 #if defined(__ARM_NEON__)
     float32x4x4_t iMatrix = *(float32x4x4_t *)&matrixLeft;
@@ -752,9 +752,9 @@ static __inline__ vector4 matrix4_mul_vector4(matrix4 matrixLeft, vector4 vector
 
     v = vaddq_f32(iMatrix.val[0], iMatrix.val[2]);
 
-    return *(vector4 *)&v;
+    return *(m_vector4 *)&v;
 #else
-    vector4 v = { matrixLeft.m[0] * vectorRight.v[0] + matrixLeft.m[4] * vectorRight.v[1] + matrixLeft.m[8] * vectorRight.v[2] + matrixLeft.m[12] * vectorRight.v[3],
+    m_vector4 v = { matrixLeft.m[0] * vectorRight.v[0] + matrixLeft.m[4] * vectorRight.v[1] + matrixLeft.m[8] * vectorRight.v[2] + matrixLeft.m[12] * vectorRight.v[3],
                   matrixLeft.m[1] * vectorRight.v[0] + matrixLeft.m[5] * vectorRight.v[1] + matrixLeft.m[9] * vectorRight.v[2] + matrixLeft.m[13] * vectorRight.v[3],
                   matrixLeft.m[2] * vectorRight.v[0] + matrixLeft.m[6] * vectorRight.v[1] + matrixLeft.m[10] * vectorRight.v[2] + matrixLeft.m[14] * vectorRight.v[3],
                   matrixLeft.m[3] * vectorRight.v[0] + matrixLeft.m[7] * vectorRight.v[1] + matrixLeft.m[11] * vectorRight.v[2] + matrixLeft.m[15] * vectorRight.v[3] };
@@ -762,7 +762,7 @@ static __inline__ vector4 matrix4_mul_vector4(matrix4 matrixLeft, vector4 vector
 #endif
 }
 
-static __inline__ void matrix4_mul_vector4_array(matrix4 matrix, vector4 *vectors, size_t vectorCount)
+static __inline__ void matrix4_mul_vector4_array(m_matrix4 matrix, m_vector4 *vectors, size_t vectorCount)
 {
     int i;
     for (i=0; i < vectorCount; i++)

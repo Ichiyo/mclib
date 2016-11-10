@@ -10,7 +10,7 @@ struct _Matrix2
 {
   float m[4];
 }__attribute__((aligned(16)));
-typedef struct _Matrix2 matrix2;
+typedef struct _Matrix2 m_matrix2;
 #else
 union _Matrix2
 {
@@ -21,7 +21,7 @@ union _Matrix2
   float m2[2][2]__attribute__((aligned(16)));
   float m[4]__attribute__((aligned(16)));
 }__attribute__((aligned(16)));
-typedef union _Matrix2 matrix2;
+typedef union _Matrix2 m_matrix2;
 #endif
 
 #if defined(__STRICT_ANSI__)
@@ -29,7 +29,7 @@ struct _Matrix3
 {
   float m[9];
 };
-typedef struct _Matrix3 matrix3;
+typedef struct _Matrix3 m_matrix3;
 #else
 union _Matrix3
 {
@@ -40,7 +40,7 @@ union _Matrix3
   };
   float m[9];
 };
-typedef union _Matrix3 matrix3;
+typedef union _Matrix3 m_matrix3;
 #endif
 
 #if defined(__STRICT_ANSI__)
@@ -48,7 +48,7 @@ struct _Matrix4
 {
   float m[16] __attribute__((aligned(16)));
 } __attribute__((aligned(16)));
-typedef struct _Matrix4 matrix4;
+typedef struct _Matrix4 m_matrix4;
 #else
 union _Matrix4
 {
@@ -60,7 +60,7 @@ union _Matrix4
   } __attribute__((aligned(16)));
   float m[16] __attribute__((aligned(16)));
 } __attribute__((aligned(16)));
-typedef union _Matrix4 matrix4;
+typedef union _Matrix4 m_matrix4;
 #endif
 
 #if defined(__STRICT_ANSI__)
@@ -68,7 +68,7 @@ struct _Vector2
 {
   float m[2] __attribute__((aligned(8)));
 } __attribute__((aligned(8)));
-typedef struct _Vector2 vector2;
+typedef struct _Vector2 m_vector2;
 #else
 union _Vector2
 {
@@ -77,7 +77,7 @@ union _Vector2
   struct { float w, h; } __attribute__((aligned(8)));
   float v[2] __attribute__((aligned(8)));
 } __attribute__((aligned(8)));
-typedef union _Vector2 vector2;
+typedef union _Vector2 m_vector2;
 #endif
 
 #if defined(__STRICT_ANSI__)
@@ -85,7 +85,7 @@ struct _Vector3
 {
   float v[3];
 };
-typedef struct _Vector3 vector3;
+typedef struct _Vector3 m_vector3;
 #else
 union _Vector3
 {
@@ -94,7 +94,7 @@ union _Vector3
   struct {float w, h, d;};
   float v[3];
 };
-typedef union _Vector3 vector3;
+typedef union _Vector3 m_vector3;
 #endif
 
 #if defined(__STRICT_ANSI__)
@@ -102,7 +102,7 @@ struct _Vector4
 {
   float v[4] __attribute__((aligned(16)));
 } __attribute__((aligned(16)));
-typedef struct _Vector4 vector4;
+typedef struct _Vector4 m_vector4;
 #else
 union _Vector4
 {
@@ -110,7 +110,7 @@ union _Vector4
   struct {float r, g, b, a;} __attribute__((aligned(16)));
   float v[4] __attribute__((aligned(16)));
 } __attribute__((aligned(16)));
-typedef union _Vector4 vector4;
+typedef union _Vector4 m_vector4;
 #endif
 
 #if defined(__STRICT_ANSI__)
@@ -122,7 +122,7 @@ typedef struct _Quaternion quaternion;
 #else
 union _Quaternion
 {
-  struct{vector3 v; float s;} __attribute__((aligned(16)));
+  struct{m_vector3 v; float s;} __attribute__((aligned(16)));
   struct{float x, y, z, w;} __attribute__((aligned(16)));
   float q[4] __attribute__((aligned(16)));
 } __attribute__((aligned(16)));

@@ -13,14 +13,14 @@ extern "C" {
 
 #define EXTEND_NODE_FUNC(type,content) \
 	EXTEND_REF_FUNC(type, \
-		void(*visit)(void*, matrix4, int); \
+		void(*visit)(void*, m_matrix4, int); \
 		void(*draw)(void*); \
 		void(*add_child)(void*,void*); \
 		void(*set_visible)(void*,int); \
-		void(*set_scale)(void*,vector3); \
-		void(*set_size)(void*,vector3); \
-		void(*set_position)(void*,vector3); \
-		void(*set_anchor)(void*,vector3); \
+		void(*set_scale)(void*,m_vector3); \
+		void(*set_size)(void*,m_vector3); \
+		void(*set_position)(void*,m_vector3); \
+		void(*set_anchor)(void*,m_vector3); \
 		void(*set_quat)(void*,quaternion); \
 		content \
 	);
@@ -43,12 +43,12 @@ extern "C" {
 */
 #define EXTEND_NODE(struct_type, func, content) \
 	EXTEND_REF(struct_type, func, \
-		vector3 position; \
-		vector3 anchor; \
-		vector3 size; \
-		vector3 scale; \
-		matrix4 model; \
-		matrix4 render_model; \
+		m_vector3 position; \
+		m_vector3 anchor; \
+		m_vector3 size; \
+		m_vector3 scale; \
+		m_matrix4 model; \
+		m_matrix4 render_model; \
 		quaternion quat; \
 		weak_ref* parent; \
 		m_list* children; \
@@ -64,14 +64,14 @@ EXTEND_NODE(g_node, g_node_func,);
 interface for subclass
 */
 void free_node(g_node* node);
-void visit_node(g_node* node, matrix4, int);
+void visit_node(g_node* node, m_matrix4, int);
 void node_add_child(g_node*, g_node*);
 void init_node(g_node* node);
 void node_set_visible(g_node* node,int);
-void node_set_scale(g_node* node,vector3);
-void node_set_size(g_node* node,vector3);
-void node_set_position(g_node* node,vector3);
-void node_set_anchor(g_node* node,vector3);
+void node_set_scale(g_node* node,m_vector3);
+void node_set_size(g_node* node,m_vector3);
+void node_set_position(g_node* node,m_vector3);
+void node_set_anchor(g_node* node,m_vector3);
 void node_set_quat(g_node* node,quaternion);
 
 #define INHERIT_NODE_FUNC \

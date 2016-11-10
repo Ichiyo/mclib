@@ -4,20 +4,20 @@
 extern "C" {
 #endif
 
-const matrix4 matrix4_identity = {1, 0, 0, 0,
+const m_matrix4 matrix4_identity = {1, 0, 0, 0,
                                   0, 1, 0, 0,
                                   0, 0, 1, 0,
                                   0, 0, 0, 1};
 
 const quaternion quaternion_identity = {0, 0, 0, 1};
 
-const matrix3 matrix3_identity = {1, 0, 0,
+const m_matrix3 matrix3_identity = {1, 0, 0,
                                   0, 1, 0,
                                   0, 0, 1};
 
-matrix4 matrix4_invert(matrix4 matrix, int *isInvertible)
+m_matrix4 matrix4_invert(m_matrix4 matrix, int *isInvertible)
 {
-  matrix4 inv = matrix4_identity;
+  m_matrix4 inv = matrix4_identity;
   float det;
   int i;
 
@@ -154,7 +154,7 @@ matrix4 matrix4_invert(matrix4 matrix, int *isInvertible)
   return inv;
 }
 
-matrix4 matrix4_invert_transpose(matrix4 matrix, int *isInvertible)
+m_matrix4 matrix4_invert_transpose(m_matrix4 matrix, int *isInvertible)
 {
   int invertable;
   matrix = matrix4_invert(matrix, &invertable);
@@ -169,9 +169,9 @@ matrix4 matrix4_invert_transpose(matrix4 matrix, int *isInvertible)
   return matrix;
 }
 
-quaternion quaternion_new_matrix3(matrix3 matrix)
+quaternion quaternion_new_matrix3(m_matrix3 matrix)
 {
-  matrix4 temp = matrix4_identity;
+  m_matrix4 temp = matrix4_identity;
   temp.m[0] = matrix.m[0];
   temp.m[1] = matrix.m[1];
   temp.m[2] = matrix.m[2];
@@ -184,7 +184,7 @@ quaternion quaternion_new_matrix3(matrix3 matrix)
   return quaternion_new_matrix4(temp);
 }
 
-quaternion quaternion_new_matrix4(matrix4 matrix)
+quaternion quaternion_new_matrix4(m_matrix4 matrix)
 {
   float tr =  matrix.m[0] + matrix.m[5] + matrix.m[10];
   quaternion ret;
@@ -228,13 +228,13 @@ float quaternion_to_angle(quaternion quat)
   quat = quaternion_normalize(quat);
   float cos_angle = quat.q[3];
   float angle = acos(cos_angle) * 2;
-  
+
   return angle;
 }
 
-vector3 quaternion_to_axis(quaternion quat)
+m_vector3 quaternion_to_axis(quaternion quat)
 {
-  vector3 ret;
+  m_vector3 ret;
   quat = quaternion_normalize(quat);
   float cos_angle = quat.q[3];
   float s = sqrt(1 - cos_angle * cos_angle);
@@ -253,9 +253,9 @@ vector3 quaternion_to_axis(quaternion quat)
   return ret;
 }
 
-matrix3 matrix3_invert(matrix3 matrix, int *isInvertible)
+m_matrix3 matrix3_invert(m_matrix3 matrix, int *isInvertible)
 {
-  matrix4 temp;
+  m_matrix4 temp;
   temp.m[0] = matrix.m[0];
   temp.m[1] = matrix.m[1];
   temp.m[2] = matrix.m[2];
@@ -283,9 +283,9 @@ matrix3 matrix3_invert(matrix3 matrix, int *isInvertible)
   else return matrix;
 }
 
-matrix3 matrix3_invert_transpose(matrix3 matrix, int *isInvertible)
+m_matrix3 matrix3_invert_transpose(m_matrix3 matrix, int *isInvertible)
 {
-  matrix4 temp;
+  m_matrix4 temp;
   temp.m[0] = matrix.m[0];
   temp.m[1] = matrix.m[1];
   temp.m[2] = matrix.m[2];

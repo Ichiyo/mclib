@@ -26,6 +26,9 @@ int main(int argc, char *argv[])
   g_shader* shader2 = shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
   g_sprite2d* sprite = sprite2d_new();
+  sprite->func->set_texture(sprite, tex);
+  sprite->func->set_shader(sprite, shader);
+  sprite->func->set_size(sprite, vector3_new(50, 50, 0));
   sprite->func->retain(sprite);
 
   {
@@ -35,17 +38,17 @@ int main(int argc, char *argv[])
     sprite4->func->set_texture(sprite4,tex2);
     sprite->func->add_child(sprite, sprite4);
     sprite4->func->set_model_obj(sprite4, "res/model/cube.obj");
-    sprite4->func->set_position(sprite4, vector3_new(30, 0, 0));
+    sprite4->func->set_position(sprite4, vector3_new(50, 0, 0));
     quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(45), 0, 0, 1);
     sprite4->func->set_quat(sprite4, quaternion_mul(sprite4->quat, offset_q));
   }
 
-  matrix4 view = matrix4_create_look_at(
+  m_matrix4 view = matrix4_create_look_at(
     0.01f, 0.0f, 200.0f,
     0.0f, 0.0f, 0.0f,
     0.0f, 1.0f, 0.0f
   );
-  matrix4 proj = matrix4_create_perspective(DEG_TO_RAD(45.0f), 800.0f / 600.0f, 1.0f, 1000.0f);
+  m_matrix4 proj = matrix4_create_perspective(DEG_TO_RAD(45.0f), 800.0f / 600.0f, 1.0f, 1000.0f);
   shader->func->use(shader);
   glUniform1i(glGetUniformLocation(shader->func->get_id(shader), "tex"), 0);
   glUniformMatrix4fv(glGetUniformLocation(shader->func->get_id(shader), "view"), 1, GL_FALSE, view.m);
@@ -53,15 +56,21 @@ int main(int argc, char *argv[])
   shader2->func->use(shader2);
   glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "proj"), 1, GL_FALSE, proj.m);
   glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "view"), 1, GL_FALSE, view.m);
-  glUniform1i(glGetUniformLocation(shader2->func->get_id(shader2), "material.diffuse"), 0);
+  int diffuse = 0;
+  glUniform1iv(glGetUniformLocation(shader2->func->get_id(shader2), "material.diffuse"),1, &diffuse);
 
   GLint lightDirLoc = glGetUniformLocation(shader2->func->get_id(shader2), "light.direction");
-  glUniform3f(lightDirLoc, -1, 0, -1);
-  glUniform3f(glGetUniformLocation(shader2->func->get_id(shader2), "light.ambient"),  0.5f, 0.5f, 0.5f);
-  glUniform3f(glGetUniformLocation(shader2->func->get_id(shader2), "light.diffuse"),  1.0f, 1.0f, 1.0f);
-  glUniform3f(glGetUniformLocation(shader2->func->get_id(shader2), "light.specular"), 1.0f, 1.0f, 1.0f);
+  m_vector3 vector = vector3_new(-1, 0, -1);
+  glUniform3fv(lightDirLoc,1, &vector);
+  vector = vector3_new(0.5f, 0.5f, 0.5f);
+  glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.ambient"),  1, &vector);
+  vector = vector3_new(1,1,1);
+  glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.diffuse"),  1, &vector);
+  vector = vector3_new(1, 1, 1);
+  glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.specular"), 1, &vector);
   // Set material properties
-  glUniform1f(glGetUniformLocation(shader2->func->get_id(shader2), "material.shininess"), 32.0f);
+  float shinness = 32;
+  glUniform1fv(glGetUniformLocation(shader2->func->get_id(shader2), "material.shininess"), 1, &shinness);
 
   glEnable(GL_DEPTH_TEST);
   quaternion offset_q = quaternion_identity;
@@ -70,7 +79,7 @@ int main(int argc, char *argv[])
   int key = 0;
   while (1)
   {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClearStencil(0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     if (SDL_PollEvent(&windowEvent))

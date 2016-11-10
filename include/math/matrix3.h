@@ -8,113 +8,114 @@
 #include <math/vector3.h>
 #include <math/vector4.h>
 #include <math/quaternion.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern const matrix3 matrix3_identity;
-static __inline__ matrix3 matrix3_create( float m00, float m01, float m02,
+extern const m_matrix3 matrix3_identity;
+static __inline__ m_matrix3 matrix3_create( float m00, float m01, float m02,
                                           float m10, float m11, float m12,
                                           float m20, float m21, float m22);
-static __inline__ matrix3 matrix3_create_transpose( float m00, float m01, float m02,
+static __inline__ m_matrix3 matrix3_create_transpose( float m00, float m01, float m02,
                                                     float m10, float m11, float m12,
                                                     float m20, float m21, float m22);
-static __inline__ matrix3 matrix3_create_array(float values[9]);
-static __inline__ matrix3 matrix3_create_array_transpose(float values[9]);
-static __inline__ matrix3 matrix3_create_rows(vector3 row0,
-                                              vector3 row1,
-                                              vector3 row2);
-static __inline__ matrix3 matrix3_create_columns( vector3 column0,
-                                                  vector3 column1,
-                                                  vector3 column2);
-static __inline__ matrix3 matrix3_create_quaternion(quaternion quat);
-static __inline__ matrix3 matrix3_create_scale(float sx, float sy, float sz);
-static __inline__ matrix3 matrix3_create_rotation(float radians, float x, float y, float z);
-static __inline__ matrix3 matrix3_create_x_rotation(float radians);
-static __inline__ matrix3 matrix3_create_y_rotation(float radians);
-static __inline__ matrix3 matrix3_create_z_rotation(float radians);
-static __inline__ matrix2 matrix3_get_matrix2(matrix3 matrix);
-static __inline__ vector3 matrix3_get_row(matrix3 matrix, int row);
-static __inline__ vector3 matrix3_get_coulm(matrix3 matrix, int column);
-static __inline__ matrix3 matrix3_set_row(matrix3 matrix, int row, vector3 vector);
-static __inline__ matrix3 matrix3_set_column(matrix3 matrix, int column, vector3 vector);
-static __inline__ matrix3 matrix3_transpose(matrix3 matrix);
-static __inline__ matrix3 matrix3_mul(matrix3 matrixLeft, matrix3 matrixRight);
-static __inline__ matrix3 matrix3_add(matrix3 matrixLeft, matrix3 matrixRight);
-static __inline__ matrix3 matrix3_sub(matrix3 matrixLeft, matrix3 matrixRight);
-static __inline__ matrix3 matrix3_scale(matrix3 matrix, float sx, float sy, float sz);
-static __inline__ matrix3 matrix3_scale_vector3(matrix3 matrix, vector3 scaleVector);
-static __inline__ matrix3 matrix3_scale_vector4(matrix3 matrix, vector4 scaleVector);
-static __inline__ matrix3 matrix3_rotate(matrix3 matrix, float radians, float x, float y, float z);
-static __inline__ matrix3 matrix3_rotate_vector3(matrix3 matrix, float radians, vector3 axisVector);
-static __inline__ matrix3 matrix3_rotate_vector4(matrix3 matrix, float radians, vector4 axisVector);
-static __inline__ matrix3 matrix3_rotate_x(matrix3 matrix, float radians);
-static __inline__ matrix3 matrix3_rotate_y(matrix3 matrix, float radians);
-static __inline__ matrix3 matrix3_rotate_z(matrix3 matrix, float radians);
-static __inline__ vector3 matrix3_mul_vector3(matrix3 matrixLeft, vector3 vectorRight);
-static __inline__ void matrix3_mul_vector3_array(matrix3 matrix, vector3 *vectors, size_t vectorCount);
-matrix3 matrix3_invert(matrix3 matrix, int *isInvertible);
-matrix3 matrix3_invert_transpose(matrix3 matrix, int *isInvertible);
+static __inline__ m_matrix3 matrix3_create_array(float values[9]);
+static __inline__ m_matrix3 matrix3_create_array_transpose(float values[9]);
+static __inline__ m_matrix3 matrix3_create_rows(m_vector3 row0,
+                                              m_vector3 row1,
+                                              m_vector3 row2);
+static __inline__ m_matrix3 matrix3_create_columns( m_vector3 column0,
+                                                  m_vector3 column1,
+                                                  m_vector3 column2);
+static __inline__ m_matrix3 matrix3_create_quaternion(quaternion quat);
+static __inline__ m_matrix3 matrix3_create_scale(float sx, float sy, float sz);
+static __inline__ m_matrix3 matrix3_create_rotation(float radians, float x, float y, float z);
+static __inline__ m_matrix3 matrix3_create_x_rotation(float radians);
+static __inline__ m_matrix3 matrix3_create_y_rotation(float radians);
+static __inline__ m_matrix3 matrix3_create_z_rotation(float radians);
+static __inline__ m_matrix2 matrix3_get_matrix2(m_matrix3 matrix);
+static __inline__ m_vector3 matrix3_get_row(m_matrix3 matrix, int row);
+static __inline__ m_vector3 matrix3_get_coulm(m_matrix3 matrix, int column);
+static __inline__ m_matrix3 matrix3_set_row(m_matrix3 matrix, int row, m_vector3 vector);
+static __inline__ m_matrix3 matrix3_set_column(m_matrix3 matrix, int column, m_vector3 vector);
+static __inline__ m_matrix3 matrix3_transpose(m_matrix3 matrix);
+static __inline__ m_matrix3 matrix3_mul(m_matrix3 matrixLeft, m_matrix3 matrixRight);
+static __inline__ m_matrix3 matrix3_add(m_matrix3 matrixLeft, m_matrix3 matrixRight);
+static __inline__ m_matrix3 matrix3_sub(m_matrix3 matrixLeft, m_matrix3 matrixRight);
+static __inline__ m_matrix3 matrix3_scale(m_matrix3 matrix, float sx, float sy, float sz);
+static __inline__ m_matrix3 matrix3_scale_vector3(m_matrix3 matrix, m_vector3 scaleVector);
+static __inline__ m_matrix3 matrix3_scale_vector4(m_matrix3 matrix, m_vector4 scaleVector);
+static __inline__ m_matrix3 matrix3_rotate(m_matrix3 matrix, float radians, float x, float y, float z);
+static __inline__ m_matrix3 matrix3_rotate_vector3(m_matrix3 matrix, float radians, m_vector3 axisVector);
+static __inline__ m_matrix3 matrix3_rotate_vector4(m_matrix3 matrix, float radians, m_vector4 axisVector);
+static __inline__ m_matrix3 matrix3_rotate_x(m_matrix3 matrix, float radians);
+static __inline__ m_matrix3 matrix3_rotate_y(m_matrix3 matrix, float radians);
+static __inline__ m_matrix3 matrix3_rotate_z(m_matrix3 matrix, float radians);
+static __inline__ m_vector3 matrix3_mul_vector3(m_matrix3 matrixLeft, m_vector3 vectorRight);
+static __inline__ void matrix3_mul_vector3_array(m_matrix3 matrix, m_vector3 *vectors, size_t vectorCount);
+m_matrix3 matrix3_invert(m_matrix3 matrix, int *isInvertible);
+m_matrix3 matrix3_invert_transpose(m_matrix3 matrix, int *isInvertible);
 
 
-static __inline__ matrix3 matrix3_create( float m00, float m01, float m02,
+static __inline__ m_matrix3 matrix3_create( float m00, float m01, float m02,
                                           float m10, float m11, float m12,
                                           float m20, float m21, float m22)
 {
-    matrix3 m = { m00, m01, m02,
+    m_matrix3 m = { m00, m01, m02,
                   m10, m11, m12,
                   m20, m21, m22 };
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_transpose( float m00, float m01, float m02,
+static __inline__ m_matrix3 matrix3_create_transpose( float m00, float m01, float m02,
                                                     float m10, float m11, float m12,
                                                     float m20, float m21, float m22)
 {
-    matrix3 m = { m00, m10, m20,
+    m_matrix3 m = { m00, m10, m20,
                   m01, m11, m21,
                   m02, m12, m22 };
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_array(float values[9])
+static __inline__ m_matrix3 matrix3_create_array(float values[9])
 {
-    matrix3 m = { values[0], values[1], values[2],
+    m_matrix3 m = { values[0], values[1], values[2],
                   values[3], values[4], values[5],
                   values[6], values[7], values[8] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_array_transpose(float values[9])
+static __inline__ m_matrix3 matrix3_create_array_transpose(float values[9])
 {
-    matrix3 m = { values[0], values[3], values[6],
+    m_matrix3 m = { values[0], values[3], values[6],
                   values[1], values[4], values[7],
                   values[2], values[5], values[8] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_rows(vector3 row0,
-                                              vector3 row1,
-                                              vector3 row2)
+static __inline__ m_matrix3 matrix3_create_rows(m_vector3 row0,
+                                              m_vector3 row1,
+                                              m_vector3 row2)
 {
-    matrix3 m = { row0.v[0], row1.v[0], row2.v[0],
+    m_matrix3 m = { row0.v[0], row1.v[0], row2.v[0],
                   row0.v[1], row1.v[1], row2.v[1],
                   row0.v[2], row1.v[2], row2.v[2] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_columns( vector3 column0,
-                                                  vector3 column1,
-                                                  vector3 column2)
+static __inline__ m_matrix3 matrix3_create_columns( m_vector3 column0,
+                                                  m_vector3 column1,
+                                                  m_vector3 column2)
 {
-    matrix3 m = { column0.v[0], column0.v[1], column0.v[2],
+    m_matrix3 m = { column0.v[0], column0.v[1], column0.v[2],
                   column1.v[0], column1.v[1], column1.v[2],
                   column2.v[0], column2.v[1], column2.v[2] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_quaternion(quaternion quat)
+static __inline__ m_matrix3 matrix3_create_quaternion(quaternion quat)
 {
     quat = quaternion_normalize(quat);
 
@@ -128,7 +129,7 @@ static __inline__ matrix3 matrix3_create_quaternion(quaternion quat)
     float _2z = z + z;
     float _2w = w + w;
 
-    matrix3 m = {   1.0f - _2y * y - _2z * z,
+    m_matrix3 m = {   1.0f - _2y * y - _2z * z,
                     _2x * y + _2w * z,
                     _2x * z - _2w * y,
 
@@ -143,23 +144,23 @@ static __inline__ matrix3 matrix3_create_quaternion(quaternion quat)
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_scale(float sx, float sy, float sz)
+static __inline__ m_matrix3 matrix3_create_scale(float sx, float sy, float sz)
 {
-    matrix3 m = matrix3_identity;
+    m_matrix3 m = matrix3_identity;
     m.m[0] = sx;
     m.m[4] = sy;
     m.m[8] = sz;
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_rotation(float radians, float x, float y, float z)
+static __inline__ m_matrix3 matrix3_create_rotation(float radians, float x, float y, float z)
 {
-    vector3 v = vector3_normalize(vector3_new(x, y, z));
+    m_vector3 v = vector3_normalize(vector3_new(x, y, z));
     float cos = cosf(radians);
     float cosp = 1.0f - cos;
     float sin = sinf(radians);
 
-    matrix3 m = {    cos + cosp * v.v[0] * v.v[0],
+    m_matrix3 m = {    cos + cosp * v.v[0] * v.v[0],
                      cosp * v.v[0] * v.v[1] + v.v[2] * sin,
                      cosp * v.v[0] * v.v[2] - v.v[1] * sin,
 
@@ -174,62 +175,62 @@ static __inline__ matrix3 matrix3_create_rotation(float radians, float x, float 
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_x_rotation(float radians)
+static __inline__ m_matrix3 matrix3_create_x_rotation(float radians)
 {
     float cos = cosf(radians);
     float sin = sinf(radians);
 
-    matrix3 m = {    1.0f, 0.0f, 0.0f,
+    m_matrix3 m = {    1.0f, 0.0f, 0.0f,
                      0.0f, cos, sin,
                      0.0f, -sin, cos };
 
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_y_rotation(float radians)
+static __inline__ m_matrix3 matrix3_create_y_rotation(float radians)
 {
     float cos = cosf(radians);
     float sin = sinf(radians);
 
-    matrix3 m = { cos, 0.0f, -sin,
+    m_matrix3 m = { cos, 0.0f, -sin,
                   0.0f, 1.0f, 0.0f,
                   sin, 0.0f, cos };
 
     return m;
 }
 
-static __inline__ matrix3 matrix3_create_z_rotation(float radians)
+static __inline__ m_matrix3 matrix3_create_z_rotation(float radians)
 {
     float cos = cosf(radians);
     float sin = sinf(radians);
 
-    matrix3 m = { cos, sin, 0.0f,
+    m_matrix3 m = { cos, sin, 0.0f,
                   -sin, cos, 0.0f,
                   0.0f, 0.0f, 1.0f };
 
     return m;
 }
 
-static __inline__ matrix2 matrix3_get_matrix2(matrix3 matrix)
+static __inline__ m_matrix2 matrix3_get_matrix2(m_matrix3 matrix)
 {
-    matrix2 m = { matrix.m[0], matrix.m[1],
+    m_matrix2 m = { matrix.m[0], matrix.m[1],
                   matrix.m[3], matrix.m[4] };
     return m;
 }
 
-static __inline__ vector3 matrix3_get_row(matrix3 matrix, int row)
+static __inline__ m_vector3 matrix3_get_row(m_matrix3 matrix, int row)
 {
-    vector3 v = { matrix.m[row], matrix.m[3 + row], matrix.m[6 + row] };
+    m_vector3 v = { matrix.m[row], matrix.m[3 + row], matrix.m[6 + row] };
     return v;
 }
 
-static __inline__ vector3 matrix3_get_coulm(matrix3 matrix, int column)
+static __inline__ m_vector3 matrix3_get_coulm(m_matrix3 matrix, int column)
 {
-    vector3 v = { matrix.m[column * 3 + 0], matrix.m[column * 3 + 1], matrix.m[column * 3 + 2] };
+    m_vector3 v = { matrix.m[column * 3 + 0], matrix.m[column * 3 + 1], matrix.m[column * 3 + 2] };
     return v;
 }
 
-static __inline__ matrix3 matrix3_set_row(matrix3 matrix, int row, vector3 vector)
+static __inline__ m_matrix3 matrix3_set_row(m_matrix3 matrix, int row, m_vector3 vector)
 {
     matrix.m[row] = vector.v[0];
     matrix.m[row + 3] = vector.v[1];
@@ -238,7 +239,7 @@ static __inline__ matrix3 matrix3_set_row(matrix3 matrix, int row, vector3 vecto
     return matrix;
 }
 
-static __inline__ matrix3 matrix3_set_column(matrix3 matrix, int column, vector3 vector)
+static __inline__ m_matrix3 matrix3_set_column(m_matrix3 matrix, int column, m_vector3 vector)
 {
     matrix.m[column * 3 + 0] = vector.v[0];
     matrix.m[column * 3 + 1] = vector.v[1];
@@ -247,18 +248,18 @@ static __inline__ matrix3 matrix3_set_column(matrix3 matrix, int column, vector3
     return matrix;
 }
 
-static __inline__ matrix3 matrix3_transpose(matrix3 matrix)
+static __inline__ m_matrix3 matrix3_transpose(m_matrix3 matrix)
 {
-    matrix3 m = { matrix.m[0], matrix.m[3], matrix.m[6],
+    m_matrix3 m = { matrix.m[0], matrix.m[3], matrix.m[6],
                   matrix.m[1], matrix.m[4], matrix.m[7],
                   matrix.m[2], matrix.m[5], matrix.m[8] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_mul(matrix3 matrixLeft, matrix3 matrixRight)
+static __inline__ m_matrix3 matrix3_mul(m_matrix3 matrixLeft, m_matrix3 matrixRight)
 {
 #if defined(__ARM_NEON__)
-    matrix3 m;
+    m_matrix3 m;
     float32x4x3_t iMatrixLeft;
     float32x4x3_t iMatrixRight;
     float32x4x3_t mm;
@@ -293,7 +294,7 @@ static __inline__ matrix3 matrix3_mul(matrix3 matrixLeft, matrix3 matrixRight)
 
     return m;
 #else
-    matrix3 m;
+    m_matrix3 m;
 
     m.m[0] = matrixLeft.m[0] * matrixRight.m[0] + matrixLeft.m[3] * matrixRight.m[1] + matrixLeft.m[6] * matrixRight.m[2];
     m.m[3] = matrixLeft.m[0] * matrixRight.m[3] + matrixLeft.m[3] * matrixRight.m[4] + matrixLeft.m[6] * matrixRight.m[5];
@@ -311,9 +312,9 @@ static __inline__ matrix3 matrix3_mul(matrix3 matrixLeft, matrix3 matrixRight)
 #endif
 }
 
-static __inline__ matrix3 matrix3_add(matrix3 matrixLeft, matrix3 matrixRight)
+static __inline__ m_matrix3 matrix3_add(m_matrix3 matrixLeft, m_matrix3 matrixRight)
 {
-    matrix3 m;
+    m_matrix3 m;
 
     m.m[0] = matrixLeft.m[0] + matrixRight.m[0];
     m.m[1] = matrixLeft.m[1] + matrixRight.m[1];
@@ -330,9 +331,9 @@ static __inline__ matrix3 matrix3_add(matrix3 matrixLeft, matrix3 matrixRight)
     return m;
 }
 
-static __inline__ matrix3 matrix3_sub(matrix3 matrixLeft, matrix3 matrixRight)
+static __inline__ m_matrix3 matrix3_sub(m_matrix3 matrixLeft, m_matrix3 matrixRight)
 {
-    matrix3 m;
+    m_matrix3 m;
 
     m.m[0] = matrixLeft.m[0] - matrixRight.m[0];
     m.m[1] = matrixLeft.m[1] - matrixRight.m[1];
@@ -349,75 +350,75 @@ static __inline__ matrix3 matrix3_sub(matrix3 matrixLeft, matrix3 matrixRight)
     return m;
 }
 
-static __inline__ matrix3 matrix3_scale(matrix3 matrix, float sx, float sy, float sz)
+static __inline__ m_matrix3 matrix3_scale(m_matrix3 matrix, float sx, float sy, float sz)
 {
-    matrix3 m = { matrix.m[0] * sx, matrix.m[1] * sx, matrix.m[2] * sx,
+    m_matrix3 m = { matrix.m[0] * sx, matrix.m[1] * sx, matrix.m[2] * sx,
                   matrix.m[3] * sy, matrix.m[4] * sy, matrix.m[5] * sy,
                   matrix.m[6] * sz, matrix.m[7] * sz, matrix.m[8] * sz };
     return m;
 }
 
-static __inline__ matrix3 matrix3_scale_vector3(matrix3 matrix, vector3 scaleVector)
+static __inline__ m_matrix3 matrix3_scale_vector3(m_matrix3 matrix, m_vector3 scaleVector)
 {
-    matrix3 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0],
+    m_matrix3 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0],
                   matrix.m[3] * scaleVector.v[1], matrix.m[4] * scaleVector.v[1], matrix.m[5] * scaleVector.v[1],
                   matrix.m[6] * scaleVector.v[2], matrix.m[7] * scaleVector.v[2], matrix.m[8] * scaleVector.v[2] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_scale_vector4(matrix3 matrix, vector4 scaleVector)
+static __inline__ m_matrix3 matrix3_scale_vector4(m_matrix3 matrix, m_vector4 scaleVector)
 {
-    matrix3 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0],
+    m_matrix3 m = { matrix.m[0] * scaleVector.v[0], matrix.m[1] * scaleVector.v[0], matrix.m[2] * scaleVector.v[0],
                   matrix.m[3] * scaleVector.v[1], matrix.m[4] * scaleVector.v[1], matrix.m[5] * scaleVector.v[1],
                   matrix.m[6] * scaleVector.v[2], matrix.m[7] * scaleVector.v[2], matrix.m[8] * scaleVector.v[2] };
     return m;
 }
 
-static __inline__ matrix3 matrix3_rotate(matrix3 matrix, float radians, float x, float y, float z)
+static __inline__ m_matrix3 matrix3_rotate(m_matrix3 matrix, float radians, float x, float y, float z)
 {
-    matrix3 rm = matrix3_create_rotation(radians, x, y, z);
+    m_matrix3 rm = matrix3_create_rotation(radians, x, y, z);
     return matrix3_mul(matrix, rm);
 }
 
-static __inline__ matrix3 matrix3_rotate_vector3(matrix3 matrix, float radians, vector3 axisVector)
+static __inline__ m_matrix3 matrix3_rotate_vector3(m_matrix3 matrix, float radians, m_vector3 axisVector)
 {
-    matrix3 rm = matrix3_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
+    m_matrix3 rm = matrix3_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
     return matrix3_mul(matrix, rm);
 }
 
-static __inline__ matrix3 matrix3_rotate_vector4(matrix3 matrix, float radians, vector4 axisVector)
+static __inline__ m_matrix3 matrix3_rotate_vector4(m_matrix3 matrix, float radians, m_vector4 axisVector)
 {
-    matrix3 rm = matrix3_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
+    m_matrix3 rm = matrix3_create_rotation(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
     return matrix3_mul(matrix, rm);
 }
 
-static __inline__ matrix3 matrix3_rotate_x(matrix3 matrix, float radians)
+static __inline__ m_matrix3 matrix3_rotate_x(m_matrix3 matrix, float radians)
 {
-    matrix3 rm = matrix3_create_x_rotation(radians);
+    m_matrix3 rm = matrix3_create_x_rotation(radians);
     return matrix3_mul(matrix, rm);
 }
 
-static __inline__ matrix3 matrix3_rotate_y(matrix3 matrix, float radians)
+static __inline__ m_matrix3 matrix3_rotate_y(m_matrix3 matrix, float radians)
 {
-    matrix3 rm = matrix3_create_y_rotation(radians);
+    m_matrix3 rm = matrix3_create_y_rotation(radians);
     return matrix3_mul(matrix, rm);
 }
 
-static __inline__ matrix3 matrix3_rotate_z(matrix3 matrix, float radians)
+static __inline__ m_matrix3 matrix3_rotate_z(m_matrix3 matrix, float radians)
 {
-    matrix3 rm = matrix3_create_z_rotation(radians);
+    m_matrix3 rm = matrix3_create_z_rotation(radians);
     return matrix3_mul(matrix, rm);
 }
 
-static __inline__ vector3 matrix3_mul_vector3(matrix3 matrixLeft, vector3 vectorRight)
+static __inline__ m_vector3 matrix3_mul_vector3(m_matrix3 matrixLeft, m_vector3 vectorRight)
 {
-    vector3 v = { matrixLeft.m[0] * vectorRight.v[0] + matrixLeft.m[3] * vectorRight.v[1] + matrixLeft.m[6] * vectorRight.v[2],
+    m_vector3 v = { matrixLeft.m[0] * vectorRight.v[0] + matrixLeft.m[3] * vectorRight.v[1] + matrixLeft.m[6] * vectorRight.v[2],
                   matrixLeft.m[1] * vectorRight.v[0] + matrixLeft.m[4] * vectorRight.v[1] + matrixLeft.m[7] * vectorRight.v[2],
                   matrixLeft.m[2] * vectorRight.v[0] + matrixLeft.m[5] * vectorRight.v[1] + matrixLeft.m[8] * vectorRight.v[2] };
     return v;
 }
 
-static __inline__ void matrix3_mul_vector3_array(matrix3 matrix, vector3 *vectors, size_t vectorCount)
+static __inline__ void matrix3_mul_vector3_array(m_matrix3 matrix, m_vector3 *vectors, size_t vectorCount)
 {
     int i;
     for (i=0; i < vectorCount; i++)

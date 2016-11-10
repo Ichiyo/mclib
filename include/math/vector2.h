@@ -12,47 +12,47 @@
 extern "C" {
 #endif
 
-static __inline__ vector2 vector2_new(float x, float y);
-static __inline__ vector2 vector2_neg(vector2 vector);
-static __inline__ vector2 vector2_add(vector2 left, vector2 right);
-static __inline__ vector2 vector2_sub(vector2 left, vector2 right);
-static __inline__ vector2 vector2_mul(vector2 left, vector2 right);
-static __inline__ vector2 vector2_div(vector2 left, vector2 right);
-static __inline__ vector2 vector2_add_scalar(vector2 left, float scalar);
-static __inline__ vector2 vector2_sub_scalar(vector2 left, float scalar);
-static __inline__ vector2 vector2_mul_scalar(vector2 left, float scalar);
-static __inline__ vector2 vector2_div_scalar(vector2 left, float scalar);
-static __inline__ vector2 vector2_normalize(vector2 vector);
-static __inline__ float   vector2_dot_product(vector2 left, vector2 right);
-static __inline__ float   vector2_length(vector2 vector);
-static __inline__ float   vector2_distance(vector2 left, vector2 right);
-static __inline__ vector2 vector2_lerp(vector2 begin, vector2 end, float t);
+static __inline__ m_vector2 vector2_new(float x, float y);
+static __inline__ m_vector2 vector2_neg(m_vector2 vector);
+static __inline__ m_vector2 vector2_add(m_vector2 left, m_vector2 right);
+static __inline__ m_vector2 vector2_sub(m_vector2 left, m_vector2 right);
+static __inline__ m_vector2 vector2_mul(m_vector2 left, m_vector2 right);
+static __inline__ m_vector2 vector2_div(m_vector2 left, m_vector2 right);
+static __inline__ m_vector2 vector2_add_scalar(m_vector2 left, float scalar);
+static __inline__ m_vector2 vector2_sub_scalar(m_vector2 left, float scalar);
+static __inline__ m_vector2 vector2_mul_scalar(m_vector2 left, float scalar);
+static __inline__ m_vector2 vector2_div_scalar(m_vector2 left, float scalar);
+static __inline__ m_vector2 vector2_normalize(m_vector2 vector);
+static __inline__ float   vector2_dot_product(m_vector2 left, m_vector2 right);
+static __inline__ float   vector2_length(m_vector2 vector);
+static __inline__ float   vector2_distance(m_vector2 left, m_vector2 right);
+static __inline__ m_vector2 vector2_lerp(m_vector2 begin, m_vector2 end, float t);
 
-static __inline__ vector2 vector2_new(float x, float y)
+static __inline__ m_vector2 vector2_new(float x, float y)
 {
-  vector2 ret = {x , y};
+  m_vector2 ret = {x , y};
   return ret;
 }
 
-static __inline__ vector2 vector2_neg(vector2 v)
+static __inline__ m_vector2 vector2_neg(m_vector2 v)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vneg_f32(*(float32x2_t *)&v);
-  return *(vector2 *)&ret;
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {-v.v[0], -v.v[1]};
+  m_vector2 ret = {-v.v[0], -v.v[1]};
   return ret;
 #endif
 }
 
-static __inline__ vector2 vector2_add(vector2 left, vector2 right)
+static __inline__ m_vector2 vector2_add(m_vector2 left, m_vector2 right)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vadd_f32(*(float32x2_t *)&left,
                            *(float32x2_t *)&right);
-  return *(vector2 *)&ret;
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] + right.v[0],
     left.v[1] + right.v[1]
   };
@@ -60,14 +60,14 @@ static __inline__ vector2 vector2_add(vector2 left, vector2 right)
 #endif
 }
 
-static __inline__ vector2 vector2_sub(vector2 left, vector2 right)
+static __inline__ m_vector2 vector2_sub(m_vector2 left, m_vector2 right)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vsub_f32(*(float32x2_t *)&left,
                            *(float32x2_t *)&right);
-  return *(vector2 *)&ret;
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] - right.v[0],
     left.v[1] - right.v[1]
   };
@@ -75,14 +75,14 @@ static __inline__ vector2 vector2_sub(vector2 left, vector2 right)
 #endif
 }
 
-static __inline__ vector2 vector2_mul(vector2 left, vector2 right)
+static __inline__ m_vector2 vector2_mul(m_vector2 left, m_vector2 right)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vmul_f32(*(float32x2_t *)&left,
                            *(float32x2_t *)&right);
-  return *(vector2 *)&ret;
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] * right.v[0],
     left.v[1] * right.v[1]
   };
@@ -90,7 +90,7 @@ static __inline__ vector2 vector2_mul(vector2 left, vector2 right)
 #endif
 }
 
-static __inline__ vector2 vector2_div(vector2 left, vector2 right)
+static __inline__ m_vector2 vector2_div(m_vector2 left, m_vector2 right)
 {
 #if defined(__ARM_NEON__)
   float32x2_t *vLeft = (float32x2_t *)&left;
@@ -99,9 +99,9 @@ static __inline__ vector2 vector2_div(vector2 left, vector2 right)
   estimate = vmul_f32(vrecps_f32(*vRight, estimate), estimate);
   estimate = vmul_f32(vrecps_f32(*vRight, estimate), estimate);
   float32x2_t v = vmul_f32(*vLeft, estimate);
-  return *(vector2 *)&v;
+  return *(m_vector2 *)&v;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] / right.v[0],
     left.v[1] / right.v[1]
   };
@@ -109,14 +109,14 @@ static __inline__ vector2 vector2_div(vector2 left, vector2 right)
 #endif
 }
 
-static __inline__ vector2 vector2_add_scalar(vector2 left, float scalar)
+static __inline__ m_vector2 vector2_add_scalar(m_vector2 left, float scalar)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vadd_f32(*(float32x2_t *)&left,
-                           vdup_n_f32((float32_t)scalar);
-  return *(vector2 *)&ret;
+                           vdup_n_f32((float32_t)scalar));
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] + scalar,
     left.v[1] + scalar
   };
@@ -124,14 +124,14 @@ static __inline__ vector2 vector2_add_scalar(vector2 left, float scalar)
 #endif
 }
 
-static __inline__ vector2 vector2_sub_scalar(vector2 left, float scalar)
+static __inline__ m_vector2 vector2_sub_scalar(m_vector2 left, float scalar)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vsub_f32(*(float32x2_t *)&left,
-                           vdup_n_f32((float32_t)scalar);
-  return *(vector2 *)&ret;
+                           vdup_n_f32((float32_t)scalar));
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] - scalar,
     left.v[1] - scalar
   };
@@ -139,14 +139,14 @@ static __inline__ vector2 vector2_sub_scalar(vector2 left, float scalar)
 #endif
 }
 
-static __inline__ vector2 vector2_mul_scalar(vector2 left, float scalar)
+static __inline__ m_vector2 vector2_mul_scalar(m_vector2 left, float scalar)
 {
 #if defined(__ARM_NEON__)
   float32x2_t ret = vmul_f32(*(float32x2_t *)&left,
-                           vdup_n_f32((float32_t)scalar);
-  return *(vector2 *)&ret;
+                           vdup_n_f32((float32_t)scalar));
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] * scalar,
     left.v[1] * scalar
   };
@@ -154,7 +154,7 @@ static __inline__ vector2 vector2_mul_scalar(vector2 left, float scalar)
 #endif
 }
 
-static __inline__ vector2 vector2_div_scalar(vector2 left, float scalar)
+static __inline__ m_vector2 vector2_div_scalar(m_vector2 left, float scalar)
 {
 #if defined(__ARM_NEON__)
   float32x2_t values = vdup_n_f32((float32_t)scalar);
@@ -162,9 +162,9 @@ static __inline__ vector2 vector2_div_scalar(vector2 left, float scalar)
   estimate = vmul_f32(vrecps_f32(values, estimate), estimate);
   estimate = vmul_f32(vrecps_f32(values, estimate), estimate);
   float32x2_t ret = vmul_f32(*(float32x2_t *)&left, estimate);
-  return *(GLKVector2 *)&ret;
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     left.v[0] / scalar,
     left.v[1] / scalar
   };
@@ -172,14 +172,14 @@ static __inline__ vector2 vector2_div_scalar(vector2 left, float scalar)
 #endif
 }
 
-static __inline__ vector2 vector2_normalize(vector2 vector)
+static __inline__ m_vector2 vector2_normalize(m_vector2 vector)
 {
   float scale = 1.0f / vector2_length(vector);
-  vector2 v = vector2_mul_scalar(vector, scale);
+  m_vector2 v = vector2_mul_scalar(vector, scale);
   return v;
 }
 
-static __inline__ float   vector2_dot_product(vector2 left, vector2 right)
+static __inline__ float   vector2_dot_product(m_vector2 left, m_vector2 right)
 {
 #if defined(__ARM_NEON__)
   float32x2_t v = vmul_f32(*(float32x2_t *)&left,
@@ -191,7 +191,7 @@ static __inline__ float   vector2_dot_product(vector2 left, vector2 right)
 #endif
 }
 
-static __inline__ float   vector2_length(vector2 vector)
+static __inline__ float   vector2_length(m_vector2 vector)
 {
 #if defined(__ARM_NEON__)
     float32x2_t v = vmul_f32(*(float32x2_t *)&vector,
@@ -203,21 +203,21 @@ static __inline__ float   vector2_length(vector2 vector)
 #endif
 }
 
-static __inline__ float   vector2_distance(vector2 left, vector2 right)
+static __inline__ float   vector2_distance(m_vector2 left, m_vector2 right)
 {
     return vector2_length(vector2_sub(right, left));
 }
 
-static __inline__ vector2 vector2_lerp(vector2 begin, vector2 end, float t)
+static __inline__ m_vector2 vector2_lerp(m_vector2 begin, m_vector2 end, float t)
 {
 #if defined(__ARM_NEON__)
   float32x2_t vDiff = vsub_f32(*(float32x2_t *)&end,
                                *(float32x2_t *)&begin);
   vDiff = vmul_f32(vDiff, vdup_n_f32((float32_t)t));
   float32x2_t ret = vadd_f32(*(float32x2_t *)&begin, vDiff);
-  return *(vector2 *)&ret;
+  return *(m_vector2 *)&ret;
 #else
-  vector2 ret = {
+  m_vector2 ret = {
     begin.v[0] + (end.v[0] - begin.v[0]) * t,
     begin.v[1] + (end.v[1] - begin.v[1]) * t
   };

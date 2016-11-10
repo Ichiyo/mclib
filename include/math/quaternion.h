@@ -17,10 +17,10 @@ extern "C" {
 extern const quaternion quaternion_identity;
 
 static __inline__ quaternion quaternion_new(float x, float y, float z, float w);
-static __inline__ quaternion quaternion_new_vector3(vector3 vector, float scalar);
+static __inline__ quaternion quaternion_new_vector3(m_vector3 vector, float scalar);
 static __inline__ quaternion quaternion_new_array(float values[4]);
 static __inline__ quaternion quaternion_new_angle_axis(float radians, float x, float y, float z);
-static __inline__ quaternion quaternion_new_angle_vector3_axis(float radians, vector3 axisVector);
+static __inline__ quaternion quaternion_new_angle_vector3_axis(float radians, m_vector3 axisVector);
 static __inline__ quaternion quaternion_add(quaternion quaternionLeft, quaternion quaternionRight);
 static __inline__ quaternion quaternion_sub(quaternion quaternionLeft, quaternion quaternionRight);
 static __inline__ quaternion quaternion_mul(quaternion quaternionLeft, quaternion quaternionRight);
@@ -28,15 +28,15 @@ static __inline__ float quaternion_length(quaternion quat);
 static __inline__ quaternion quaternion_conjugate(quaternion quat);
 static __inline__ quaternion quaternion_invert(quaternion quat);
 static __inline__ quaternion quaternion_normalize(quaternion quat);
-static __inline__ vector3 quaternion_rotate_vector3(quaternion quat, vector3 vector);
-static __inline__ vector4 quaternion_rotate_vector4(quaternion quat, vector4 vector);
+static __inline__ m_vector3 quaternion_rotate_vector3(quaternion quat, m_vector3 vector);
+static __inline__ m_vector4 quaternion_rotate_vector4(quaternion quat, m_vector4 vector);
 static __inline__ quaternion quaternion_new_euler_angle(float pitch, float roll, float yaw);
-static __inline__ quaternion quaternion_new_vector3_euler_angle(vector3 vector);
+static __inline__ quaternion quaternion_new_vector3_euler_angle(m_vector3 vector);
 static __inline__ quaternion quaternion_lerp(quaternion from, quaternion to, float time);
-quaternion quaternion_new_matrix3(matrix3 matrix);
-quaternion quaternion_new_matrix4(matrix4 matrix);
+quaternion quaternion_new_matrix3(m_matrix3 matrix);
+quaternion quaternion_new_matrix4(m_matrix4 matrix);
 float quaternion_to_angle(quaternion quat);
-vector3 quaternion_to_axis(quaternion quat);
+m_vector3 quaternion_to_axis(quaternion quat);
 
 static __inline__ quaternion quaternion_new(float x, float y, float z, float w)
 {
@@ -44,7 +44,7 @@ static __inline__ quaternion quaternion_new(float x, float y, float z, float w)
     return q;
 }
 
-static __inline__ quaternion quaternion_new_vector3(vector3 vector, float scalar)
+static __inline__ quaternion quaternion_new_vector3(m_vector3 vector, float scalar)
 {
     quaternion q = { vector.v[0], vector.v[1], vector.v[2], scalar };
     return q;
@@ -64,7 +64,7 @@ static __inline__ quaternion quaternion_new_angle_axis(float radians, float x, f
     return q;
 }
 
-static __inline__ quaternion quaternion_new_angle_vector3_axis(float radians, vector3 axisVector)
+static __inline__ quaternion quaternion_new_angle_vector3_axis(float radians, m_vector3 axisVector)
 {
     return quaternion_new_angle_axis(radians, axisVector.v[0], axisVector.v[1], axisVector.v[2]);
 }
@@ -197,7 +197,7 @@ static __inline__ quaternion quaternion_normalize(quaternion quat)
 #endif
 }
 
-static __inline__ vector3 quaternion_rotate_vector3(quaternion quat, vector3 vector)
+static __inline__ m_vector3 quaternion_rotate_vector3(quaternion quat, m_vector3 vector)
 {
     quaternion rotatedQuaternion = quaternion_new(vector.v[0], vector.v[1], vector.v[2], 0.0f);
     rotatedQuaternion = quaternion_mul(quaternion_mul(quat, rotatedQuaternion), quaternion_invert(quat));
@@ -205,7 +205,7 @@ static __inline__ vector3 quaternion_rotate_vector3(quaternion quat, vector3 vec
     return vector3_new(rotatedQuaternion.q[0], rotatedQuaternion.q[1], rotatedQuaternion.q[2]);
 }
 
-static __inline__ vector4 quaternion_rotate_vector4(quaternion quat, vector4 vector)
+static __inline__ m_vector4 quaternion_rotate_vector4(quaternion quat, m_vector4 vector)
 {
     quaternion rotatedQuaternion = quaternion_new(vector.v[0], vector.v[1], vector.v[2], 0.0f);
     rotatedQuaternion = quaternion_mul(quaternion_mul(quat, rotatedQuaternion), quaternion_invert(quat));
@@ -230,7 +230,7 @@ static __inline__ quaternion quaternion_new_euler_angle(float pitch, float roll,
 	return q;
 }
 
-static __inline__ quaternion quaternion_new_vector3_euler_angle(vector3 vector)
+static __inline__ quaternion quaternion_new_vector3_euler_angle(m_vector3 vector)
 {
   float pitch = vector.v[0];
   float roll = vector.v[2];

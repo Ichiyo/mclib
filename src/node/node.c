@@ -22,14 +22,14 @@ void free_node(g_node* node)
 	free(node);
 }
 
-void visit_node(g_node* node, matrix4 current_model, int flag)
+void visit_node(g_node* node, m_matrix4 current_model, int flag)
 {
 	if(!node->visible) return;
 
 	flag = flag | node->transform_dirty;
 	if(flag)
 	{
-		matrix4 model = matrix4_identity;
+		m_matrix4 model = matrix4_identity;
 		model = matrix4_translate_vector3(model, node->position);
 
 		model = matrix4_translate_vector3(model, vector3_new(node->anchor.v[0] * node->size.v[0], node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
@@ -75,25 +75,25 @@ void node_set_visible(g_node* node,int visible)
 	node->visible = visible;
 }
 
-void node_set_scale(g_node* node,vector3 vector)
+void node_set_scale(g_node* node,m_vector3 vector)
 {
 	node->scale = vector;
 	node->transform_dirty = 1;
 }
 
-void node_set_size(g_node* node,vector3 vector)
+void node_set_size(g_node* node,m_vector3 vector)
 {
 	node->size = vector;
 	node->transform_dirty = 1;
 }
 
-void node_set_position(g_node* node,vector3 vector)
+void node_set_position(g_node* node,m_vector3 vector)
 {
 	node->position = vector;
 	node->transform_dirty = 1;
 }
 
-void node_set_anchor(g_node* node, vector3 vector)
+void node_set_anchor(g_node* node, m_vector3 vector)
 {
 	node->anchor = vector;
 	node->transform_dirty = 1;

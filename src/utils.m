@@ -1,16 +1,18 @@
 #include <utils/file_utils.h>
 #include <stdio.h>
 #include <base/platform.h>
+#import <Foundation/Foundation.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if TARGET_PLATFORM != PLATFORM_IOS
+#if TARGET_PLATFORM == PLATFORM_IOS
 
 m_string* read_string_from_file(const char* path)
 {
- FILE* file = fopen(path, "r");
+ FILE* file = fopen([[[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:path]
+                                                             ofType:nil inDirectory:nil] UTF8String], "r");
  if(!file) return 0;
 
  m_string* ret = new_string();
@@ -25,7 +27,8 @@ m_string* read_string_from_file(const char* path)
 
 m_data* read_data_from_file(const char* path)
 {
-  FILE* file = fopen(path, "r");
+  FILE* file = fopen([[[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:path]
+                                                              ofType:nil inDirectory:nil] UTF8String], "r");
   if(!file) return 0;
 
   m_data* ret = data_new();

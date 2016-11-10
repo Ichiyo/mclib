@@ -2,12 +2,17 @@
 #include <graphic/graphic.h>
 #include <stdlib.h>
 
-#ifdef linux
+#if TARGET_PLATFORM == PLATFORM_LINUX
   #if defined(USE_SDL)
   #include <SDL2/SDL.h>
   #include <SDL2/SDL_image.h>
   #endif
-#else
+#elif TARGET_PLATFORM == PLATFORM_IOS
+  #if defined(USE_SDL)
+  #include <SDL.h>
+  #include <SDL_image.h>
+  #endif
+#elif TARGET_PLATFORM == PLATFORM_MAC
   #if defined(USE_SDL)
   #include <SDL2/SDL.h>
   #include <SDL2/SDL_image.h>
