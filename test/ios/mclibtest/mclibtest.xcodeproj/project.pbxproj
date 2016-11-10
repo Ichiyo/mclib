@@ -19,6 +19,17 @@
 		C0BE79CD1DD4D48A008D597C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE79CC1DD4D48A008D597C /* UIKit.framework */; };
 		C0BE79CF1DD4D48E008D597C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0BE79CE1DD4D48E008D597C /* GLKit.framework */; };
 		C0BE7B0C1DD4E87E008D597C /* res in Resources */ = {isa = PBXBuildFile; fileRef = C0BE7B0B1DD4E87E008D597C /* res */; };
+		C0D5BCBB1DD51EA0002C4F2D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCBA1DD51EA0002C4F2D /* CoreAudio.framework */; };
+		C0D5BCBD1DD51EA8002C4F2D /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCBC1DD51EA8002C4F2D /* GameController.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C0D5BCBF1DD51EB2002C4F2D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCBE1DD51EB2002C4F2D /* MediaPlayer.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C0D5BCC31DD51F41002C4F2D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCC21DD51F41002C4F2D /* CoreImage.framework */; };
+		C0D5BCC51DD51F48002C4F2D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCC41DD51F48002C4F2D /* CoreData.framework */; };
+		C0D5BCC71DD51F4E002C4F2D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCC61DD51F4E002C4F2D /* CoreFoundation.framework */; };
+		C0D5BCC91DD51F55002C4F2D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCC81DD51F54002C4F2D /* ImageIO.framework */; };
+		C0D5BCCB1DD51F61002C4F2D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCCA1DD51F61002C4F2D /* MobileCoreServices.framework */; };
+		C0D5BCCD1DD51F80002C4F2D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCCC1DD51F80002C4F2D /* QuartzCore.framework */; };
+		C0D5BCCF1DD51F88002C4F2D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCCE1DD51F88002C4F2D /* AudioToolbox.framework */; };
+		C0D5BCD11DD51FA6002C4F2D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D5BCD01DD51FA6002C4F2D /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +70,18 @@
 		C0BE79CC1DD4D48A008D597C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C0BE79CE1DD4D48E008D597C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		C0BE7B0B1DD4E87E008D597C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../res; sourceTree = "<group>"; };
+		C0D5BCBA1DD51EA0002C4F2D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		C0D5BCBC1DD51EA8002C4F2D /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		C0D5BCBE1DD51EB2002C4F2D /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C0D5BCC01DD51EC5002C4F2D /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		C0D5BCC21DD51F41002C4F2D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		C0D5BCC41DD51F48002C4F2D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C0D5BCC61DD51F4E002C4F2D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		C0D5BCC81DD51F54002C4F2D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C0D5BCCA1DD51F61002C4F2D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		C0D5BCCC1DD51F80002C4F2D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C0D5BCCE1DD51F88002C4F2D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C0D5BCD01DD51FA6002C4F2D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +89,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D5BCD11DD51FA6002C4F2D /* CoreMotion.framework in Frameworks */,
+				C0D5BCCF1DD51F88002C4F2D /* AudioToolbox.framework in Frameworks */,
+				C0D5BCCD1DD51F80002C4F2D /* QuartzCore.framework in Frameworks */,
+				C0D5BCCB1DD51F61002C4F2D /* MobileCoreServices.framework in Frameworks */,
+				C0D5BCC91DD51F55002C4F2D /* ImageIO.framework in Frameworks */,
+				C0D5BCC71DD51F4E002C4F2D /* CoreFoundation.framework in Frameworks */,
+				C0D5BCC51DD51F48002C4F2D /* CoreData.framework in Frameworks */,
+				C0D5BCC31DD51F41002C4F2D /* CoreImage.framework in Frameworks */,
+				C0D5BCBF1DD51EB2002C4F2D /* MediaPlayer.framework in Frameworks */,
+				C0D5BCBD1DD51EA8002C4F2D /* GameController.framework in Frameworks */,
+				C0D5BCBB1DD51EA0002C4F2D /* CoreAudio.framework in Frameworks */,
 				C0BE79CF1DD4D48E008D597C /* GLKit.framework in Frameworks */,
 				C0BE79CD1DD4D48A008D597C /* UIKit.framework in Frameworks */,
 				C0BE79CB1DD4D42B008D597C /* OpenGLES.framework in Frameworks */,
@@ -156,6 +190,18 @@
 		C0BE79C91DD4D42B008D597C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0D5BCD01DD51FA6002C4F2D /* CoreMotion.framework */,
+				C0D5BCCE1DD51F88002C4F2D /* AudioToolbox.framework */,
+				C0D5BCCC1DD51F80002C4F2D /* QuartzCore.framework */,
+				C0D5BCCA1DD51F61002C4F2D /* MobileCoreServices.framework */,
+				C0D5BCC81DD51F54002C4F2D /* ImageIO.framework */,
+				C0D5BCC61DD51F4E002C4F2D /* CoreFoundation.framework */,
+				C0D5BCC41DD51F48002C4F2D /* CoreData.framework */,
+				C0D5BCC21DD51F41002C4F2D /* CoreImage.framework */,
+				C0D5BCC01DD51EC5002C4F2D /* AudioUnit.framework */,
+				C0D5BCBE1DD51EB2002C4F2D /* MediaPlayer.framework */,
+				C0D5BCBC1DD51EA8002C4F2D /* GameController.framework */,
+				C0D5BCBA1DD51EA0002C4F2D /* CoreAudio.framework */,
 				C0BE79CE1DD4D48E008D597C /* GLKit.framework */,
 				C0BE79CC1DD4D48A008D597C /* UIKit.framework */,
 				C0BE79CA1DD4D42B008D597C /* OpenGLES.framework */,
@@ -469,7 +515,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/manhtran/Documents/mclib/ios_build/Release-iphoneos",
+					"/Users/manhtran/Documents/mclib/ios_build/Debug-iphoneos",
 					/Users/manhtran/Documents/mclib/test/ios/mclibtest/lib,
 				);
 				OTHER_LDFLAGS = (
@@ -496,7 +542,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"/Users/manhtran/Documents/mclib/ios_build/Release-iphoneos",
+					"/Users/manhtran/Documents/mclib/ios_build/Debug-iphoneos",
 					/Users/manhtran/Documents/mclib/test/ios/mclibtest/lib,
 				);
 				OTHER_LDFLAGS = (
@@ -578,6 +624,7 @@
 				C0BE79B21DD4CBB1008D597C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C0BE79B31DD4CBB1008D597C /* Build configuration list for PBXNativeTarget "mclibtestTests" */ = {
 			isa = XCConfigurationList;
@@ -586,6 +633,7 @@
 				C0BE79B51DD4CBB1008D597C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C0BE79B61DD4CBB1008D597C /* Build configuration list for PBXNativeTarget "mclibtestUITests" */ = {
 			isa = XCConfigurationList;
@@ -594,6 +642,7 @@
 				C0BE79B81DD4CBB1008D597C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

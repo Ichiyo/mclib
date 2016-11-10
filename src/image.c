@@ -41,7 +41,29 @@ static void free_image(sdl_image* image)
 
 static void init_image(sdl_image* image, const char* file)
 {
-  image->_image = IMG_Load(file);
+
+  SDL_Surface *tempimage = IMG_Load(file);
+  SDL_Surface *tempsurface;
+  Uint32 rmask, gmask, bmask, amask;
+
+  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  rmask = 0xff000000;
+  gmask = 0x00ff0000;
+  bmask = 0x0000ff00;
+  amask = 0x000000ff;
+  #else
+  rmask = 0x000000ff;
+  gmask = 0x0000ff00;
+  bmask = 0x00ff0000;
+  amask = 0xff000000;
+  #endif
+  tempsurface = SDL_CreateRGBSurface(SDL_SWSURFACE, tempimage->w, tempimage->h, 32, rmask, gmask, bmask, amask);
+  SDL_BlitSurface(tempimage, NULL, tempsurface, NULL);
+  SDL_FreeSurface(tempimage);
+
+  image->_image = tempsurface;
+
+
 
   /* Extracting color components from a 32-bit color value */
   SDL_PixelFormat *fmt;
