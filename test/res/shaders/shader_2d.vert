@@ -1,12 +1,17 @@
 #version 100
+
 #ifdef GL_ES
+
 #define plf_in attribute
 #define plf_out varying
 #define plf_texture texture2D
+
 #else
+
 #define plf_in in
 #define plf_out out
 #define plf_texture texture
+
 #endif
 
 plf_in vec2 position;
