@@ -1,0 +1,43 @@
+#ifndef _M_[struct_name_uppercase]_H
+#define _M_[struct_name_uppercase]_H
+
+//EXPEND HEADER -- DO NOT DELETE THIS LINE
+//TODO include header
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define EXTEND_[struct_name_uppercase]_FUNC(type, content) \
+  EXTEND_[struct_parent_name_uppercase]_FUNC(type, \
+  /*EXPAND FUNCTION -- DO NOT DELETE IT*/ \[child_function_declaration]
+  content \
+  );
+
+#define EXTEND_[struct_name_uppercase](type, func, content) \
+  EXTEND_[struct_parent_name_uppercase](type, func, \
+  /*EXPAND FIELD -- DO NOT DELETE IT*/ \[child_field_declaration]
+  content \
+  );
+
+EXTEND_[struct_name_uppercase]_FUNC([struct_name]_func,);
+
+EXTEND_[struct_name_uppercase]([struct_name], [struct_name]_func,);
+
+void [struct_name]_free([struct_name]* arg);
+void [struct_name]_init([struct_name]* arg);
+/*EXPAND DECLARE INTERFACE FUNCTION -- DO NOT DELETE IT*/
+[struct_function_interface_declaration]
+
+#define INHERIT_[struct_name_uppercase]_FUNC \
+  INHERIT_[struct_parent_name_uppercase]_FUNC, \
+  /*EXPAND FUNCTION INTERFACE ASSIGMENT -- DO NOT DELETE IT*/ \[struct_function_interface_assignment]
+  .free = [struct_name]_free
+
+[struct_name]* [struct_name]_new();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

@@ -1,0 +1,41 @@
+//TODO include header
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+
+void [struct_name]_free([struct_name]* node)
+{
+	//TODO free resource
+}
+
+/*EXPEND IMPLEMENTATION -- DO NOT DELETE THIS LINE*/
+[implement_function]
+
+static [struct_name]_func base_[struct_name]_func =
+{
+  INHERIT_[struct_name_uppercase]_FUNC
+};
+
+void [struct_name]_init([struct_name]* node)
+{
+	node->func = &base_[struct_name]_func;
+  //TODO init
+}
+
+[struct_name]* [struct_name]_new()
+{
+	REF_NEW_AUTO_RELEASE([struct_name], node)
+  [struct_parent_name_init]
+  [struct_name]_init(node);
+	return node;
+}
+
+#pragma GCC diagnostic pop
+
+#ifdef __cplusplus
+}
+#endif
