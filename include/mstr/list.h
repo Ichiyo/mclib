@@ -14,6 +14,7 @@ EXTEND_REF_FUNC(m_list_func,
   void*(*get_first)(struct _m_list*);
   void(*remove)(struct _m_list*, void*);
   void*(*get_index)(struct _m_list*, long);
+  void(*clear)(void*);
 );
 
 EXTEND_REF(m_list, m_list_func,

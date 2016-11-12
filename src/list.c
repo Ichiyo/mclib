@@ -29,6 +29,17 @@ static void linked_list_push(m_list* list, void* data, int is_ref);
 static void linked_list_remove(m_list* list, void* data);
 static void* linked_list_last(m_list* list);
 static void* linked_list_first(m_list* list);
+static void linked_list_clear(m_list* list);
+
+static void linked_list_clear(m_list* list)
+{
+  m_list_linked_content* content = (m_list_linked_content*)list->content;
+  while(content->first)
+  {
+    linked_list_pop(list);
+  }
+  list->size = 0;
+}
 
 static void linked_list_free(m_list* list)
 {
@@ -187,7 +198,8 @@ static m_list_func base_linked_list_func =
   .get_last = linked_list_last,
   .get_first = linked_list_first,
   .get_index = linked_list_index,
-  .remove = linked_list_remove
+  .remove = linked_list_remove,
+  .clear = linked_list_clear
 };
 
 m_list* linked_list_new()
@@ -313,6 +325,14 @@ static void array_list_remove(m_list* list, void* data)
   }
 }
 
+static void array_list_clear(m_list* list)
+{
+  while(list->size)
+  {
+    list->func->pop(list);
+  }
+}
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 
@@ -325,7 +345,8 @@ static m_list_func base_array_list_func =
   .get_last = array_list_last,
   .get_first = array_list_first,
   .get_index = array_list_index,
-  .remove = array_list_remove
+  .remove = array_list_remove,
+  .clear = array_list_clear
 };
 
 m_list* array_list_new()
