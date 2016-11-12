@@ -3,8 +3,8 @@
 
 #include <graphic/node.h>
 #include <graphic/graphic.h>
-#include <graphic/texture.h>
-#include <graphic/shader.h>
+#include <graphic/m_texture.h>
+#include <graphic/m_shader.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,8 +22,8 @@ extern "C" {
     GLuint vbo; \
     GLuint ebo; \
     GLuint vao; \
-    g_shader* shader; \
-    g_texture* texture; \
+    m_shader* shader; \
+    m_texture* texture; \
     content \
   );
 
@@ -32,8 +32,8 @@ EXTEND_SPRITE2D_FUNC(g_sprite2d_func,);
 EXTEND_SPRITE2D(g_sprite2d, g_sprite2d_func,);
 
 void sprite2d_free(g_sprite2d* node);
-void sprite2d_set_shader(g_sprite2d* node, g_shader* shader);
-void sprite2d_set_texture(g_sprite2d* node, g_texture* texture);
+void sprite2d_set_shader(g_sprite2d* node, m_shader* shader);
+void sprite2d_set_texture(g_sprite2d* node, m_texture* texture);
 void sprite2d_draw(g_sprite2d* node);
 void init_sprite2d(g_sprite2d* node);
 

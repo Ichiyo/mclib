@@ -76,14 +76,14 @@ void base_ref_release(ref* obj)
     {
       obj->func->free(obj);
     }
-    #ifdef APP_DEBUG
+    #ifdef APP_DEBUG_MEMORY
     else
     {
         printf("not set free funciton - please fix!!!\n");
     }
     #endif
 
-    #ifdef APP_DEBUG
+    #ifdef APP_DEBUG_MEMORY
       printf("ref freed!\n");
     #endif
   }

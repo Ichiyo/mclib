@@ -34,12 +34,12 @@ lambda_ref* new_lambda(void* func, void* guards,...);
 #if defined(__clang__)
 
 #define SAFE_NEW_LAMBDA(return_type,body,list...) \
-  new_lambda(^body,list,0);
+  new_lambda(^body,list,0)
 
 #else //GNU
 
 #define SAFE_NEW_LAMBDA(return_type,body,list...) \
-  new_lambda(({return_type __fn__ body __fn__;}),list,0);
+  new_lambda(({return_type __fn__ body __fn__;}),list,0)
 
 #endif
 

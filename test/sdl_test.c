@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <graphic/graphic.h>
-#include <graphic/texture.h>
-#include <graphic/shader.h>
+#include <graphic/m_texture.h>
+#include <graphic/m_shader.h>
 #include <graphic/sprite2d.h>
 #include <base/ref.h>
 #include <math/math.h>
@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
   SDL_Event windowEvent;
 
   //-------------------------------
-  g_texture* tex = texture_new_from_file_char("res/nature.jpg");
-  g_texture* tex2 = texture_new_from_file_char("res/Silent-Morning.png");
+  m_texture* tex = m_texture_new_from_file_char("res/nature.jpg");
+  m_texture* tex2 = m_texture_new_from_file_char("res/Silent-Morning.png");
   // Create Vertex Array Object
   GLuint vao;
   glGenVertexArrays(1, &vao);
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
   // Create and compile the vertex shader
-  g_shader* shader = shader_new_from_file("res/shader.vert", "res/shader.frag");
+  m_shader* shader = m_shader_new_from_file("res/shader.vert", "res/shader.frag");
   shader->func->retain(shader);
   shader->func->use(shader);
 
@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
   glDeleteBuffers(1, &vbo);
 
   glDeleteVertexArrays(1, &vao);
-  texture_free_cache();
+  m_texture_free_cache();
   ref_update_auto_release_pool();
   SDL_GL_DeleteContext(context);
   SDL_Quit();

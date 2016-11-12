@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <graphic/shader.h>
+#include <graphic/m_shader.h>
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -12,7 +12,7 @@
 GLdouble width, height;   /* window width and height */
 int wd;                   /* GLUT window handle */
 GLuint VBO, VAO, EBO;
-g_shader* shader;
+m_shader* shader;
 // Shaders
 const GLchar* vertexShaderSource = "\n"
     "attribute vec3 position;\n"
@@ -127,7 +127,7 @@ main(int argc, char *argv[])
 
   //-----------------------------------------------
   // Build and compile our shader program
-  shader = shader_new(vertexShaderSource, fragmentShaderSource);
+  shader = m_shader_new_from_source(vertexShaderSource, fragmentShaderSource);
   shader->func->retain(shader);
 
   GLfloat vertices[] = {

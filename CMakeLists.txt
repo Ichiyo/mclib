@@ -19,12 +19,12 @@ endif()
 
 if (${USER_BUILD_IOS} MATCHES "true")
 
-file(GLOB SOURCES "src/*.c" "src/*.m" "src/node/*.c" "src/node/*.m")
+file(GLOB SOURCES "src/*.c" "src/*.m" "src/node/*.c" "src/node/*.m" "src/graphic/*.c" "src/graphic/*.m")
 add_library(clibraries STATIC ${SOURCES})
 
 else()
 
-file(GLOB SOURCES "src/*.c" "src/node/*.c")
+file(GLOB SOURCES "src/*.c" "src/node/*.c" "src/graphic/*.c")
 add_library(clibraries STATIC ${SOURCES})
 
 endif()

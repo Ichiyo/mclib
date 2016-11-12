@@ -59,3 +59,13 @@ add_executable(test_2d test_2d.c temp)
 set_property(TARGET test_2d PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
 add_dependencies(test_2d clibraries)
 target_link_libraries(test_2d ${PROJECT_LINK_LIBS})
+
+add_executable(xml_test xml_test.c temp)
+set_property(TARGET xml_test PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(xml_test clibraries)
+target_link_libraries(xml_test ${PROJECT_LINK_LIBS})
+
+add_executable(gen_code gen_code.c temp)
+set_property(TARGET gen_code PROPERTY LINK_DEPENDS ${PROJECT_SOURCE_DIR}/../build/libclibraries.a)
+add_dependencies(gen_code clibraries)
+target_link_libraries(gen_code ${PROJECT_LINK_LIBS})

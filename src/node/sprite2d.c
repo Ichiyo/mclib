@@ -17,7 +17,7 @@ void sprite2d_free(g_sprite2d* node)
 	free_node(node);
 }
 
-void sprite2d_set_shader(g_sprite2d* node, g_shader* shader)
+void sprite2d_set_shader(g_sprite2d* node, m_shader* shader)
 {
 	if(node->shader) node->shader->func->release(node->shader);
 	node->shader = shader;
@@ -39,7 +39,7 @@ void sprite2d_set_shader(g_sprite2d* node, g_shader* shader)
 	glBindVertexArray(0);
 }
 
-void sprite2d_set_texture(g_sprite2d* node, g_texture* texture)
+void sprite2d_set_texture(g_sprite2d* node, m_texture* texture)
 {
 	if(node->texture) node->texture->func->release(node->texture);
 	node->texture = texture;

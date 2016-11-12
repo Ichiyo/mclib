@@ -152,6 +152,8 @@ EXTEND_REF(weak_ref,ref_func,
   .auto_release = base_ref_auto_release, \
   .new_weak_ref = base_ref_new_weak_ref
 
+#define INHERIT_REF_FUNC BASE_REF_FUNC_INHERIT
+
 /*
   autorelease pool is designed with linked list to remove object quickly
   a ref need to keep track about it in release pool

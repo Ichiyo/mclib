@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <graphic/graphic.h>
-#include <graphic/texture.h>
-#include <graphic/shader.h>
+#include <graphic/m_texture.h>
+#include <graphic/m_shader.h>
 #include <graphic/sprite2d.h>
 #include <graphic/node3d.h>
 #include <base/ref.h>
@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
   SDL_Event windowEvent;
 
   //-------------------------------
-  g_texture* tex = texture_new_from_file_char("res/Silent-Morning.png");
-  g_texture* tex2 = texture_new_from_file_char("res/floor/TexturesCom_FloorsCheckerboard0017_1_seamless_S.jpg");
-  g_shader* shader = shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
-  g_shader* shader2 = shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
+  m_texture* tex = m_texture_new_from_file_char("res/Silent-Morning.png");
+  m_texture* tex2 = m_texture_new_from_file_char("res/floor/TexturesCom_FloorsCheckerboard0017_1_seamless_S.jpg");
+  m_shader* shader = m_shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
+  m_shader* shader2 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
   g_sprite2d* sprite = sprite2d_new();
   sprite->func->set_texture(sprite, tex);
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
   }
   sprite->func->release(sprite);
 
-  texture_free_cache();
+  m_texture_free_cache();
   ref_update_auto_release_pool();
   SDL_GL_DeleteContext(context);
   SDL_Quit();
