@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <utils/file_utils.h>
+#include <mstr/xml.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,7 +11,6 @@ extern "C" {
 
 void node3d_free(g_node3d* node)
 {
-	if(node->ebo) glDeleteBuffers(1, &node->ebo);
   if(node->vbo) glDeleteBuffers(1, &node->vbo);
   if(node->vao) glDeleteVertexArrays(1, &node->vao);
 	if(node->shader) node->shader->func->release(node->shader);
@@ -18,7 +18,7 @@ void node3d_free(g_node3d* node)
 	free_node(node);
 }
 
-void node3d_set_shader(g_node3d* node, g_shader* shader)
+void node3d_set_shader(g_node3d* node, m_shader* shader)
 {
 	if(node->shader) node->shader->func->release(node->shader);
 	node->shader = shader;
@@ -51,7 +51,7 @@ void node3d_set_shader(g_node3d* node, g_shader* shader)
   }
 }
 
-void node3d_set_texture(g_node3d* node, g_texture* texture)
+void node3d_set_texture(g_node3d* node, m_texture* texture)
 {
 	if(node->texture) node->texture->func->release(node->texture);
 	node->texture = texture;
@@ -71,6 +71,27 @@ void node3d_draw(g_node3d* node)
 	glBindVertexArray(node->vao);
 	glDrawArrays(GL_TRIANGLES, 0, node->count);
 	glBindVertexArray(0);
+}
+
+void node3d_set_model_dae(g_node3d* node, char* path)
+{
+	// parse_xml_file("res/cude.dae",
+	//
+	// 	SAFE_NEW_LAMBDA(void, (int depth, m_string* name)
+	// 	{
+	//
+	// 	},0),
+	//
+	// 	SAFE_NEW_LAMBDA(void, (int depth, m_string* content)
+	// 	{
+	//
+	// 	},0),
+	//
+	// 	SAFE_NEW_LAMBDA(void, (int depth, m_string* name)
+	// 	{
+	// 	},0)
+	//
+	// );
 }
 
 void node3d_set_model_obj(g_node3d* node, char* path)
@@ -242,60 +263,12 @@ static g_node3d_func base_g_sprite_func =
 void init_node3d(g_node3d* node)
 {
 	node->func = &base_g_sprite_func;
-	GLfloat vertices[] = {
-    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f, 0.0, 0.0, 0.0, 0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 0.0, 0.0, 0.0, 0.0f, 1.0f
-	};
-  node->count = 36;
+  node->count = 0;
 	glGenVertexArrays(1, &node->vao);
 	glGenBuffers(1, &node->vbo);
 
 	glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
-	// glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	//
 	glBindVertexArray(node->vao);
-	//
-	// glEnableVertexAttribArray(0);
-	// glVertexAttribPointer(0, 8, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
 	//
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
