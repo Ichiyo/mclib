@@ -3,8 +3,8 @@
 #include <graphic/graphic.h>
 #include <graphic/m_texture.h>
 #include <graphic/m_shader.h>
-#include <graphic/sprite2d.h>
-#include <graphic/node3d.h>
+#include <graphic/m_sprite2d.h>
+#include <graphic/m_node3d.h>
 #include <base/ref.h>
 #include <math/math.h>
 
@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
   m_shader* shader = m_shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
   m_shader* shader2 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
-  g_sprite2d* sprite = sprite2d_new();
+  m_sprite2d* sprite = m_sprite2d_new();
   sprite->func->set_texture(sprite, tex);
   sprite->func->set_shader(sprite, shader);
   sprite->func->set_size(sprite, vector3_new(50, 50, 0));
   sprite->func->retain(sprite);
 
   {
-    g_node3d* sprite4 = node3d_new();
+    m_node3d* sprite4 = m_node3d_new();
     sprite4->size = vector3_new(30, 30, 30);
     sprite4->func->set_shader(sprite4, shader2);
     sprite4->func->set_texture(sprite4,tex2);

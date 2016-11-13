@@ -6,8 +6,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <serialize/serialize.h>
-#include <graphic/node.h>
-#include <graphic/sprite2d.h>
+#include <graphic/m_node.h>
+#include <graphic/m_sprite2d.h>
 #include <math/math.h>
 #include <utils/file_utils.h>
 #include <graphic/image.h>

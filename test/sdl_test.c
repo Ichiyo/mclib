@@ -3,7 +3,7 @@
 #include <graphic/graphic.h>
 #include <graphic/m_texture.h>
 #include <graphic/m_shader.h>
-#include <graphic/sprite2d.h>
+#include <graphic/m_sprite2d.h>
 #include <base/ref.h>
 #include <math/math.h>
 

@@ -93,12 +93,21 @@ void generate_new_file(int argc, char const *argv[])
       char* ch;
       char s[2] = " ";
       ch = strtok(buff, s);
+      int add = -1;
       while(ch != NULL)
       {
-        params->func->push(params, new_string_from_char(ch), 1);
+        if(add == -1)
+        {
+          if(strcmp(ch,"add") == 0) add = 1;
+          else add = 0;
+        }
+        else
+        {
+          params->func->push(params, new_string_from_char(ch), 1);
+        }
         ch = strtok(NULL, s);
       }
-      child_function_declaration->func->cat_char(child_function_declaration,"\n");
+      if(add == 1) child_function_declaration->func->cat_char(child_function_declaration,"\n");
       struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration,"\n");
       struct_function_interface_assignment->func->cat_char(struct_function_interface_assignment,"\n");
       implement_function->func->cat_char(implement_function, "\n\n");
@@ -107,16 +116,16 @@ void generate_new_file(int argc, char const *argv[])
       {
         if(i == 0)
         {
-          child_function_declaration->func->cat_char(child_function_declaration,"\t");
-          child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration,"\t");
+          if(add == 1) child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
           struct_function_interface_declaration->func->cat_str(struct_function_interface_declaration, params->func->get_index(params, i));
           implement_function->func->cat_str(implement_function, params->func->get_index(params, i));
         }
         else if(i == 1)
         {
-          child_function_declaration->func->cat_char(child_function_declaration, "(*");
-          child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
-          child_function_declaration->func->cat_char(child_function_declaration, ")();");
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, "(*");
+          if(add == 1) child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, ")();");
 
           struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration," ");
           struct_function_interface_declaration->func->cat_str(struct_function_interface_declaration, struct_name);
@@ -175,7 +184,7 @@ void generate_new_file(int argc, char const *argv[])
             }
         }
       }
-      child_function_declaration->func->cat_char(child_function_declaration," \\");
+      if(add == 1) child_function_declaration->func->cat_char(child_function_declaration," \\");
       struct_function_interface_assignment->func->cat_char(struct_function_interface_assignment," \\");
     }
     params->func->clear(params);
@@ -263,9 +272,18 @@ void modify_file(int argc, char const *argv[])
       char* ch;
       char s[2] = " ";
       ch = strtok(buff, s);
+      int add = -1;
       while(ch != NULL)
       {
-        params->func->push(params, new_string_from_char(ch), 1);
+        if(add == -1)
+        {
+          if(strcmp(ch,"add") == 0) add = 1;
+          else add = 0;
+        }
+        else
+        {
+          params->func->push(params, new_string_from_char(ch), 1);
+        }
         ch = strtok(NULL, s);
       }
 
@@ -291,7 +309,7 @@ void modify_file(int argc, char const *argv[])
         continue;
       }
 
-      child_function_declaration->func->cat_char(child_function_declaration,"\n");
+      if(add == 1) child_function_declaration->func->cat_char(child_function_declaration,"\n");
       struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration,"\n");
       struct_function_interface_assignment->func->cat_char(struct_function_interface_assignment,"\n");
       implement_function->func->cat_char(implement_function, "\n\n");
@@ -300,16 +318,16 @@ void modify_file(int argc, char const *argv[])
       {
         if(i == 0)
         {
-          child_function_declaration->func->cat_char(child_function_declaration,"\t");
-          child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration,"\t");
+          if(add == 1) child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
           struct_function_interface_declaration->func->cat_str(struct_function_interface_declaration, params->func->get_index(params, i));
           implement_function->func->cat_str(implement_function, params->func->get_index(params, i));
         }
         else if(i == 1)
         {
-          child_function_declaration->func->cat_char(child_function_declaration, "(*");
-          child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
-          child_function_declaration->func->cat_char(child_function_declaration, ")();");
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, "(*");
+          if(add == 1) child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, ")();");
 
           struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration," ");
           struct_function_interface_declaration->func->cat_str(struct_function_interface_declaration, struct_name);
@@ -368,7 +386,7 @@ void modify_file(int argc, char const *argv[])
             }
         }
       }
-      child_function_declaration->func->cat_char(child_function_declaration," \\");
+      if(add == 1) child_function_declaration->func->cat_char(child_function_declaration," \\");
       struct_function_interface_assignment->func->cat_char(struct_function_interface_assignment," \\");
     }
     params->func->clear(params);
