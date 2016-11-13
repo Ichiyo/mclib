@@ -1,6 +1,9 @@
 #ifndef _M_MATRIX4_H
 #define _M_MATRIX4_H
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+
 #include <stddef.h>
 
 #if defined(__ARM_NEON__)

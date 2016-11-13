@@ -1,6 +1,9 @@
 #ifndef _M_MATH_TYPES_H
 #define _M_MATH_TYPES_H
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

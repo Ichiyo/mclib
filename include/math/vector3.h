@@ -1,6 +1,9 @@
 #ifndef _M_VECTOR3_H
 #define _M_VECTOR3_H
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-braces"
+
 #if defined(__ARM_NEON__)
 #include <arm_neon.h>
 #endif
