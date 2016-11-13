@@ -12,6 +12,8 @@
 #include <utils/file_utils.h>
 #include <graphic/image.h>
 #include <graphic/m_texture.h>
+#include <mstr/m_float_array.h>
+#include <mstr/m_int_array.h>
 
 // static void traverse(unsigned long key, void* data)
 // {
@@ -21,6 +23,25 @@
 int
 main (int argc, char *argv[])
 {
+	{
+		m_float_array* arr = m_float_array_new();
+		arr->func->push(arr, 1.0f);
+		arr->func->push(arr, 159.0f);
+		for(long i = 0; i < arr->length; i++)
+		{
+			printf("%f\n",arr->data[i]);
+		}
+	}
+	{
+		m_int_array* arr = m_int_array_new();
+		arr->func->push(arr, 888888888);
+		arr->func->push(arr, 159);
+		for(long i = 0; i < arr->length; i++)
+		{
+			printf("%d\n",arr->data[i]);
+		}
+	}
+
 	//
 	// g_image* image = image_new_from_file("res/wolf.jpg");
 	// m_string* str = new_string();

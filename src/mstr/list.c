@@ -318,7 +318,7 @@ static void array_list_remove(m_list* list, void* data)
       }
       free(node);
 
-      memmove(content->elements+i, content->elements+i+1, (list->size - i - 1) * sizeof(m_array_list_node*));
+      if(i != list->size - 1) memmove(content->elements+i, content->elements+i+1, (list->size - i - 1) * sizeof(m_array_list_node*));
       list->size--;
       break;
     }

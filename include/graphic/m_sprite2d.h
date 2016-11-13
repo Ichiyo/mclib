@@ -14,8 +14,8 @@ extern "C" {
 #define EXTEND_M_SPRITE2D_FUNC(type, content) \
   EXTEND_M_NODE_FUNC(type, \
   /*EXPAND FUNCTION -- DO NOT DELETE IT*/ \
-	void(*set_shader)(); \
-	void(*set_texture)(); \
+	void(*set_shader)(void*,void*); \
+	void(*set_texture)(void*,void*); \
   content \
   );
 

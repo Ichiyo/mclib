@@ -7,6 +7,7 @@
 #include <graphic/m_node3d.h>
 #include <base/ref.h>
 #include <math/math.h>
+#include <utils/file_utils.h>
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +24,17 @@ int main(int argc, char *argv[])
   m_texture* tex = m_texture_new_from_file_char("res/Silent-Morning.png");
   m_texture* tex2 = m_texture_new_from_file_char("res/floor/TexturesCom_FloorsCheckerboard0017_1_seamless_S.jpg");
   m_shader* shader = m_shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
-  m_shader* shader2 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
+
+  m_string* _3d_vert = read_string_from_file("res/shaders/shader_skin_3d.vert");
+  m_string* _3d_frag = read_string_from_file("res/shaders/shader_skin_3d.frag");
+
+  _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_join_ids"), new_string_from_char("0"));
+  _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_joins"), new_string_from_char("0"));
+  _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$use_model_index"), new_string_from_char("1"));
+  m_shader* shader2 = m_shader_new_from_source(_3d_vert->content, _3d_frag->content);
+  QUICK_RELEASE(_3d_vert);
+  QUICK_RELEASE(_3d_frag);
+  // m_shader* shader2 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
   m_sprite2d* sprite = m_sprite2d_new();
   sprite->func->set_texture(sprite, tex);
@@ -49,6 +60,7 @@ int main(int argc, char *argv[])
     0.0f, 1.0f, 0.0f
   );
   m_matrix4 proj = matrix4_create_perspective(DEG_TO_RAD(45.0f), 800.0f / 600.0f, 1.0f, 1000.0f);
+
   shader->func->use(shader);
   glUniform1i(glGetUniformLocation(shader->func->get_id(shader), "tex"), 0);
   glUniformMatrix4fv(glGetUniformLocation(shader->func->get_id(shader), "view"), 1, GL_FALSE, view.m);

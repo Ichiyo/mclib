@@ -177,6 +177,9 @@ void ref_update_auto_release_pool();
   ref_init(val); \
   val->func->auto_release(val);
 
+#define QUICK_RETAIN(val) do { if(val) val->func->retain(val); } while(0)
+#define QUICK_RELEASE(val) do { if(val) val->func->release(val); } while(0)
+
 #ifdef __cplusplus
 }
 #endif

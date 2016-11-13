@@ -16,6 +16,14 @@ EXTEND_REF_FUNC(lambda_func,
   Clang does not support nested function but has block.
   Block acts "like function" but invoking block as function type
   will generate segment fault !
+
+  IMPORTAINT:
+  function in GNU or block in CLANG needs declare arguments of these types :
+    - pointer : void*, name*...
+    - double : can not use float because of implicit conversion from float to double when pushing float to call stack
+               results 8 bytes in stack for argument,
+               if argument declared as float then function will receive only 4 bytes from stack --> wrong binary
+    - int/long/char...
 */
 #if defined(__clang__)
 EXTEND_REF(lambda_ref, lambda_func,

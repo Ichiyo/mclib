@@ -13,15 +13,15 @@ extern "C" {
 #define EXTEND_M_NODE_FUNC(type, content) \
   EXTEND_REF_FUNC(type, \
   /*EXPAND FUNCTION -- DO NOT DELETE IT*/ \
-	void(*visit)(); \
-	void(*draw)(); \
-	void(*add_child)(); \
-	void(*set_visible)(); \
-	void(*set_scale)(); \
-	void(*set_size)(); \
-	void(*set_position)(); \
-	void(*set_anchor)(); \
-	void(*set_quat)(); \
+	void(*visit)(void*,m_matrix4,int); \
+	void(*draw)(void*); \
+	void(*add_child)(void*,void*); \
+	void(*set_visible)(void*,int); \
+	void(*set_scale)(void*,m_vector3); \
+	void(*set_size)(void*,m_vector3); \
+	void(*set_position)(void*,m_vector3); \
+	void(*set_anchor)(void*,m_vector3); \
+	void(*set_quat)(void*,quaternion); \
   content \
   );
 

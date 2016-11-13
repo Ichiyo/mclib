@@ -125,7 +125,12 @@ void generate_new_file(int argc, char const *argv[])
         {
           if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, "(*");
           if(add == 1) child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
-          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, ")();");
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, ")(");
+
+          if(add == 1 && i == params->size - 1)
+          {
+            child_function_declaration->func->cat_char(child_function_declaration, ");");
+          }
 
           struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration," ");
           struct_function_interface_declaration->func->cat_str(struct_function_interface_declaration, struct_name);
@@ -157,6 +162,27 @@ void generate_new_file(int argc, char const *argv[])
         }
         else
         {
+            if(add == 1)
+            {
+              if(i > 2)
+              {
+                child_function_declaration->func->cat_char(child_function_declaration, ", ");
+              }
+              m_string* p = (m_string*)params->func->get_index(params, i);
+              if(p->func->contain_char(p,"*"))
+              {
+                child_function_declaration->func->cat_char(child_function_declaration, "void*");
+              }
+              else
+              {
+                child_function_declaration->func->cat_str(child_function_declaration, p);
+              }
+              if(i == params->size - 1)
+              {
+                child_function_declaration->func->cat_char(child_function_declaration, ");");
+              }
+            }
+
             if(i > 2)
             {
               struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration,", ");
@@ -327,7 +353,8 @@ void modify_file(int argc, char const *argv[])
         {
           if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, "(*");
           if(add == 1) child_function_declaration->func->cat_str(child_function_declaration, params->func->get_index(params, i));
-          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, ")();");
+          if(add == 1) child_function_declaration->func->cat_char(child_function_declaration, ")(");
+          if(add == 1 && i == params->size - 1) child_function_declaration->func->cat_char(child_function_declaration, ");");
 
           struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration," ");
           struct_function_interface_declaration->func->cat_str(struct_function_interface_declaration, struct_name);
@@ -359,6 +386,27 @@ void modify_file(int argc, char const *argv[])
         }
         else
         {
+            if(add == 1)
+            {
+              if(i > 2)
+              {
+                child_function_declaration->func->cat_char(child_function_declaration, ", ");
+              }
+              m_string* p = (m_string*)params->func->get_index(params, i);
+              if(p->func->contain_char(p,"*"))
+              {
+                child_function_declaration->func->cat_char(child_function_declaration, "void*");
+              }
+              else
+              {
+                child_function_declaration->func->cat_str(child_function_declaration, p);
+              }
+              if(i == params->size - 1)
+              {
+                child_function_declaration->func->cat_char(child_function_declaration, ");");
+              }
+            }
+
             if(i > 2)
             {
               struct_function_interface_declaration->func->cat_char(struct_function_interface_declaration,", ");

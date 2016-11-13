@@ -14,9 +14,9 @@ extern "C" {
 #define EXTEND_M_TEXTURE_FUNC(type, content) \
   EXTEND_REF_FUNC(type, \
   /*EXPAND FUNCTION -- DO NOT DELETE IT*/ \
-	void(*bind)(); \
-	int(*get_width)(); \
-	int(*get_height)(); \
+	void(*bind)(void*,int); \
+	int(*get_width)(void*); \
+	int(*get_height)(void*); \
   content \
   );
 

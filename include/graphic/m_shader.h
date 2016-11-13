@@ -12,8 +12,8 @@ extern "C" {
 #define EXTEND_M_SHADER_FUNC(type, content) \
   EXTEND_REF_FUNC(type, \
   /*EXPAND FUNCTION -- DO NOT DELETE IT*/ \
-	void(*use)(); \
-	int(*get_id)(); \
+	void(*use)(void*); \
+	int(*get_id)(void*); \
   content \
   );
 
