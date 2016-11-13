@@ -1,4 +1,5 @@
 #include <graphic/m_node.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {

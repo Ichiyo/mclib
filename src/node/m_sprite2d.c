@@ -1,4 +1,5 @@
 #include <graphic/m_sprite2d.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
