@@ -19,13 +19,43 @@ plf_in vec3 position;
 plf_in vec3 normal;
 plf_in vec2 texcoord;
 
+//DO NOT DELETE THIS LINE
+//TEMPLATE [i]
+//plf_in float joinIds_[i-1]
+//plf_in float weights_[i-1]
+
 #if USE_MODEL_INDEX != 0
 plf_in float model_index;
 #endif
 
-#if NUMBER_JOIN_IDS != 0
-plf_in float joinIds[NUMBER_JOIN_IDS];
-plf_in float weights[NUMBER_JOIN_IDS];
+#if NUMBER_JOIN_IDS >= 1
+plf_in float joinIds_0;
+plf_in float weights_0;
+#endif
+
+#if NUMBER_JOIN_IDS >= 2
+plf_in float joinIds_1;
+plf_in float weights_1;
+#endif
+
+#if NUMBER_JOIN_IDS >= 3
+plf_in float joinIds_2;
+plf_in float weights_2;
+#endif
+
+#if NUMBER_JOIN_IDS >= 4
+plf_in float joinIds_3;
+plf_in float weights_3;
+#endif
+
+#if NUMBER_JOIN_IDS >= 5
+plf_in float joinIds_4;
+plf_in float weights_4;
+#endif
+
+#if NUMBER_JOIN_IDS >= 6
+plf_in float joinIds_5;
+plf_in float weights_5;
 #endif
 
 plf_out vec2 Texcoord;
@@ -195,56 +225,55 @@ void main()
 
 #if NUMBER_JOIN_IDS == 0
     vec4 pos = vec4(position, 1.0);
-    vec3 nor = normal;
+    vec4 nor = vec4(normal, 1.0);
 #else
     vec4 pos;
-    vec3 nor;
+    vec4 nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 1
-  pos = joins[int(joinIds[0])] * vec4(position, 1.0) * weights[0];
-  nor = joins[int(joinIds[0])] * vec4(normal, 1.0) * weights[0];
+  pos = joins[int(joinIds_0)] * vec4(position, 1.0) * weights_0;
+  nor = joins[int(joinIds_0)] * vec4(normal, 1.0) * weights_0;
 #endif
 
 #if NUMBER_JOIN_IDS >= 2
-  pos = joins[int(joinIds[1])] * vec4(position, 1.0) * weights[1] + pos;
-  nor = joins[int(joinIds[1])] * vec4(normal, 1.0) * weights[1] + nor;
+  pos = joins[int(joinIds_1)] * vec4(position, 1.0) * weights_1 + pos;
+  nor = joins[int(joinIds_1)] * vec4(normal, 1.0) * weights_1 + nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 3
-  pos = joins[int(joinIds[2])] * vec4(position, 1.0) * weights[2] + pos;
-  nor = joins[int(joinIds[2])] * vec4(normal, 1.0) * weights[2] + nor;
+  pos = joins[int(joinIds_2)] * vec4(position, 1.0) * weights_2 + pos;
+  nor = joins[int(joinIds_2)] * vec4(normal, 1.0) * weights_2 + nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 4
-  pos = joins[int(joinIds[3])] * vec4(position, 1.0) * weights[3] + pos;
-  nor = joins[int(joinIds[3])] * vec4(normal, 1.0) * weights[3] + nor;
+  pos = joins[int(joinIds_3)] * vec4(position, 1.0) * weights_3 + pos;
+  nor = joins[int(joinIds_3)] * vec4(normal, 1.0) * weights_3 + nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 5
-  pos = joins[int(joinIds[4])] * vec4(position, 1.0) * weights[4] + pos;
-  nor = joins[int(joinIds[4])] * vec4(normal, 1.0) * weights[4] + nor;
+  pos = joins[int(joinIds_4)] * vec4(position, 1.0) * weights_4 + pos;
+  nor = joins[int(joinIds_4)] * vec4(normal, 1.0) * weights_4 + nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 6
-  pos = joins[int(joinIds[5])] * vec4(position, 1.0) * weights[5] + pos;
-  nor = joins[int(joinIds[5])] * vec4(normal, 1.0) * weights[5] + nor;
+  pos = joins[int(joinIds_5)] * vec4(position, 1.0) * weights_5 + pos;
+  nor = joins[int(joinIds_5)] * vec4(normal, 1.0) * weights_5 + nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 7
-  pos = joins[int(joinIds[6])] * vec4(position, 1.0) * weights[6] + pos;
-  nor = joins[int(joinIds[6])] * vec4(normal, 1.0) * weights[6] + nor;
+  pos = joins[int(joinIds_6)] * vec4(position, 1.0) * weights_6 + pos;
+  nor = joins[int(joinIds_6)] * vec4(normal, 1.0) * weights_6 + nor;
 #endif
 
 #if NUMBER_JOIN_IDS >= 8
-  pos = joins[int(joinIds[7])] * vec4(position, 1.0) * weights[7] + pos;
-  nor = joins[int(joinIds[7])] * vec4(normal, 1.0) * weights[7] + nor;
+  pos = joins[int(joinIds_7)] * vec4(position, 1.0) * weights_7 + pos;
+  nor = joins[int(joinIds_7)] * vec4(normal, 1.0) * weights_7 + nor;
 #endif
 
     pos[3] = 1.0;
     Texcoord = texcoord;
     gl_Position = proj * view * mod * pos;
-    //Normal = normal;
-    Normal = mat3(matrix4_transpose(matrix4_inverse(mod))) * nor;
+    Normal = mat3(matrix4_transpose(matrix4_inverse(mod))) * vec3(nor);
     FragPos = vec3(mod * pos);
 }

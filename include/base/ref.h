@@ -5,6 +5,10 @@
 #include <stdatomic.h>
 #endif
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 /*
 
   force disable warning incompatible pointer types
