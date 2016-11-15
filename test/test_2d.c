@@ -30,32 +30,37 @@ int main(int argc, char *argv[])
   m_string* _3d_vert = read_string_from_file("res/shaders/shader_skin_3d.vert");
   m_string* _3d_frag = read_string_from_file("res/shaders/shader_skin_3d.frag");
 
-  _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_join_ids"), new_string_from_char("0"));
-  _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_joins"), new_string_from_char("0"));
-  _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$use_model_index"), new_string_from_char("1"));
-  m_shader* shader2 = m_shader_new_from_source(_3d_vert->content, _3d_frag->content);
-  QUICK_RELEASE(_3d_vert);
-  QUICK_RELEASE(_3d_frag);
-  // m_shader* shader2 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
+  // _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_join_ids"), new_string_from_char("0"));
+  // _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_joins"), new_string_from_char("0"));
+  // _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$use_model_index"), new_string_from_char("1"));
+  // m_shader* shader2 = m_shader_new_from_source(_3d_vert->content, _3d_frag->content);
+  // QUICK_RELEASE(_3d_vert);
+  // QUICK_RELEASE(_3d_frag);
+  m_shader* shader3 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
-  m_skin_node_parser_parse("res/cube-3.dae");
+  m_list* nodes = m_skin_node_parser_parse("res/work1.dae");
 
   m_sprite2d* sprite = m_sprite2d_new();
-  sprite->func->set_texture(sprite, tex);
-  sprite->func->set_shader(sprite, shader);
   sprite->func->set_size(sprite, vector3_new(50, 50, 0));
   sprite->func->retain(sprite);
+  _(sprite, add_child, _(nodes, get_first));
 
+  m_skin_node* n = _(nodes, get_first);
+  _(n, set_texture, tex);
+
+  m_shader* shader2 = n->shader;
+  _(n, set_size, vector3_new(30, 30, 30));
+  // _(n, set_anchor, vector3_new(0, 0, 0));
   {
     m_node3d* sprite4 = m_node3d_new();
     sprite4->size = vector3_new(30, 30, 30);
-    sprite4->func->set_shader(sprite4, shader2);
+    sprite4->func->set_shader(sprite4, shader3);
     sprite4->func->set_texture(sprite4,tex2);
     sprite->func->add_child(sprite, sprite4);
-    sprite4->func->set_model_obj(sprite4, "res/model/cube.obj");
+    sprite4->func->set_model_obj(sprite4, "res/model/monkey2.obj");
     sprite4->func->set_position(sprite4, vector3_new(50, 0, 0));
-    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(45), 0, 0, 1);
-    sprite4->func->set_quat(sprite4, quaternion_mul(sprite4->quat, offset_q));
+    // quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(45), 0, 0, 1);
+    // sprite4->func->set_quat(sprite4, quaternion_mul(sprite4->quat, offset_q));
   }
 
   m_matrix4 view = matrix4_create_look_at(
@@ -69,24 +74,50 @@ int main(int argc, char *argv[])
   glUniform1i(glGetUniformLocation(shader->func->get_id(shader), "tex"), 0);
   glUniformMatrix4fv(glGetUniformLocation(shader->func->get_id(shader), "view"), 1, GL_FALSE, view.m);
   glUniformMatrix4fv(glGetUniformLocation(shader->func->get_id(shader), "proj"), 1, GL_FALSE, proj.m);
-  shader2->func->use(shader2);
-  glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "proj"), 1, GL_FALSE, proj.m);
-  glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "view"), 1, GL_FALSE, view.m);
-  int diffuse = 0;
-  glUniform1iv(glGetUniformLocation(shader2->func->get_id(shader2), "material.diffuse"),1, &diffuse);
 
-  GLint lightDirLoc = glGetUniformLocation(shader2->func->get_id(shader2), "light.direction");
-  m_vector3 vector = vector3_new(-1, 0, -1);
-  glUniform3fv(lightDirLoc,1, &vector);
-  vector = vector3_new(0.5f, 0.5f, 0.5f);
-  glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.ambient"),  1, &vector);
-  vector = vector3_new(1,1,1);
-  glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.diffuse"),  1, &vector);
-  vector = vector3_new(1, 1, 1);
-  glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.specular"), 1, &vector);
-  // Set material properties
-  float shinness = 32;
-  glUniform1fv(glGetUniformLocation(shader2->func->get_id(shader2), "material.shininess"), 1, &shinness);
+  {
+    shader2->func->use(shader2);
+    glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "proj"), 1, GL_FALSE, proj.m);
+    glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader2), "view"), 1, GL_FALSE, view.m);
+    int diffuse = 0;
+    glUniform1iv(glGetUniformLocation(shader2->func->get_id(shader2), "material.diffuse"),1, &diffuse);
+
+    GLint lightDirLoc = glGetUniformLocation(shader2->func->get_id(shader2), "light.direction");
+    m_vector3 vector = vector3_new(-1, 0, -1);
+    glUniform3fv(lightDirLoc,1, &vector);
+    vector = vector3_new(0.5f, 0.5f, 0.5f);
+    glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.ambient"),  1, &vector);
+    vector = vector3_new(1,1,1);
+    glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.diffuse"),  1, &vector);
+    vector = vector3_new(1, 1, 1);
+    glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader2), "light.specular"), 1, &vector);
+    // Set material properties
+    float shinness = 32;
+    glUniform1fv(glGetUniformLocation(shader2->func->get_id(shader2), "material.shininess"), 1, &shinness);
+
+  }
+
+  {
+    shader3->func->use(shader3);
+    glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader3), "proj"), 1, GL_FALSE, proj.m);
+    glUniformMatrix4fv(glGetUniformLocation(shader2->func->get_id(shader3), "view"), 1, GL_FALSE, view.m);
+    int diffuse = 0;
+    glUniform1iv(glGetUniformLocation(shader2->func->get_id(shader3), "material.diffuse"),1, &diffuse);
+
+    GLint lightDirLoc = glGetUniformLocation(shader2->func->get_id(shader3), "light.direction");
+    m_vector3 vector = vector3_new(-1, 0, -1);
+    glUniform3fv(lightDirLoc,1, &vector);
+    vector = vector3_new(0.5f, 0.5f, 0.5f);
+    glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader3), "light.ambient"),  1, &vector);
+    vector = vector3_new(1,1,1);
+    glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader3), "light.diffuse"),  1, &vector);
+    vector = vector3_new(1, 1, 1);
+    glUniform3fv(glGetUniformLocation(shader2->func->get_id(shader3), "light.specular"), 1, &vector);
+    // Set material properties
+    float shinness = 32;
+    glUniform1fv(glGetUniformLocation(shader2->func->get_id(shader3), "material.shininess"), 1, &shinness);
+
+  }
 
   glEnable(GL_DEPTH_TEST);
   quaternion offset_q = quaternion_identity;

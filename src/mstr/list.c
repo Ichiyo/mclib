@@ -354,6 +354,7 @@ static void array_list_insert(m_list* list, void* data, long index, int is_ref)
     array_list_push(list, data, is_ref);
     return;
   }
+
   if(is_ref)
   {
     ((ref*)data)->func->retain(data);

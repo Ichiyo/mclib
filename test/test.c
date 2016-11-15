@@ -24,22 +24,15 @@
 int
 main (int argc, char *argv[])
 {
-	m_list* list = linked_list_new();
-	m_string* s1 = new_string_from_char("I am 1");
-	m_string* s2 = new_string_from_char("I am 2");
-	m_string* s3 = new_string_from_char("I am 3");
-	m_string* s4 = new_string_from_char("I am 4");
-
-	_(list, push, s1, 1);
-	_(list, push, s2, 1);
-	_(list, push, s4, 1);
-	_(list, insert, s3, 0, 1);
-	printf("--------\n");
-	for(long i = 0; i < list->size; i++)
+	int a[2] = {100, 200};
+	int b[2] = {5, 10};
+	int t = 0;
+	int l = 0;
+	for(int i = 0; i < 2; i++)
 	{
-		m_string* s = _(list, get_index, i);
-		printf("%s\n",s->content);
+		a[t++] = b[l++];
 	}
+	printf("%d %d\n",a[0], a[1]);
 	//
 	// g_image* image = image_new_from_file("res/wolf.jpg");
 	// m_string* str = new_string();
