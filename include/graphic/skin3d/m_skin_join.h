@@ -21,6 +21,8 @@ extern "C" {
 #define EXTEND_M_SKIN_JOIN(type, func, content) \
   EXTEND_REF(type, func, \
   /*EXPAND FIELD -- DO NOT DELETE IT*/ \
+	m_string* id; \
+	m_matrix4 transform; \
 	m_list* children; \
 	weak_ref* parent; \
 	m_matrix4 inverse_bind_pose; \

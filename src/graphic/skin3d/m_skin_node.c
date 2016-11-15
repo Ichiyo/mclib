@@ -1,6 +1,8 @@
 #include <graphic/skin3d/m_skin_node.h>
 #include <mstr/xml.h>
 #include <utils/file_utils.h>
+#include <graphic/skin3d/m_geometry_mesh.h>
+#include <graphic/skin3d/m_controller_skin.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,32 +23,11 @@ void m_skin_node_free(m_skin_node* node)
 
 /*EXPEND IMPLEMENTATION -- DO NOT DELETE THIS LINE*/
 
-void m_skin_node_parse_collada_file(m_skin_node* node, char* path)
+void m_skin_node_set_join(m_skin_node* node, m_skin_join* join)
 {
-
-  parse_xml_file(path,
-
-    SAFE_NEW_LAMBDA(void, (int depth, m_string* name, m_list* attributes)
-    {
-      printf("begin : %s\n",name->content);
-      for(int i = 0; i < attributes->size; i += 2)
-      {
-        m_string* attr_name = (m_string*)attributes->func->get_index(attributes, i);
-        m_string* attr_value = (m_string*)attributes->func->get_index(attributes, i + 1);
-        printf("\t%s : %s\n",attr_name->content, attr_value->content);
-      }
-    },0),
-
-    SAFE_NEW_LAMBDA(void, (int depth, m_string* content)
-    {
-
-    },0),
-
-    SAFE_NEW_LAMBDA(void, (int depth, m_string* name)
-    {
-    },0)
-
-  );
+	QUICK_RELEASE(node->join);
+  node->join = join;
+  QUICK_RETAIN(node->join);
 }
 
 void m_skin_node_draw(m_skin_node* node)
