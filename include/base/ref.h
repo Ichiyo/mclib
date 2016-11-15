@@ -184,6 +184,16 @@ void ref_update_auto_release_pool();
 #define QUICK_RETAIN(val) do { if(val) val->func->retain(val); } while(0)
 #define QUICK_RELEASE(val) do { if(val) val->func->release(val); } while(0)
 
+#define _0(x,y) x->func->y(x)
+#define _1(x,y,a1) x->func->y(x,a1)
+#define _2(x,y,a1,a2) x->func->y(x,a1,a2)
+#define _3(x,y,a1,a2,a3) x->func->y(x,a1,a2,a3)
+#define _4(x,y,a1,a2,a3,a4) x->func->y(x,a1,a2,a3,a4)
+#define _5(x,y,a1,a2,a3,a4,a5) x->func->y(x,a1,a2,a3,a4,a5)
+#define _6(x,y,a1,a2,a3,a4,a5,a6) x->func->y(x,a1,a2,a3,a4,a5,a6)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,NAME,...) NAME
+#define _(...) GET_MACRO(__VA_ARGS__,_6,_5,_4, _3, _2, _1, _0)(__VA_ARGS__)
+
 #ifdef __cplusplus
 }
 #endif
