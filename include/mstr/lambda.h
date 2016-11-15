@@ -26,15 +26,23 @@ EXTEND_REF_FUNC(lambda_func,
     - int/long/char...
 */
 #if defined(__clang__)
+
 EXTEND_REF(lambda_ref, lambda_func,
   void*(^callback)();
   m_list* guards;
 );
+
+#define __assignable __block
+
 #else //GNU
+
 EXTEND_REF(lambda_ref, lambda_func,
   void*(*callback)();
   m_list* guards;
 );
+
+#define __assignable 
+
 #endif
 
 lambda_ref* new_lambda(void* func, void* guards,...);

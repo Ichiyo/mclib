@@ -18,23 +18,23 @@ extern "C" {
 
 m_list* m_skin_node_parser_parse(char* path)
 {
-  m_list* geometry_meshs = array_list_new();
-  m_list* controller_skins = array_list_new();
-  m_list* visual_nodes = array_list_new();
+  __assignable m_list* geometry_meshs = array_list_new();
+  __assignable m_list* controller_skins = array_list_new();
+  __assignable m_list* visual_nodes = array_list_new();
 
-  int parsing_geometry_mesh = 0;
-  int parsing_vertices = 0;
-  int parsing_polylist = 0;
+  __assignable int parsing_geometry_mesh = 0;
+  __assignable int parsing_vertices = 0;
+  __assignable int parsing_polylist = 0;
 
-  int parsing_controller = 0;
-  m_float_array* last_float_array = 0;
+  __assignable int parsing_controller = 0;
+  __assignable m_float_array* last_float_array = 0;
 
-  int parsing_visual_scene = 0;
-  int start_join = 0;
+  __assignable int parsing_visual_scene = 0;
+  __assignable int start_join = 0;
   // m_skin_join* current_join = 0;
-  m_visual_scene_join* current_join = 0;
-  m_visual_scene_node* current_node = 0;
-  int is_node = 0;
+  __assignable m_visual_scene_join* current_join = 0;
+  __assignable m_visual_scene_node* current_node = 0;
+  __assignable int is_node = 0;
 
   /********************************************
   *           prepare collada data
@@ -501,7 +501,7 @@ m_list* m_skin_node_parser_parse(char* path)
             }
           }
         }
-        return 0;
+        return (m_skin_join*)0;
       }, 0);
       // create m_skin_join tree
       m_list* queue = linked_list_new();
@@ -520,6 +520,7 @@ m_list* m_skin_node_parser_parse(char* path)
           _(parent, add_child, join);
         }
         parent = join;
+        
         if(msj->children->size)
         {
           for(long j = msj->children->size - 1; j >= 0; j--)

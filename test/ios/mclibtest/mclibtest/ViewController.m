@@ -70,14 +70,6 @@
     {
         first_time = 0;
         
-        m_string* _3d_vert = read_string_from_file("res/shaders/shader_skin_3d.vert");
-        m_string* _3d_frag = read_string_from_file("res/shaders/shader_skin_3d.frag");
-        
-        _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_join_ids"), new_string_from_char("5"));
-        _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_joins"), new_string_from_char("30"));
-        _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$use_model_index"), new_string_from_char("0"));
-        m_shader* shadertest = m_shader_new_from_source(_3d_vert->content, _3d_frag->content);
-        
         m_texture* tex = m_texture_new_from_file_char("res/Silent-Morning.png");
         m_texture* tex2 = m_texture_new_from_file_char("res/floor/TexturesCom_FloorsCheckerboard0017_1_seamless_S.jpg");
         m_shader* shader = m_shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
