@@ -17,6 +17,8 @@ EXTEND_REF_FUNC(m_string_func, \
 	void(*insert_after)(); \
 	int(*contain_char)(); \
 	int(*contain_str)(); \
+	int(*equal_char)(); \
+	int(*equal_str)(); \
 );
 
 EXTEND_REF(m_string, m_string_func,

@@ -12,7 +12,9 @@ EXTEND_REF_FUNC(m_list_func,
   void(*pop)(struct _m_list*);
   void*(*get_last)(struct _m_list*);
   void*(*get_first)(struct _m_list*);
+  void(*insert)(struct _m_list*, void*, long, int);
   void(*remove)(struct _m_list*, void*);
+  void(*remove_index)(struct _m_list*, long);
   void*(*get_index)(struct _m_list*, long);
   void(*clear)(void*);
 );

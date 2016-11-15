@@ -238,6 +238,16 @@ static int mstr_contain_str(m_string* str, m_string* in)
 	return 0;
 }
 
+static int mstr_equal_char(m_string* str, char* c)
+{
+	return strcmp(str->content, c) == 0;
+}
+
+static int mstr_equal_str(m_string* str, m_string* in)
+{
+	return strcmp(str->content, in->content) == 0;
+}
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 
@@ -253,7 +263,9 @@ static m_string_func base_m_string_func =
 	.clear = mstr_clear,
 	.insert_after = mstr_insert_after,
 	.contain_str = mstr_contain_str,
-	.contain_char = mstr_contain_char
+	.contain_char = mstr_contain_char,
+	.equal_char = mstr_equal_char,
+	.equal_str = mstr_equal_str
 };
 
 m_string* new_string()

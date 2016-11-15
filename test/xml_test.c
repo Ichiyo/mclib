@@ -28,7 +28,7 @@ main (int argc, char *argv[])
       }
     },0),
 
-    SAFE_NEW_LAMBDA(void, (int depth, m_string* content)
+    SAFE_NEW_LAMBDA(void, (int depth, m_string* name, m_string* content)
     {
 
     },0),

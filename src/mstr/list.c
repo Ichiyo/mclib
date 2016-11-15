@@ -26,6 +26,7 @@ static void linked_list_pop(m_list* list);
 static void linked_list_free(m_list* list);
 static void linked_list_remove_node(m_list* list, m_linked_list_node* node);
 static void linked_list_push(m_list* list, void* data, int is_ref);
+static void linked_list_remove_index(m_list* list, long);
 static void linked_list_remove(m_list* list, void* data);
 static void* linked_list_last(m_list* list);
 static void* linked_list_first(m_list* list);
@@ -118,6 +119,82 @@ static void linked_list_push(m_list* list, void* data, int is_ref)
   }
 }
 
+static void linked_list_insert(m_list* list, void* data, long index, int is_ref)
+{
+  m_list_linked_content* content = (m_list_linked_content*)list->content;
+  list->size++;
+  if(is_ref)
+  {
+    ((ref*)data)->func->retain(data);
+  }
+  m_linked_list_node* node = calloc(1, sizeof(m_linked_list_node));
+  node->data = data;
+  node->has_ref = is_ref;
+
+  if(!content->first)
+  {
+    content->first = node;
+  }
+  else
+  {
+    m_linked_list_node* current = content->first;
+    for(int i = 0 ; i < index; i++)
+    {
+      if(current->right) current = current->right;
+      else
+      {
+        current = 0;
+        break;
+      }
+    }
+    if(current)
+    {
+      if(current->left)
+      {
+        m_linked_list_node* left = current->left;
+        node->left = left;
+        node->right = current;
+        left->right = node;
+        current->left = node;
+      }
+      else // first node
+      {
+        current->left = node;
+        node->right = current;
+        content->first = node;
+      }
+    }
+    else
+    {
+      if(!content->last)
+      {
+        content->last = node;
+        content->first->right = node;
+        content->last->left = content->first;
+      }
+      else
+      {
+        content->last->right = node;
+        node->left = content->last;
+        content->last = node;
+      }
+    }
+  }
+}
+
+static void linked_list_remove_index(m_list* list, long index)
+{
+  if(index < 0 || index >= list->size) return;
+
+  m_list_linked_content* content = (m_list_linked_content*)list->content;
+  m_linked_list_node* node = content->first;
+  for(long i = 0; i < index; i++)
+  {
+    if(node->right) node = node->right;
+  }
+  linked_list_remove_node(list, node);
+}
+
 static void linked_list_remove(m_list* list, void* data)
 {
   m_list_linked_content* content = (m_list_linked_content*)list->content;
@@ -198,7 +275,9 @@ static m_list_func base_linked_list_func =
   .get_last = linked_list_last,
   .get_first = linked_list_first,
   .get_index = linked_list_index,
+  .insert = linked_list_insert,
   .remove = linked_list_remove,
+  .remove_index = linked_list_remove_index,
   .clear = linked_list_clear
 };
 
@@ -268,6 +347,41 @@ static void array_list_push(m_list* list, void* data, int is_ref)
   list->size++;
 }
 
+static void array_list_insert(m_list* list, void* data, long index, int is_ref)
+{
+  if(index >= list->size)
+  {
+    array_list_push(list, data, is_ref);
+    return;
+  }
+  if(is_ref)
+  {
+    ((ref*)data)->func->retain(data);
+  }
+  m_array_list_node* node = calloc(1, sizeof(m_array_list_node));
+  node->data = data;
+  node->has_ref = is_ref;
+
+  m_array_list_content* content = (m_array_list_content*)list->content;
+  if(content->reserved == list->size)
+  {
+    content->reserved++;
+    if(content->reserved == 1)
+    {
+      content->elements = calloc(1, sizeof(m_array_list_node*));
+    }
+    else
+    {
+      content->elements = realloc(content->elements, content->reserved*sizeof(m_array_list_node*));
+    }
+  }
+  if(index < 0) index = 0;
+  int lsize = list->size - index;
+  if(lsize) memmove(content->elements+index+1, content->elements+index, (lsize) * sizeof(m_array_list_node*));
+  content->elements[index] = node;
+  list->size++;
+}
+
 static void array_list_pop(m_list* list)
 {
   m_array_list_content* content = (m_array_list_content*)list->content;
@@ -302,6 +416,27 @@ static void* array_list_first(m_list* list)
   m_array_list_content* content = (m_array_list_content*)list->content;
   if(list->size > 0) return content->elements[0]->data;
   else return 0;
+}
+
+static void array_list_remove_index(m_list* list, long index)
+{
+  m_array_list_content* content = (m_array_list_content*)list->content;
+  for(long i = 0; i < list->size; i++)
+  {
+    if(i == index)
+    {
+      m_array_list_node* node = content->elements[i];
+      if(node->has_ref)
+      {
+        ((ref*)node->data)->func->release(node->data);
+      }
+      free(node);
+
+      if(i != list->size - 1) memmove(content->elements+i, content->elements+i+1, (list->size - i - 1) * sizeof(m_array_list_node*));
+      list->size--;
+      break;
+    }
+  }
 }
 
 static void array_list_remove(m_list* list, void* data)
@@ -345,6 +480,8 @@ static m_list_func base_array_list_func =
   .get_last = array_list_last,
   .get_first = array_list_first,
   .get_index = array_list_index,
+  .insert = array_list_insert,
+  .remove_index = array_list_remove_index,
   .remove = array_list_remove,
   .clear = array_list_clear
 };

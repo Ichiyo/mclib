@@ -5,6 +5,8 @@
 #include <graphic/m_shader.h>
 #include <graphic/m_sprite2d.h>
 #include <graphic/m_node3d.h>
+#include <graphic/skin3d/m_skin_node.h>
+#include <graphic/skin3d/m_skin_node_parser.h>
 #include <base/ref.h>
 #include <math/math.h>
 #include <utils/file_utils.h>
@@ -35,6 +37,8 @@ int main(int argc, char *argv[])
   QUICK_RELEASE(_3d_vert);
   QUICK_RELEASE(_3d_frag);
   // m_shader* shader2 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
+
+  m_skin_node_parser_parse("res/cube-3.dae");
 
   m_sprite2d* sprite = m_sprite2d_new();
   sprite->func->set_texture(sprite, tex);

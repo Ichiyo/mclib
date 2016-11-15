@@ -14,6 +14,7 @@
 #include <graphic/m_texture.h>
 #include <mstr/m_float_array.h>
 #include <mstr/m_int_array.h>
+#include <mstr/m_generic_array.h>
 
 // static void traverse(unsigned long key, void* data)
 // {
@@ -23,25 +24,22 @@
 int
 main (int argc, char *argv[])
 {
-	{
-		m_float_array* arr = m_float_array_new();
-		arr->func->push(arr, 1.0f);
-		arr->func->push(arr, 159.0f);
-		for(long i = 0; i < arr->length; i++)
-		{
-			printf("%f\n",arr->data[i]);
-		}
-	}
-	{
-		m_int_array* arr = m_int_array_new();
-		arr->func->push(arr, 888888888);
-		arr->func->push(arr, 159);
-		for(long i = 0; i < arr->length; i++)
-		{
-			printf("%d\n",arr->data[i]);
-		}
-	}
+	m_list* list = linked_list_new();
+	m_string* s1 = new_string_from_char("I am 1");
+	m_string* s2 = new_string_from_char("I am 2");
+	m_string* s3 = new_string_from_char("I am 3");
+	m_string* s4 = new_string_from_char("I am 4");
 
+	_(list, push, s1, 1);
+	_(list, push, s2, 1);
+	_(list, push, s4, 1);
+	_(list, insert, s3, 0, 1);
+	printf("--------\n");
+	for(long i = 0; i < list->size; i++)
+	{
+		m_string* s = _(list, get_index, i);
+		printf("%s\n",s->content);
+	}
 	//
 	// g_image* image = image_new_from_file("res/wolf.jpg");
 	// m_string* str = new_string();

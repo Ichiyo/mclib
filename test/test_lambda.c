@@ -13,13 +13,13 @@ int main(int argc, char const *argv[]) {
     printf("hello working here! %d\n", number_2->ref_count);
     printf("custom data %f | %d\n", arg1, arg2);
   },number, number_2);
+  _(ret, retain);
 
-  ret->func->retain(ret);
   float t = 99.1;
   ret->callback(t, 88888888888888);
   ref_update_auto_release_pool();
   ret->callback(77.12, 66);
-  ret->func->release(ret);
+  _(ret, release);
   ref_update_auto_release_pool();
   return 0;
 }

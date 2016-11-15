@@ -22,17 +22,17 @@ EXTEND_REF_FUNC(lambda_func,
     - pointer : void*, name*...
     - double : can not use float because of implicit conversion from float to double when pushing float to call stack
                results 8 bytes in stack for argument,
-               if argument declared as float then function will receive only 4 bytes from stack --> wrong binary
+               if argument declared as float then function will receive only 4 bytes from stack --> wrong bi
     - int/long/char...
 */
 #if defined(__clang__)
 EXTEND_REF(lambda_ref, lambda_func,
-  void(^callback)();
+  void*(^callback)();
   m_list* guards;
 );
 #else //GNU
 EXTEND_REF(lambda_ref, lambda_func,
-  void(*callback)();
+  void*(*callback)();
   m_list* guards;
 );
 #endif

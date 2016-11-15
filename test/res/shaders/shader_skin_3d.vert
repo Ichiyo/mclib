@@ -19,10 +19,6 @@ plf_in vec3 position;
 plf_in vec3 normal;
 plf_in vec2 texcoord;
 
-//DO NOT DELETE THIS LINE
-//TEMPLATE [i]
-//plf_in float joinIds_[i-1]
-//plf_in float weights_[i-1]
 
 #if USE_MODEL_INDEX != 0
 plf_in float model_index;

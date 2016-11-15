@@ -69,7 +69,7 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
           current_node_value = new_string();
           #endif
 
-          if(text_func) text_func->callback(depth - 1, current_node_value);
+          if(text_func) text_func->callback(depth - 1, ((m_string*)node_stacks->func->get_last(node_stacks)), current_node_value);
 
           value_white = 1;
         }
@@ -294,6 +294,17 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
 
   fclose(file);
   end:;
+}
+
+m_string* m_xml_get_value(m_list* attributes, char* name)
+{
+  for(int i = 0; i < attributes->size; i += 2)
+  {
+    m_string* attr_name = (m_string*)attributes->func->get_index(attributes, i);
+    m_string* attr_value = (m_string*)attributes->func->get_index(attributes, i + 1);
+    if(strcmp(attr_name->content, name) == 0) return attr_value;
+  }
+  return 0;
 }
 
 #ifdef __cplusplus
