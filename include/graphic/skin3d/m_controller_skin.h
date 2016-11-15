@@ -32,6 +32,7 @@ extern "C" {
 	m_generic_array* weights; \
 	m_generic_array* vcount; \
 	m_generic_array* v; \
+  int max_vcount; \
   content \
   );
 

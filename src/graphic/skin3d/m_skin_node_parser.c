@@ -345,6 +345,7 @@ m_list* m_skin_node_parser_parse(char* path)
             int f;
             sscanf(ch, "%d", &f);
             GENERIC_ARRAY_PUSH(cs->vcount, int, f);
+            cs->max_vcount = MAX(cs->max_vcount, f);
             ch = strtok(NULL, s);
           }
         }
@@ -476,8 +477,8 @@ m_list* m_skin_node_parser_parse(char* path)
   m_list* node_results = array_list_new();
   for(long i = 0; i < visual_nodes->size; i++)
   {
-    m_visual_scene_node* node = _(visual_nodes, get_index, i);
-    if(node->skeleton)
+    m_visual_scene_node* vsn = _(visual_nodes, get_index, i);
+    if(vsn->skeleton)
     {
       lambda_ref* create_skin_join = SAFE_NEW_LAMBDA(m_skin_join*,(m_visual_scene_join* join)
       {
@@ -493,6 +494,11 @@ m_list* m_skin_node_parser_parse(char* path)
               _(ret->id, cat_str, join->id);
               _(ret->name, cat_str, join->name);
               _(ret->sid, cat_str, join->sid);
+              _(ret->uniform_id, cat_char, "joins[");
+              char id[10];
+              snprintf(id, sizeof(id), "%d", k);
+              _(ret->uniform_id, cat_char, id);
+              _(ret->uniform_id, cat_char, "]");
               ret->transform = join->transform;
               ret->bind_pose = GENERIC_ARRAY_GET(cs->bind_poses, m_matrix4, k);
               int invertable = 0;
@@ -505,7 +511,7 @@ m_list* m_skin_node_parser_parse(char* path)
       }, 0);
       // create m_skin_join tree
       m_list* queue = linked_list_new();
-      _(queue, push, node->skeleton, 1);
+      _(queue, push, vsn->skeleton, 1);
       m_skin_join* parent = 0;
       m_skin_join* join_root = 0;
       while(queue->size)
@@ -520,7 +526,7 @@ m_list* m_skin_node_parser_parse(char* path)
           _(parent, add_child, join);
         }
         parent = join;
-        
+
         if(msj->children->size)
         {
           for(long j = msj->children->size - 1; j >= 0; j--)
@@ -533,11 +539,23 @@ m_list* m_skin_node_parser_parse(char* path)
           if(parent->parent) parent = parent->parent->owner;
         }
       }
-      m_skin_node* node = m_skin_node_new();
-      _(node_results, push, node, 1);
-      _(node, set_join, join_root);
-      // create vertices
 
+      m_skin_node* new_node = m_skin_node_new();
+      _(node_results, push, new_node, 1);
+      _(new_node, set_join, join_root);
+
+      //find skin
+      m_controller_skin* node_skin = 0;
+      for(long i = 0; i < controller_skins->size; i++)
+      {
+        m_controller_skin* skin = _(controller_skins, get_index, i);
+        if(strcmp(skin->id->content, vsn->url->content) == 0)
+        {
+          node_skin = skin;
+          break;
+        }
+      }
+      _(new_node, build_skin, node_skin);
       // position normal uv joins weights
     }
     else

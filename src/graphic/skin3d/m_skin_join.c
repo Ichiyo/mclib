@@ -12,6 +12,7 @@ void m_skin_join_free(m_skin_join* node)
   QUICK_RELEASE(node->name);
   QUICK_RELEASE(node->sid);
   QUICK_RELEASE(node->id);
+  QUICK_RELEASE(node->uniform_id);
   QUICK_RELEASE(node->parent);
   QUICK_RELEASE(node->children);
 	free(node);
@@ -21,11 +22,6 @@ void m_skin_join_free(m_skin_join* node)
 
 void m_skin_join_add_child(m_skin_join* join, m_skin_join* in)
 {
-	if(!join->children)
-  {
-    join->children = array_list_new();
-    QUICK_RETAIN(join->children);
-  }
   if(in->parent)
   {
     //TODO error
@@ -52,6 +48,10 @@ void m_skin_join_init(m_skin_join* node)
   QUICK_RETAIN(node->sid);
   node->id = new_string();
   QUICK_RETAIN(node->id);
+  node->uniform_id = new_string();
+  QUICK_RETAIN(node->uniform_id);
+  node->children = array_list_new();
+  QUICK_RETAIN(node->children);
 }
 
 m_skin_join* m_skin_join_new()
