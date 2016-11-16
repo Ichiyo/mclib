@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.78.0 commit date:2016-10-24, commit time:12:20, hash:e8299c8</authoring_tool>
     </contributor>
-    <created>2016-11-16T17:56:11</created>
-    <modified>2016-11-16T17:56:11</modified>
+    <created>2016-11-16T20:05:28</created>
+    <modified>2016-11-16T20:05:28</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -130,8 +130,28 @@
             <matrix sid="transform">1 1.42109e-14 -1.77636e-14 2.39188e-7 4.9738e-14 1 0 5.97977e-8 -1.42109e-14 0 1 2.00646 0 0 0 1</matrix>
             <node id="Bone_002" name="Bone.002" sid="Bone_002" type="JOINT">
               <matrix sid="transform">1 0 -3.05651e-14 5.63004e-7 0 1 0 1.6361e-8 0 -1.3378e-15 1 0.5489781 0 0 0 1</matrix>
+              <extra>
+                <technique profile="blender">
+                  <connect>1</connect>
+                  <layer>0</layer>
+                  <tip_x>0</tip_x>
+                  <tip_y>0</tip_y>
+                  <tip_z>0.786885</tip_z>
+                </technique>
+              </extra>
             </node>
+            <extra>
+              <technique profile="blender">
+                <connect>1</connect>
+                <layer>0</layer>
+              </technique>
+            </extra>
           </node>
+          <extra>
+            <technique profile="blender">
+              <layer>0</layer>
+            </technique>
+          </extra>
         </node>
       </node>
       <node id="Sphere" name="Sphere" type="NODE">

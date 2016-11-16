@@ -34,6 +34,7 @@ extern "C" {
 	m_vector3 scale; \
 	m_matrix4 model; \
 	m_matrix4 render_model; \
+  m_matrix4 fix_model; \
 	quaternion quat; \
 	weak_ref* parent; \
 	m_list* children; \

@@ -15,9 +15,14 @@
 #define NUMBER_JOIN_IDS $number_join_ids
 #define NUMBER_JOINS $number_joins
 
+#define HAS_TEXTURE $has_texture
+
 plf_in vec3 position;
 plf_in vec3 normal;
+
+#if HAS_TEXTURE != 0
 plf_in vec2 texcoord;
+#endif
 
 
 #if USE_MODEL_INDEX != 0
@@ -54,7 +59,10 @@ plf_in float joinIds_5;
 plf_in float weights_5;
 #endif
 
+#if HAS_TEXTURE != 0
 plf_out vec2 Texcoord;
+#endif
+
 plf_out vec3 Normal;
 plf_out vec3 FragPos;
 
@@ -267,8 +275,13 @@ void main()
   nor = joins[int(joinIds_7)] * vec4(normal, 1.0) * weights_7 + nor;
 #endif
 
+    //pos = vec4(position, 1.0);
+    //nor = vec4(normal, 1.0);
+
     pos[3] = 1.0;
+    #if HAS_TEXTURE != 0
     Texcoord = texcoord;
+    #endif
     gl_Position = proj * view * mod * pos;
     Normal = mat3(matrix4_transpose(matrix4_inverse(mod))) * vec3(nor);
     FragPos = vec3(mod * pos);

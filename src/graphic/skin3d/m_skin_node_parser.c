@@ -171,6 +171,8 @@ m_list* m_skin_node_parser_parse(char* path)
               {
                 mat.m[j] = last_float_array->data[i + j];
               }
+              // int invertalbe = 0;
+              // mat = matrix4_invert(mat,&invertalbe);
               GENERIC_ARRAY_PUSH(cs->bind_poses, m_matrix4, mat);
             }
           }
@@ -205,6 +207,10 @@ m_list* m_skin_node_parser_parse(char* path)
             if( ! current_join)
             {
               current_join = join;
+              if(current_node)
+              {
+                current_join->transform = current_node->transform;
+              }
             }
             else
             {
@@ -373,15 +379,58 @@ m_list* m_skin_node_parser_parse(char* path)
             char* ch = strtok(content->content, s);
             int index = 0;
             float f;
+            m_matrix4 temp;
             while(ch != NULL)
             {
               sscanf(ch, "%f", &f);
-              current_join->transform.m[index] = f;
+              temp.m[index] = f;
               index++;
               ch = strtok(NULL, s);
             }
+            if(current_join->parent)
+            {
+              current_join->transform = temp;
+            }
+            else
+            {
+              current_join->transform = matrix4_mul(current_join->transform, temp);
+            }
           }
         }
+
+        if(!is_node)
+        {
+          // if(strcmp(name->content, "roll") == 0)
+          // {
+          //   float roll;
+          //   sscanf(content->content, "%f", &roll);
+          //   m_matrix4 temp = matrix4_create_y_rotation(roll);
+          //   current_join->transform = matrix4_mul(current_join->transform, temp);
+          // }
+          // else if(strcmp(name->content, "tip_x") == 0)
+          // {
+          //   float t;
+          //   sscanf(content->content, "%f", &t);
+          //   m_matrix4 temp = matrix4_create_translation(t, 0, 0);
+          //   current_join->transform = matrix4_mul(current_join->transform, temp);
+          // }
+          // else if(strcmp(name->content, "tip_y") == 0)
+          // {
+          //   float t;
+          //   sscanf(content->content, "%f", &t);
+          //   m_matrix4 temp = matrix4_create_translation(0, 0, t);
+          //   current_join->transform = matrix4_mul(current_join->transform, temp);
+          // }
+          // else
+          // if(strcmp(name->content, "tip_z") == 0)
+          // {
+          //   float t;
+          //   sscanf(content->content, "%f", &t);
+          //   m_matrix4 temp = matrix4_create_z_rotation(t);
+          //   current_join->transform = matrix4_mul(current_join->transform, temp);
+          // }
+        }
+
         if(is_node)
         {
           if(strcmp(name->content, "matrix") == 0)
@@ -401,6 +450,23 @@ m_list* m_skin_node_parser_parse(char* path)
           if(strcmp(name->content, "skeleton") == 0)
           {
             current_node->func->set_skeleton(current_node, current_join);
+          }
+        }
+        else
+        {
+          if(current_node && strcmp(name->content, "matrix") == 0)
+          {
+            char s[4] = " \t\n";
+            char* ch = strtok(content->content, s);
+            int index = 0;
+            float f;
+            while(ch != NULL)
+            {
+              sscanf(ch, "%f", &f);
+              current_node->transform.m[index] = f;
+              index++;
+              ch = strtok(NULL, s);
+            }
           }
         }
       }
@@ -475,74 +541,136 @@ m_list* m_skin_node_parser_parse(char* path)
   *           generate node
   *********************************************/
   m_list* node_results = array_list_new();
-  for(long i = 0; i < visual_nodes->size; i++)
+  m_skin_node* current_node_parent = 0;
+  m_list* node_parse_stack = linked_list_new();
+  m_list* visual_join_keys = array_list_new();
+  m_list* joins_created = array_list_new();
+
+  for(long i = visual_nodes->size - 1; i >= 0; i--)
   {
-    m_visual_scene_node* vsn = _(visual_nodes, get_index, i);
+    _(node_parse_stack, insert, _(visual_nodes, get_index, i), 0, 1);
+  }
+
+  while(node_parse_stack->size)
+  {
+    m_visual_scene_node* vsn = _(node_parse_stack, get_first);
+    _(node_parse_stack, remove_index, 0);
+    m_skin_node* new_node = m_skin_node_new();
+    _(node_results, push, new_node, 1);
+    if(current_node_parent)
+    {
+      _(current_node_parent, add_child, new_node);
+      current_node_parent = new_node;
+    }
+    else
+    {
+      current_node_parent = new_node;
+    }
     if(vsn->skeleton)
     {
-      lambda_ref* create_skin_join = SAFE_NEW_LAMBDA(m_skin_join*,(m_visual_scene_join* join)
+      int found = 0;
+      for(long j = 0; j < visual_join_keys->size; j++)
       {
-        for(long j = 0; j < controller_skins->size; j++)
+        m_visual_scene_join* v = _(visual_join_keys, get_index, j);
+        if(v == vsn->skeleton)
         {
-          m_controller_skin* cs = _(controller_skins, get_index, j);
-          for(long k = 0; k < cs->join_names->size; k++)
-          {
-            m_string* join_name = _(cs->join_names, get_index, k);
-            if(strcmp(join_name->content, join->sid->content) == 0)
-            {
-              m_skin_join* ret = m_skin_join_new();
-              _(ret->id, cat_str, join->id);
-              _(ret->name, cat_str, join->name);
-              _(ret->sid, cat_str, join->sid);
-              _(ret->uniform_id, cat_char, "joins[");
-              char id[10];
-              snprintf(id, sizeof(id), "%d", k);
-              _(ret->uniform_id, cat_char, id);
-              _(ret->uniform_id, cat_char, "]");
-              ret->transform = join->transform;
-              ret->bind_pose = GENERIC_ARRAY_GET(cs->bind_poses, m_matrix4, k);
-              int invertable = 0;
-              ret->inverse_bind_pose = matrix4_invert(ret->bind_pose, &invertable);
-              return ret;
-            }
-          }
-        }
-        return (m_skin_join*)0;
-      }, 0);
-      // create m_skin_join tree
-      m_list* queue = linked_list_new();
-      _(queue, push, vsn->skeleton, 1);
-      m_skin_join* parent = 0;
-      m_skin_join* join_root = 0;
-      while(queue->size)
-      {
-        m_visual_scene_join* msj = _(queue, get_first);
-        _(queue, remove_index, 0);
-
-        m_skin_join* join = create_skin_join->callback(msj);
-        if(!join_root) join_root = join;
-        if(parent)
-        {
-          _(parent, add_child, join);
-        }
-        parent = join;
-
-        if(msj->children->size)
-        {
-          for(long j = msj->children->size - 1; j >= 0; j--)
-          {
-           _(queue, insert, _(msj->children, get_index, j), 0, 1);
-          }
-        }
-        else
-        {
-          if(parent->parent) parent = parent->parent->owner;
+          _(new_node, set_join, _(joins_created, get_index, j));
+          found = 1;
+          break;
         }
       }
 
-      m_skin_node* new_node = m_skin_node_new();
-      _(node_results, push, new_node, 1);
-      _(new_node, set_join, join_root);
+      if(!found)
+      {
+        lambda_ref* create_skin_join = SAFE_NEW_LAMBDA(m_skin_join*,(m_visual_scene_join* join)
+        {
+          for(long j = 0; j < controller_skins->size; j++)
+          {
+            m_controller_skin* cs = _(controller_skins, get_index, j);
+            for(long k = 0; k < cs->join_names->size; k++)
+            {
+              m_string* join_name = _(cs->join_names, get_index, k);
+              if(strcmp(join_name->content, join->sid->content) == 0)
+              {
+                m_skin_join* ret = m_skin_join_new();
+                _(ret->id, cat_str, join->id);
+                _(ret->name, cat_str, join->name);
+                _(ret->sid, cat_str, join->sid);
+                _(ret->uniform_id, cat_char, "joins[");
+                char id[10];
+                snprintf(id, sizeof(id), "%d", k);
+                _(ret->uniform_id, cat_char, id);
+                _(ret->uniform_id, cat_char, "]");
+                ret->transform = join->transform;
+                // {
+                //   quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(90), 1, 0, 0);
+                //   m_matrix4 m = matrix4_create_quaternion(offset_q);
+                //   ret->transform = matrix4_mul(ret->transform, m);
+                // }
+                // ret->bind_pose = GENERIC_ARRAY_GET(cs->bind_poses, m_matrix4, k);
+                //
+                // int invertable = 0;
+                // ret->inverse_bind_pose = matrix4_invert(ret->bind_pose, &invertable);
+                ret->inverse_bind_pose = GENERIC_ARRAY_GET(cs->bind_poses, m_matrix4, k);
+                return ret;
+              }
+            }
+          }
+          return (m_skin_join*)0;
+        }, 0);
+        // create m_skin_join tree
+        m_list* queue = linked_list_new();
+        _(queue, push, vsn->skeleton, 1);
+        m_skin_join* parent = 0;
+        m_skin_join* join_root = 0;
+        while(queue->size)
+        {
+          m_visual_scene_join* msj = _(queue, get_first);
+          _(queue, remove_index, 0);
+
+          m_skin_join* join = create_skin_join->callback(msj);
+          if(!join_root) join_root = join;
+          if(parent)
+          {
+            _(parent, add_child, join);
+
+            m_skin_join* join_parent = join->parent->owner;
+            m_matrix4 temp = join->inverse_bind_pose;
+            while(join_parent)
+            {
+              temp = matrix4_mul(join_parent->inverse_bind_pose, temp);
+              if(join_parent->parent) join_parent = join_parent->parent->owner;
+              else break;
+            }
+            int invertable = 0;
+            join->bind_pose = matrix4_invert(temp, &invertable);
+
+          }
+          else
+          {
+            int invertable = 0;
+            join->bind_pose = matrix4_invert(join->inverse_bind_pose, &invertable);
+
+          }
+          parent = join;
+
+          if(msj->children->size)
+          {
+            for(long j = msj->children->size - 1; j >= 0; j--)
+            {
+             _(queue, insert, _(msj->children, get_index, j), 0, 1);
+            }
+          }
+          else
+          {
+            if(parent->parent) parent = parent->parent->owner;
+          }
+        }
+
+        _(new_node, set_join, join_root);
+        _(visual_join_keys, push, vsn->skeleton, 1);
+        _(joins_created, push, join_root, 1);
+      }
 
       //find skin
       m_controller_skin* node_skin = 0;
@@ -556,14 +684,36 @@ m_list* m_skin_node_parser_parse(char* path)
         }
       }
       _(new_node, build_skin, node_skin);
-      // position normal uv joins weights
+    }
+    else if(vsn->children->size)
+    {
+      for(long j = 0; j < geometry_meshs->size; j++)
+      {
+        m_geometry_mesh* gm = _(geometry_meshs, get_index, j);
+        if(strcmp(vsn->geometry_url->content, gm->id->content) == 0)
+        {
+          _(new_node, build_mesh, gm);
+          break;
+        }
+      }
+    }
+
+    if(vsn->children->size)
+    {
+      for(long j = vsn->children->size - 1; j >= 0; j--)
+      {
+        _(node_parse_stack, insert, _(vsn->children, get_index, j), 0, 1);
+      }
     }
     else
     {
-      // has geometry
+      if(current_node_parent->parent) current_node_parent = current_node_parent->parent->owner;
     }
   }
 
+  QUICK_RELEASE(geometry_meshs);
+  QUICK_RELEASE(controller_skins);
+  QUICK_RELEASE(visual_nodes);
   return node_results;
 }
 

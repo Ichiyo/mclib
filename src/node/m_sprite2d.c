@@ -20,6 +20,41 @@ void m_sprite2d_free(m_sprite2d* node)
 
 /*EXPEND IMPLEMENTATION -- DO NOT DELETE THIS LINE*/
 
+void m_sprite2d_visit(m_sprite2d* node, m_matrix4 current_model, int flag)
+{
+  if(!node->visible) return;
+
+	flag = flag | node->transform_dirty;
+  if(flag)
+	{
+		m_matrix4 model = matrix4_identity;
+		model = matrix4_translate_vector3(model, node->position);
+		model = matrix4_mul(model,matrix4_create_quaternion(node->quat));
+    model = matrix4_mul(model,node->fix_model);
+	  model = matrix4_scale_vector3(model, node->scale);
+    node->render_model = model;
+    node->render_model = matrix4_translate_vector3(node->render_model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], -node->anchor.v[2] * node->size.v[2]));
+    node->render_model = matrix4_scale_vector3(node->render_model, node->size);
+    node->render_model = matrix4_mul(current_model, node->render_model);
+
+    model= matrix4_translate_vector3(model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], -node->anchor.v[2] * node->size.v[2]));
+		model = matrix4_mul(current_model, model);
+    node->model = model;
+		node->transform_dirty = 0;
+	}
+
+	if(node->func->draw) node->func->draw(node);
+	if(node->children)
+	{
+		long size = node->children->size;
+		for(long i = 0; i < size; i++)
+		{
+			m_node* child = (m_node*)node->children->func->get_index(node->children, i);
+			child->func->visit(child, node->model, flag);
+		}
+	}
+}
+
 void m_sprite2d_draw(m_sprite2d* node)
 {
   if(node->shader) node->shader->func->use(node->shader);
@@ -72,17 +107,27 @@ static m_sprite2d_func base_m_sprite2d_func =
 void m_sprite2d_init(m_sprite2d* node)
 {
 	node->func = &base_m_sprite2d_func;
-
+  //
+  // GLfloat vertices[] = {
+	// // Pos      // Tex
+	// 	-0.5f, 0.5f, 0.0f, 0.0f,
+	// 	0.5f, -0.5f, 1.0f, 1.0f,
+	// 	-0.5f, -0.5f, 0.0f, 1.0f,
+  //
+	// 	-0.5f, 0.5f, 0.0f, 0.0f,
+	// 	0.5f, 0.5f, 1.0f, 0.0f,
+	// 	0.5f, -0.5f, 1.0f, 1.0f
+	// };
   GLfloat vertices[] = {
-	// Pos      // Tex
-		-0.5f, 0.5f, 0.0f, 0.0f,
-		0.5f, -0.5f, 1.0f, 1.0f,
-		-0.5f, -0.5f, 0.0f, 1.0f,
+  // Pos      // Tex
+    0, 1, 0.0f, 0.0f,
+    1, 0, 1.0f, 1.0f,
+    0, 0, 0.0f, 1.0f,
 
-		-0.5f, 0.5f, 0.0f, 0.0f,
-		0.5f, 0.5f, 1.0f, 0.0f,
-		0.5f, -0.5f, 1.0f, 1.0f
-	};
+    0, 1, 0.0f, 0.0f,
+    1, 1, 1.0f, 0.0f,
+    1, 0, 1.0f, 1.0f
+  };
 
 	glGenVertexArrays(1, &node->vao);
 	glGenBuffers(1, &node->vbo);

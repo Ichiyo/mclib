@@ -18,6 +18,8 @@ out vec4 fragColor;
 
 #endif
 
+#define HAS_TEXTURE $has_texture
+
 struct Material
 {
     sampler2D diffuse;
@@ -33,7 +35,10 @@ struct DirLight
     vec3 specular;
 };
 
+#if HAS_TEXTURE != 0
 plf_in vec2 Texcoord;
+#endif
+
 plf_in vec3 Normal;
 plf_in vec3 FragPos;
 
@@ -42,7 +47,11 @@ uniform DirLight light;
 
 void main()
 {
+  #if HAS_TEXTURE != 0
   vec3 param = vec3(plf_texture(material.diffuse, Texcoord));
+  #else
+  vec3 param = vec3(1.0, 1.0, 1.0);
+  #endif
   // Ambient
   vec3 ambient = light.ambient * param;
 

@@ -33,6 +33,7 @@ extern "C" {
 	GLuint vao; \
 	m_shader* shader; \
 	m_texture* texture; \
+  int has_uvs; \
 	m_skin_join* join; \
 	int vertices_count; \
   content \
@@ -45,6 +46,7 @@ EXTEND_M_SKIN_NODE(m_skin_node, m_skin_node_func,);
 void m_skin_node_free(m_skin_node* arg);
 void m_skin_node_init(m_skin_node* arg);
 /*EXPAND DECLARE INTERFACE FUNCTION -- DO NOT DELETE IT*/
+void m_skin_node_visit(m_skin_node* arg_0, m_matrix4 arg_1, int arg_2);
 void m_skin_node_update_skeleton(m_skin_node* arg_0, m_skin_join* arg_1);
 void m_skin_node_build_skin(m_skin_node* arg_0, m_controller_skin* arg_1);
 void m_skin_node_build_mesh(m_skin_node* arg_0, m_geometry_mesh* arg_1);
@@ -57,6 +59,7 @@ void m_skin_node_set_texture(m_skin_node* arg_0, m_texture* arg_1);
 #define INHERIT_M_SKIN_NODE_FUNC \
   INHERIT_M_NODE_FUNC, \
   /*EXPAND FUNCTION INTERFACE ASSIGMENT -- DO NOT DELETE IT*/ \
+	.visit = m_skin_node_visit, \
 	.update_skeleton = m_skin_node_update_skeleton, \
 	.build_skin = m_skin_node_build_skin, \
 	.build_mesh = m_skin_node_build_mesh, \

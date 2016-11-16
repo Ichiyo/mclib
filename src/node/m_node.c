@@ -35,14 +35,15 @@ void m_node_visit(m_node* node, m_matrix4 current_model, int flag)
 	{
 		m_matrix4 model = matrix4_identity;
 		model = matrix4_translate_vector3(model, node->position);
-
-		model = matrix4_translate_vector3(model, vector3_new(node->anchor.v[0] * node->size.v[0], node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
-		model = matrix4_mul(model, matrix4_create_quaternion(node->quat));
-		model = matrix4_translate_vector3(model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
+    model = matrix4_mul(model,node->fix_model);
+		model = matrix4_mul(model,matrix4_create_quaternion(node->quat));
 		model = matrix4_scale_vector3(model, node->scale);
+    node->render_model = model;
+    node->render_model = matrix4_mul(current_model, node->render_model);
+    node->render_model = matrix4_scale_vector3(node->render_model, node->size);
+    model= matrix4_translate_vector3(model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], -node->anchor.v[2] * node->size.v[2]));
 		model = matrix4_mul(current_model, model);
-		node->render_model = matrix4_scale_vector3(model, node->size);
-		node->model= matrix4_translate_vector3(model, vector3_new(-node->anchor.v[0] * node->size.v[0], -node->anchor.v[1] * node->size.v[1], node->anchor.v[2] * node->size.v[2]));
+    node->model = model;
 		node->transform_dirty = 0;
 	}
 
@@ -124,6 +125,7 @@ void m_node_init(m_node* node)
 	node->func = &base_m_node_func;
 
   node->model = matrix4_identity;
+  node->fix_model = matrix4_identity;
   node->anchor = vector3_new(0.5, 0.5, 0.5);
   node->scale = vector3_new(1, 1, 1);
   node->transform_dirty = 1;

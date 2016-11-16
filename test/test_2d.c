@@ -38,10 +38,16 @@ int main(int argc, char *argv[])
   // QUICK_RELEASE(_3d_frag);
   m_shader* shader3 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
-  m_list* nodes = m_skin_node_parser_parse("res/work1.dae");
-
+  m_list* nodes = m_skin_node_parser_parse("res/work4.dae");
+ 
   m_sprite2d* sprite = m_sprite2d_new();
   sprite->func->set_size(sprite, vector3_new(50, 50, 0));
+  _(sprite, set_position, vector3_new(50, 0, 0));
+  // _(sprite, set_anchor, vector3_new(0,0,0));
+  _(sprite, set_texture, tex);
+	
+
+  _(sprite, set_shader, shader);
   sprite->func->retain(sprite);
   _(sprite, add_child, _(nodes, get_first));
 
@@ -49,19 +55,25 @@ int main(int argc, char *argv[])
   _(n, set_texture, tex);
 
   m_shader* shader2 = n->shader;
-  _(n, set_size, vector3_new(30, 30, 30));
-  // _(n, set_anchor, vector3_new(0, 0, 0));
   {
-    m_node3d* sprite4 = m_node3d_new();
-    sprite4->size = vector3_new(30, 30, 30);
-    sprite4->func->set_shader(sprite4, shader3);
-    sprite4->func->set_texture(sprite4,tex2);
-    sprite->func->add_child(sprite, sprite4);
-    sprite4->func->set_model_obj(sprite4, "res/model/monkey2.obj");
-    sprite4->func->set_position(sprite4, vector3_new(50, 0, 0));
-    // quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(45), 0, 0, 1);
-    // sprite4->func->set_quat(sprite4, quaternion_mul(sprite4->quat, offset_q));
+    _(n, set_size, vector3_new(30, 30, 30));
+    _(n, set_position, vector3_new(sprite->size.v[0]/2 + 50, sprite->size.v[1]/2, 0));
+	  quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 1, 0, 0);
+    n->fix_model = matrix4_create_quaternion(offset_q);
   }
+  
+{
+	m_node3d* sprite4 = m_node3d_new();
+	sprite4->size = vector3_new(30, 30, 30);
+	sprite4->func->set_shader(sprite4, shader3);
+	sprite4->func->set_texture(sprite4,tex2);
+	sprite->func->add_child(sprite, sprite4);
+	sprite4->func->set_model_obj(sprite4, "res/model/monkey2.obj");
+	sprite4->func->set_position(sprite4, vector3_new(sprite->size.v[0]/2, sprite->size.v[1]/2, 0));
+
+	quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(90), 1, 0, 0);
+	sprite4->fix_model = matrix4_create_quaternion(offset_q);
+}
 
   m_matrix4 view = matrix4_create_look_at(
     0.01f, 0.0f, 200.0f,
@@ -126,7 +138,7 @@ int main(int argc, char *argv[])
   int key = 0;
   while (1)
   {
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClearStencil(0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     if (SDL_PollEvent(&windowEvent))
