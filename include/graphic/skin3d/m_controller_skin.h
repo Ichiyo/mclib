@@ -28,7 +28,7 @@ extern "C" {
 	m_geometry_mesh* mesh; \
 	m_matrix4 bind_shape_matrix; \
 	m_list* join_names; \
-	m_generic_array* bind_poses; \
+	m_generic_array* inv_bind_poses; \
 	m_generic_array* weights; \
 	m_generic_array* vcount; \
 	m_generic_array* v; \

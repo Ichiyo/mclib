@@ -24,6 +24,9 @@ extern "C" {
 	m_string* id; \
 	m_string* name; \
 	m_string* sid; \
+	int is_leaf; \
+	m_vector3 leaf_offset; \
+	float roll_offset; \
 	m_matrix4 transform; \
 	m_list* children; \
 	weak_ref* parent; \

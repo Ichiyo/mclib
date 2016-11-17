@@ -173,7 +173,7 @@ m_list* m_skin_node_parser_parse(char* path)
               }
               // int invertalbe = 0;
               // mat = matrix4_invert(mat,&invertalbe);
-              GENERIC_ARRAY_PUSH(cs->bind_poses, m_matrix4, mat);
+              GENERIC_ARRAY_PUSH(cs->inv_bind_poses, m_matrix4, mat);
             }
           }
           else if(strcmp(param_name, "WEIGHT") == 0)
@@ -400,35 +400,34 @@ m_list* m_skin_node_parser_parse(char* path)
 
         if(!is_node)
         {
-          // if(strcmp(name->content, "roll") == 0)
-          // {
-          //   float roll;
-          //   sscanf(content->content, "%f", &roll);
-          //   m_matrix4 temp = matrix4_create_y_rotation(roll);
-          //   current_join->transform = matrix4_mul(current_join->transform, temp);
-          // }
-          // else if(strcmp(name->content, "tip_x") == 0)
-          // {
-          //   float t;
-          //   sscanf(content->content, "%f", &t);
-          //   m_matrix4 temp = matrix4_create_translation(t, 0, 0);
-          //   current_join->transform = matrix4_mul(current_join->transform, temp);
-          // }
-          // else if(strcmp(name->content, "tip_y") == 0)
-          // {
-          //   float t;
-          //   sscanf(content->content, "%f", &t);
-          //   m_matrix4 temp = matrix4_create_translation(0, 0, t);
-          //   current_join->transform = matrix4_mul(current_join->transform, temp);
-          // }
-          // else
-          // if(strcmp(name->content, "tip_z") == 0)
-          // {
-          //   float t;
-          //   sscanf(content->content, "%f", &t);
-          //   m_matrix4 temp = matrix4_create_z_rotation(t);
-          //   current_join->transform = matrix4_mul(current_join->transform, temp);
-          // }
+          if(strcmp(name->content, "roll") == 0)
+          {
+            float roll;
+            sscanf(content->content, "%f", &roll);
+            current_join->roll_offset = roll;
+          }
+          else if(strcmp(name->content, "tip_x") == 0)
+          {
+            current_join->is_leaf = 1;
+            float t;
+            sscanf(content->content, "%f", &t);
+            current_join->leaf_offset.v[0] = t;
+          }
+          else if(strcmp(name->content, "tip_y") == 0)
+          {
+            current_join->is_leaf = 1;
+            float t;
+            sscanf(content->content, "%f", &t);
+            current_join->leaf_offset.v[1] = t;
+          }
+          else
+          if(strcmp(name->content, "tip_z") == 0)
+          {
+            current_join->is_leaf = 1;
+            float t;
+            sscanf(content->content, "%f", &t);
+            current_join->leaf_offset.v[2] = t;
+          }
         }
 
         if(is_node)
@@ -602,16 +601,7 @@ m_list* m_skin_node_parser_parse(char* path)
                 _(ret->uniform_id, cat_char, id);
                 _(ret->uniform_id, cat_char, "]");
                 ret->transform = join->transform;
-                // {
-                //   quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(90), 1, 0, 0);
-                //   m_matrix4 m = matrix4_create_quaternion(offset_q);
-                //   ret->transform = matrix4_mul(ret->transform, m);
-                // }
-                // ret->bind_pose = GENERIC_ARRAY_GET(cs->bind_poses, m_matrix4, k);
-                //
-                // int invertable = 0;
-                // ret->inverse_bind_pose = matrix4_invert(ret->bind_pose, &invertable);
-                ret->inverse_bind_pose = GENERIC_ARRAY_GET(cs->bind_poses, m_matrix4, k);
+                ret->inverse_bind_pose = GENERIC_ARRAY_GET(cs->inv_bind_poses, m_matrix4, k);
                 return ret;
               }
             }
@@ -633,7 +623,6 @@ m_list* m_skin_node_parser_parse(char* path)
           if(parent)
           {
             _(parent, add_child, join);
-
             m_skin_join* join_parent = join->parent->owner;
             m_matrix4 temp = join->inverse_bind_pose;
             while(join_parent)
@@ -644,14 +633,40 @@ m_list* m_skin_node_parser_parse(char* path)
             }
             int invertable = 0;
             join->bind_pose = matrix4_invert(temp, &invertable);
-
           }
           else
           {
             int invertable = 0;
             join->bind_pose = matrix4_invert(join->inverse_bind_pose, &invertable);
-
           }
+
+          // WORKING WITH SECOND LIFE DAE FORMAT , NO NEED TO FIX LEAF
+          // /* fix bind pose from blender technique*/
+          // // quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(180), 1, 0, 0);
+          // // join->fix_leaf = matrix4_create_quaternion(offset_q);
+          // if(msj->is_leaf)
+          // {
+          //   // get target quaternion
+          //   // m_vector3 current_bone_direction = vector3_new(0, 1, 0);
+          //   // float d = vector3_dot_product(msj->leaf_offset, current_bone_direction);
+          //   // float d1 = vector3_length(msj->leaf_offset);
+          //   // if(d1 == 0) d = 0;
+          //   // else d = d / d1;
+          //   // d = acos(d);
+          //   // printf("---------------------\n");
+          //   // printf("leaf offset : %f %f %f\n", msj->leaf_offset.v[0],msj->leaf_offset.v[1],msj->leaf_offset.v[2]);
+          //   // m_vector3 direction = vector3_cross_product(current_bone_direction,msj->leaf_offset);
+          //   // printf("direction : %f %f %f\n", direction.v[0], direction.v[1], direction.v[2]);
+          //   //
+          //   // m_matrix4 m = matrix4_create_quaternion(quaternion_new_angle_vector3_axis(d, direction));
+          //
+          //   // m_matrix4 m = matrix4_create_quaternion(quaternion_new_angle_vector3_axis(msj->roll_offset, msj->leaf_offset));
+          //   // m_matrix4 m2 = matrix4_create_quaternion(quaternion_new_angle_axis(DEG_TO_RAD(-90), 0, 1, 0));
+          //   // m = matrix4_mul(m2, m);
+          //   //
+          //   // join->fix_leaf  = matrix4_mul(m, join->fix_leaf);
+          // }
+          /**/
           parent = join;
 
           if(msj->children->size)

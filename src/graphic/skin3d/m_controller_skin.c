@@ -13,7 +13,7 @@ void m_controller_skin_free(m_controller_skin* node)
   QUICK_RELEASE(node->name);
   QUICK_RELEASE(node->mesh);
   QUICK_RELEASE(node->join_names);
-  QUICK_RELEASE(node->bind_poses);
+  QUICK_RELEASE(node->inv_bind_poses);
   QUICK_RELEASE(node->weights);
   QUICK_RELEASE(node->vcount);
   QUICK_RELEASE(node->v);
@@ -45,8 +45,8 @@ void m_controller_skin_init(m_controller_skin* node)
   QUICK_RETAIN(node->name);
   node->join_names = array_list_new();
   QUICK_RETAIN(node->join_names);
-  node->bind_poses = m_generic_array_new();
-  QUICK_RETAIN(node->bind_poses);
+  node->inv_bind_poses = m_generic_array_new();
+  QUICK_RETAIN(node->inv_bind_poses);
   node->weights = m_generic_array_new();
   QUICK_RETAIN(node->weights);
   node->vcount = m_generic_array_new();

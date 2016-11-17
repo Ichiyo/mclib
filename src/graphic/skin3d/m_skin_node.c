@@ -154,8 +154,8 @@ void m_skin_node_build_skin(m_skin_node* node, m_controller_skin* skin)
       realvertices[vertices_id++] = positions->data[vertex_id * 3 + 1];
       realvertices[vertices_id++] = positions->data[vertex_id * 3 + 2];
       realvertices[vertices_id++] = normals->data[normal_id * 3];
-      realvertices[vertices_id++] = normals->data[normal_id * 3 + 1];
       realvertices[vertices_id++] = normals->data[normal_id * 3 + 2];
+      realvertices[vertices_id++] = -normals->data[normal_id * 3 + 1];
       realvertices[vertices_id++] = uvs->data[uv_id * 2];
       realvertices[vertices_id++] = uvs->data[uv_id * 2 + 1];
 
@@ -184,8 +184,8 @@ void m_skin_node_build_skin(m_skin_node* node, m_controller_skin* skin)
       realvertices[vertices_id++] = positions->data[vertex_id * 3 + 1];
       realvertices[vertices_id++] = positions->data[vertex_id * 3 + 2];
       realvertices[vertices_id++] = normals->data[normal_id * 3];
-      realvertices[vertices_id++] = normals->data[normal_id * 3 + 1];
       realvertices[vertices_id++] = normals->data[normal_id * 3 + 2];
+      realvertices[vertices_id++] = -normals->data[normal_id * 3 + 1];
 
       for(long j = 0; j < skin->max_vcount; j++)
       {
@@ -198,6 +198,7 @@ void m_skin_node_build_skin(m_skin_node* node, m_controller_skin* skin)
   glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
   glBufferData(GL_ARRAY_BUFFER, total_size, realvertices, GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+	free(realvertices);
 
   m_string* _3d_vert = read_string_from_file("res/shaders/shader_skin_3d.vert");
   m_string* _3d_frag = read_string_from_file("res/shaders/shader_skin_3d.frag");
@@ -221,9 +222,9 @@ void m_skin_node_build_skin(m_skin_node* node, m_controller_skin* skin)
 
   node->shader->func->use(node->shader);
 
-  glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
-  glBindVertexArray(node->vao);
 
+  glBindVertexArray(node->vao);
+	glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
   GLint posAttrib = glGetAttribLocation(shader->func->get_id(shader), "position");
   glEnableVertexAttribArray(posAttrib);
   glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, one_vertex_size * sizeof(GLfloat), 0);
@@ -258,7 +259,7 @@ void m_skin_node_build_skin(m_skin_node* node, m_controller_skin* skin)
     offset++;
   }
 
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 }
 
@@ -334,6 +335,7 @@ void m_skin_node_build_mesh(m_skin_node* node, m_geometry_mesh* mesh)
   glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
   glBufferData(GL_ARRAY_BUFFER, total_size, realvertices, GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+	free(realvertices);
 
   m_string* _3d_vert = read_string_from_file("res/shaders/shader_skin_3d.vert");
   m_string* _3d_frag = read_string_from_file("res/shaders/shader_skin_3d.frag");
@@ -355,9 +357,10 @@ void m_skin_node_build_mesh(m_skin_node* node, m_geometry_mesh* mesh)
 
   node->shader->func->use(node->shader);
 
-  glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
+
   glBindVertexArray(node->vao);
 
+	glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
   GLint posAttrib = glGetAttribLocation(shader->func->get_id(shader), "position");
   glEnableVertexAttribArray(posAttrib);
   glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, one_vertex_size * sizeof(GLfloat), 0);
@@ -382,7 +385,7 @@ void m_skin_node_set_join(m_skin_node* node, m_skin_join* join)
   node->join = join;
   QUICK_RETAIN(node->join);
 }
-
+float t = 0;
 void m_skin_node_update_skeleton(m_skin_node* node, m_skin_join* join)
 {
    printf("%s--------\n",join->sid->content);
@@ -390,57 +393,46 @@ void m_skin_node_update_skeleton(m_skin_node* node, m_skin_join* join)
    {
      printf("%f %f %f %f\n", join->transform.m[i+0],join->transform.m[i+1],join->transform.m[i+2],join->transform.m[i+3]);
    }
-	
+
 	// move to bone bind pose
   if(join->parent)
   {
     m_skin_join* parent = join->parent->owner;
 
     join->world_matrix = parent->world_matrix;
-    join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);	    
+    join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);
   }
   else
   {
     join->world_matrix = matrix4_identity;
     join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);
   }
-	// fix bonde pose direction
-	{
-		quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(180), 1, 0, 0);
 
-		m_matrix4 m = matrix4_create_quaternion(offset_q);
-		join->world_matrix  = matrix4_mul(m, join->world_matrix);
-	}
-	// move bone to position
-	join->world_matrix = matrix4_mul(join->world_matrix, join->transform);
-	// fix leaf joint
-	//test
-	if(strcmp(join->sid->content, "Bone_002") == 0)
-	{
-		quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(90), 1, 0, 0);
+  // WORKING WITH SECOND LIFE DAE FORMAT , NO NEED TO FIX LEAF
+	// // fix leaf joint
+  // join->world_matrix = matrix4_mul(join->fix_leaf, join->world_matrix);
 
-		m_matrix4 m = matrix4_create_quaternion(offset_q);
-		join->world_matrix  = matrix4_mul(m, join->world_matrix);
-	}
-	if(strcmp(join->sid->content, "Bone_003") == 0)
-	{
-		quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 0, 1, 0);
+  t+= 1;
+  join->world_matrix = matrix4_mul(join->world_matrix, join->transform);
 
-		m_matrix4 m = matrix4_create_quaternion(offset_q);
-		join->world_matrix  = matrix4_mul(m, join->world_matrix);
-	}
-	/*if(strcmp(join->sid->content, "Bone_003") == 0)
-	{
-		quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 0, 0, 1);
-
-		m_matrix4 m = matrix4_create_quaternion(offset_q);
-		join->world_matrix  = matrix4_mul(join->world_matrix, m);
-	}*/
-	
   join->final_matrix = join->world_matrix;
   join->final_matrix = matrix4_mul(join->final_matrix, join->inverse_bind_pose);
   join->final_matrix = matrix4_mul(node->bind_shape_matrix, join->final_matrix);
 
+  if(strcmp(join->sid->content, "Bone_004") == 0)
+  {
+    m_vector3 v = vector3_new(0, 0, 2);
+    join->final_matrix = matrix4_translate_vector3(join->final_matrix, v);
+      quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 1, 0, 0);
+      m_matrix4 m = matrix4_create_quaternion(offset_q);
+      join->final_matrix  = matrix4_mul(join->final_matrix, m);
+      join->final_matrix = matrix4_translate_vector3(join->final_matrix, vector3_neg(v));
+  }
+  //  printf("%s--------\n",join->sid->content);
+  //  for(int i = 0; i < 16; i += 4)
+  //  {
+  //    printf("%f %f %f %f\n", join->final_matrix.m[i+0],join->final_matrix.m[i+1],join->final_matrix.m[i+2],join->final_matrix.m[i+3]);
+  //  }
 
   GLint uniform = glGetUniformLocation(node->shader->func->get_id(node->shader), join->uniform_id->content);
   glUniformMatrix4fv(uniform, 1, GL_FALSE, join->final_matrix.m);
@@ -477,6 +469,7 @@ void m_skin_node_draw(m_skin_node* node)
 void m_skin_node_set_shader(m_skin_node* arg_0, m_shader* arg_1)
 {
   // not used
+  // join->bind_pose  = matrix4_mul(m, join->bind_pose);
 }
 
 void m_skin_node_set_texture(m_skin_node* node, m_texture* texture)
