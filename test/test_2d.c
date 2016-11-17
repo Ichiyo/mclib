@@ -49,18 +49,18 @@ int main(int argc, char *argv[])
   {
     _(n, set_size, vector3_new(30, 30, 30));
     _(n, set_position, vector3_new(sprite->size.v[0]/2 + 50, sprite->size.v[1]/2, 0));
-	  quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 1, 0, 0);
-    n->fix_model = matrix4_create_quaternion(offset_q);
+	  // quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 1, 0, 0);
+    // n->fix_model = matrix4_create_quaternion(offset_q);
   }
 
 {
 	m_node3d* sprite4 = m_node3d_new();
-	sprite4->size = vector3_new(30, 30, 30);
-	sprite4->func->set_shader(sprite4, shader3);
-	sprite4->func->set_texture(sprite4,tex2);
-	sprite->func->add_child(sprite, sprite4);
-	sprite4->func->set_model_obj(sprite4, "res/model/monkey2.obj");
-	sprite4->func->set_position(sprite4, vector3_new(sprite->size.v[0]/2, sprite->size.v[1]/2, 0));
+  _(sprite4, set_size, vector3_new(30, 30, 30));
+	_(sprite4, set_shader, shader3);
+	_(sprite4, set_texture, tex2);
+	_(sprite, add_child, sprite4);
+	_(sprite4, set_model_obj, "res/model/monkey2.obj");
+	_(sprite4, set_position, vector3_new(sprite->size.v[0]/2, sprite->size.v[1]/2, 0));
 
 	quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(90), 1, 0, 0);
 	sprite4->fix_model = matrix4_create_quaternion(offset_q);
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
             break;
       }
     }
-    sprite->func->visit(sprite, matrix4_identity, 0);
+    _(sprite, visit, matrix4_identity, 0);
 
     ref_update_auto_release_pool();
     SDL_GL_SwapWindow(window);
