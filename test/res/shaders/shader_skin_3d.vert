@@ -279,9 +279,11 @@ void main()
     //nor = vec4(normal, 1.0);
 
     pos[3] = 1.0;
+
     #if HAS_TEXTURE != 0
     Texcoord = texcoord;
     #endif
+
     gl_Position = proj * view * mod * pos;
     Normal = mat3(matrix4_transpose(matrix4_inverse(mod))) * vec3(nor);
     FragPos = vec3(mod * pos);

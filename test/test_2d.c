@@ -27,25 +27,16 @@ int main(int argc, char *argv[])
   m_texture* tex2 = m_texture_new_from_file_char("res/floor/TexturesCom_FloorsCheckerboard0017_1_seamless_S.jpg");
   m_shader* shader = m_shader_new_from_file("res/shaders/shader_2d.vert", "res/shaders/shader_2d.frag");
 
-  m_string* _3d_vert = read_string_from_file("res/shaders/shader_skin_3d.vert");
-  m_string* _3d_frag = read_string_from_file("res/shaders/shader_skin_3d.frag");
-
-  // _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_join_ids"), new_string_from_char("0"));
-  // _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$number_joins"), new_string_from_char("0"));
-  // _3d_vert->func->replace_str(_3d_vert, new_string_from_char("$use_model_index"), new_string_from_char("1"));
-  // m_shader* shader2 = m_shader_new_from_source(_3d_vert->content, _3d_frag->content);
-  // QUICK_RELEASE(_3d_vert);
-  // QUICK_RELEASE(_3d_frag);
   m_shader* shader3 = m_shader_new_from_file("res/shaders/shader_3d.vert", "res/shaders/shader_3d.frag");
 
   m_list* nodes = m_skin_node_parser_parse("res/work4.dae");
- 
+
   m_sprite2d* sprite = m_sprite2d_new();
   sprite->func->set_size(sprite, vector3_new(50, 50, 0));
-  _(sprite, set_position, vector3_new(50, 0, 0));
+  _(sprite, set_position, vector3_new(-25, -25, 0));
   // _(sprite, set_anchor, vector3_new(0,0,0));
   _(sprite, set_texture, tex);
-	
+
 
   _(sprite, set_shader, shader);
   sprite->func->retain(sprite);
@@ -61,7 +52,7 @@ int main(int argc, char *argv[])
 	  quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 1, 0, 0);
     n->fix_model = matrix4_create_quaternion(offset_q);
   }
-  
+
 {
 	m_node3d* sprite4 = m_node3d_new();
 	sprite4->size = vector3_new(30, 30, 30);

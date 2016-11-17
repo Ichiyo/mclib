@@ -62,6 +62,5 @@ void main()
   vec3 diffuse = light.diffuse * diff * param;
 
   vec3 result = ambient + diffuse;
-
   plf_fragColor =  vec4(result, 1.0);
 }
