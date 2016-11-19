@@ -85,6 +85,8 @@ static __inline__ void matrix4_mul_project_vector3_array(m_matrix4 matrix, m_vec
 static __inline__ m_vector4 matrix4_mul_vector4(m_matrix4 matrixLeft, m_vector4 vectorRight);
 static __inline__ void matrix4_mul_vector4_array(m_matrix4 matrix, m_vector4 *vectors, size_t vectorCount);
 
+static __inline__ void matrix4_print(m_matrix4 mat);
+
 m_matrix4 matrix4_invert(m_matrix4 matrix, int *isInvertible);
 m_matrix4 matrix4_invert_transpose(m_matrix4 matrix, int *isInvertible);
 
@@ -772,6 +774,17 @@ static __inline__ void matrix4_mul_vector4_array(m_matrix4 matrix, m_vector4 *ve
         vectors[i] = matrix4_mul_vector4(matrix, vectors[i]);
 }
 
+static __inline__ void matrix4_print(m_matrix4 mat)
+{
+  for(int i = 0; i < 16; i += 4)
+  {
+    printf("%f %f %f %f\n",
+    mat.m[i+0],
+    mat.m[i+1],
+    mat.m[i+2],
+    mat.m[i+3]);
+  }
+}
 
 #ifdef __cplusplus
 }
