@@ -388,78 +388,30 @@ void m_skin_node_set_join(m_skin_node* node, m_skin_join* join)
 float t = 0;
 void m_skin_node_update_skeleton(m_skin_node* node, m_skin_join* join)
 {
-  //  printf("%s--------\n",join->sid->content);
-  //  for(int i = 0; i < 16; i += 4)
-  //  {
-  //    printf("%f %f %f %f\n", join->transform.m[i+0],join->transform.m[i+1],join->transform.m[i+2],join->transform.m[i+3]);
-  //  }
-
-	// move to bone bind pose
   if(join->parent)
   {
     m_skin_join* parent = join->parent->owner;
 
+    join->world_matrix = matrix4_identity;
     join->world_matrix = parent->world_matrix;
-
     join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);
   }
   else
   {
-    join->world_matrix = matrix4_identity;
-    join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);
+    join->world_matrix = join->bind_pose;
+  }
+  if(strcmp(join->sid->content, "Bone_003") == 0)
+  {
+    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 1, 0, 0);
+    m_matrix4 m = matrix4_create_quaternion(offset_q);
+    join->world_matrix = matrix4_mul(join->world_matrix, m);
   }
 
-  // WORKING WITH SECOND LIFE DAE FORMAT , NO NEED TO FIX LEAF
-	// // fix leaf joint
-  // join->world_matrix = matrix4_mul(join->fix_leaf, join->world_matrix);
-
   t+= 1;
-  join->world_matrix = matrix4_mul(join->world_matrix, join->transform);
 
   join->final_matrix = join->world_matrix;
   join->final_matrix = matrix4_mul(join->final_matrix, join->inverse_bind_pose);
   join->final_matrix = matrix4_mul(node->bind_shape_matrix, join->final_matrix);
-
-  // process local animation // test
-  if(strcmp(join->sid->content, "Bone") == 0)
-  {
-    m_vector3 v = vector3_new(0, 0, 0);
-    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 0, 0, 1);
-    m_matrix4 m = matrix4_create_quaternion(offset_q);
-    join->local_animation = matrix4_create_translation(v.v[0], v.v[1], v.v[2]);
-    join->local_animation = matrix4_mul(join->local_animation, m);
-    join->local_animation = matrix4_translate_vector3(join->local_animation, vector3_neg(v));
-  }
-  if(strcmp(join->sid->content, "Bone_003") == 0)
-  {
-    m_vector3 v = vector3_new(0, 0, 2.006460);
-    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 0, 0, 1);
-    m_matrix4 m = matrix4_create_quaternion(offset_q);
-    join->local_animation = matrix4_create_translation(v.v[0], v.v[1], v.v[2]);
-    join->local_animation = matrix4_mul(join->local_animation, m);
-    join->local_animation = matrix4_translate_vector3(join->local_animation, vector3_neg(v));
-  }
-  if(strcmp(join->sid->content, "Bone_004") == 0)
-  {
-    m_vector3 v = vector3_new(1, 0, 2.006460);
-    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 1, 0, 0);
-    m_matrix4 m = matrix4_create_quaternion(offset_q);
-    join->local_animation = matrix4_create_translation(v.v[0], v.v[1], v.v[2]);
-    join->local_animation = matrix4_mul(join->local_animation, m);
-    join->local_animation = matrix4_translate_vector3(join->local_animation, vector3_neg(v));
-  }
-  // process parent local animation
-
-  if(join->parent)
-  {
-    m_skin_join* parent = join->parent->owner;
-    join->combine_local_animation = matrix4_mul(parent->combine_local_animation, join->local_animation);
-  }
-  else
-  {
-    join->combine_local_animation = join->local_animation;
-  }
-  join->final_matrix = matrix4_mul(join->final_matrix, join->combine_local_animation);
 
   GLint uniform = glGetUniformLocation(node->shader->func->get_id(node->shader), join->uniform_id->content);
   glUniformMatrix4fv(uniform, 1, GL_FALSE, join->final_matrix.m);

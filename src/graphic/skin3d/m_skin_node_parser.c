@@ -14,6 +14,7 @@ extern "C" {
 #include <graphic/skin3d/m_skin_join.h>
 #include <graphic/skin3d/m_visual_scene_join.h>
 #include <graphic/skin3d/m_visual_scene_node.h>
+#include <mstr/m_int_array.h>
 #include <mstr/lambda.h>
 
 m_list* m_skin_node_parser_parse(char* path)
@@ -393,7 +394,7 @@ m_list* m_skin_node_parser_parse(char* path)
             }
             else
             {
-              current_join->transform = matrix4_mul(current_join->transform, temp);
+              current_join->transform = matrix4_mul(current_node->transform, temp);
             }
           }
         }
@@ -544,7 +545,8 @@ m_list* m_skin_node_parser_parse(char* path)
   m_list* node_parse_stack = linked_list_new();
   m_list* visual_join_keys = array_list_new();
   m_list* joins_created = array_list_new();
-
+  m_int_array* node_processed_tree = m_int_array_new();
+  _(node_processed_tree, push, visual_nodes->size);
   for(long i = visual_nodes->size - 1; i >= 0; i--)
   {
     _(node_parse_stack, insert, _(visual_nodes, get_index, i), 0, 1);
@@ -552,6 +554,33 @@ m_list* m_skin_node_parser_parse(char* path)
 
   while(node_parse_stack->size)
   {
+    if(node_processed_tree->length)
+    {
+      if(node_processed_tree->data[node_processed_tree->length-1] > 0)
+      {
+          node_processed_tree->data[node_processed_tree->length-1] -= 1;
+      }
+      else
+      {
+        _(node_processed_tree, remove, node_processed_tree->length - 1);
+        if(current_node_parent ->parent)
+        {
+          current_node_parent  = current_node_parent ->parent->owner;
+          continue;
+        }
+      }
+    }
+    else
+    {
+      if(current_node_parent ->parent)
+      {
+        current_node_parent  = current_node_parent ->parent->owner;
+        continue;
+      }
+      else break;
+    }
+
+
     m_visual_scene_node* vsn = _(node_parse_stack, get_first);
     _(node_parse_stack, remove_index, 0);
     m_skin_node* new_node = m_skin_node_new();
@@ -600,8 +629,8 @@ m_list* m_skin_node_parser_parse(char* path)
                 snprintf(id, sizeof(id), "%d", k);
                 _(ret->uniform_id, cat_char, id);
                 _(ret->uniform_id, cat_char, "]");
-                ret->transform = join->transform;
-                ret->inverse_bind_pose = GENERIC_ARRAY_GET(cs->inv_bind_poses, m_matrix4, k);
+                ret->transform = matrix4_transpose(join->transform);
+                ret->inverse_bind_pose = matrix4_transpose(GENERIC_ARRAY_GET(cs->inv_bind_poses, m_matrix4, k));
                 return ret;
               }
             }
@@ -613,8 +642,32 @@ m_list* m_skin_node_parser_parse(char* path)
         _(queue, push, vsn->skeleton, 1);
         m_skin_join* parent = 0;
         m_skin_join* join_root = 0;
+        m_int_array* child_processed_tree = m_int_array_new();
+        _(child_processed_tree, push, 1);
         while(queue->size)
         {
+          if(child_processed_tree->length)
+          {
+            if(child_processed_tree->data[child_processed_tree->length-1] > 0)
+            {
+                child_processed_tree->data[child_processed_tree->length-1] -= 1;
+            }
+            else
+            {
+              _(child_processed_tree, remove, child_processed_tree->length - 1);
+              parent = parent->parent->owner;
+              continue;
+            }
+          }
+          else
+          {
+            if(parent->parent)
+            {
+              parent = parent->parent->owner;
+              continue;
+            }
+            else break;
+          }
           m_visual_scene_join* msj = _(queue, get_first);
           _(queue, remove_index, 0);
 
@@ -625,14 +678,23 @@ m_list* m_skin_node_parser_parse(char* path)
             _(parent, add_child, join);
             m_skin_join* join_parent = join->parent->owner;
             m_matrix4 temp = join->inverse_bind_pose;
+            int invertable = 0;
+            join->bind_pose = matrix4_invert(temp, &invertable); // join->bind_pose = C
+            // bind_pose_0 = A
+            // bind_pose_0 * bind_pose_1 = B --> bind_pose_1 = (bind_pose_0) ^(-1) * B
+            // bind_pose_0 * bind_pose_1 * bind_pose_2 = C --> bind_pose_2 = (bind_pose_0 * bind_pose_1) ^ (-1) * C;
+            // ...
+
+            temp = matrix4_identity;
             while(join_parent)
             {
-              temp = matrix4_mul(join_parent->inverse_bind_pose, temp);
+              temp = matrix4_mul(join_parent->bind_pose, temp);
+
               if(join_parent->parent) join_parent = join_parent->parent->owner;
               else break;
             }
-            int invertable = 0;
-            join->bind_pose = matrix4_invert(temp, &invertable);
+            temp = matrix4_invert(temp, &invertable);
+            join->bind_pose = matrix4_mul(temp, join->bind_pose);
           }
           else
           {
@@ -640,37 +702,11 @@ m_list* m_skin_node_parser_parse(char* path)
             join->bind_pose = matrix4_invert(join->inverse_bind_pose, &invertable);
           }
 
-          // WORKING WITH SECOND LIFE DAE FORMAT , NO NEED TO FIX LEAF
-          // /* fix bind pose from blender technique*/
-          // // quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(180), 1, 0, 0);
-          // // join->fix_leaf = matrix4_create_quaternion(offset_q);
-          // if(msj->is_leaf)
-          // {
-          //   // get target quaternion
-          //   // m_vector3 current_bone_direction = vector3_new(0, 1, 0);
-          //   // float d = vector3_dot_product(msj->leaf_offset, current_bone_direction);
-          //   // float d1 = vector3_length(msj->leaf_offset);
-          //   // if(d1 == 0) d = 0;
-          //   // else d = d / d1;
-          //   // d = acos(d);
-          //   // printf("---------------------\n");
-          //   // printf("leaf offset : %f %f %f\n", msj->leaf_offset.v[0],msj->leaf_offset.v[1],msj->leaf_offset.v[2]);
-          //   // m_vector3 direction = vector3_cross_product(current_bone_direction,msj->leaf_offset);
-          //   // printf("direction : %f %f %f\n", direction.v[0], direction.v[1], direction.v[2]);
-          //   //
-          //   // m_matrix4 m = matrix4_create_quaternion(quaternion_new_angle_vector3_axis(d, direction));
-          //
-          //   // m_matrix4 m = matrix4_create_quaternion(quaternion_new_angle_vector3_axis(msj->roll_offset, msj->leaf_offset));
-          //   // m_matrix4 m2 = matrix4_create_quaternion(quaternion_new_angle_axis(DEG_TO_RAD(-90), 0, 1, 0));
-          //   // m = matrix4_mul(m2, m);
-          //   //
-          //   // join->fix_leaf  = matrix4_mul(m, join->fix_leaf);
-          // }
-          /**/
           parent = join;
 
           if(msj->children->size)
           {
+            _(child_processed_tree, push, msj->children->size);
             for(long j = msj->children->size - 1; j >= 0; j--)
             {
              _(queue, insert, _(msj->children, get_index, j), 0, 1);
@@ -715,6 +751,7 @@ m_list* m_skin_node_parser_parse(char* path)
 
     if(vsn->children->size)
     {
+      _(node_processed_tree, push, vsn->children->size);
       for(long j = vsn->children->size - 1; j >= 0; j--)
       {
         _(node_parse_stack, insert, _(vsn->children, get_index, j), 0, 1);

@@ -24,15 +24,15 @@
 int
 main (int argc, char *argv[])
 {
-	int a[2] = {100, 200};
-	int b[2] = {5, 10};
-	int t = 0;
-	int l = 0;
-	for(int i = 0; i < 2; i++)
-	{
-		a[t++] = b[l++];
-	}
-	printf("%d %d\n",a[0], a[1]);
+	m_matrix4 m1 = matrix4_create_translation(4, 7, 2);
+	m_matrix4 m2 = matrix4_create_translation(9, 19, -20);
+	int t;
+	m_matrix4 b1 = matrix4_invert(m1, &t);
+	m_matrix4 b2 = matrix4_invert(matrix4_mul(m1, m2), &t);
+
+	m_matrix4 f = matrix4_mul(b1, b2);
+	f = matrix4_mul(f, m2);
+	matrix4_print(f);
 	//
 	// g_image* image = image_new_from_file("res/wolf.jpg");
 	// m_string* str = new_string();

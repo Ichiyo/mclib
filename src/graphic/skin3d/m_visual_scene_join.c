@@ -36,6 +36,7 @@ static m_visual_scene_join_func base_m_visual_scene_join_func =
 void m_visual_scene_join_init(m_visual_scene_join* node)
 {
 	node->func = &base_m_visual_scene_join_func;
+  node->transform = matrix4_identity;
   node->id = new_string();
   QUICK_RETAIN(node->id);
   node->name = new_string();
