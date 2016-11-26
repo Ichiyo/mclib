@@ -6,6 +6,12 @@
 
 int main(int argc, char const *argv[]) {
 
+{
+lambda_ref* ret = SAFE_NEW_LAMBDA(void, (float arg1, float arg2){
+		printf("custom data %f | %f\n", arg1, arg2);
+	},0);
+	ret->callback((float)1, (float)2);
+}
   m_int* number = new_int(1234);
   m_int* number_2 = new_int(12345);
   lambda_ref* ret = SAFE_NEW_LAMBDA(void, (double arg1, int arg2){

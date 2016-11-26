@@ -4,6 +4,8 @@
 #include <base/ref.h>
 
 #ifdef __cplusplus
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wwrite-strings"
 extern "C" {
 #endif
 

@@ -2,7 +2,12 @@
 #define _M_REF_H
 
 #ifdef linux
-#include <stdatomic.h>
+	#ifdef __cplusplus
+		#include <atomic>
+		using namespace std;
+	#else
+		#include <stdatomic.h>
+	#endif
 #endif
 
 #include <stdlib.h>
@@ -15,8 +20,10 @@
   expansion of BASE_REF_FUNC_INHERIT will assign ref* to void* pointer
 
 */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+#ifndef __cplusplus
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+#endif
 
 #ifdef __cplusplus
 extern "C" {

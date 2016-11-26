@@ -44,7 +44,6 @@ void m_skin_join_init(m_skin_join* node)
   node->transform = matrix4_identity;
   node->fix_leaf = matrix4_identity;
   node->local_animation = matrix4_identity;
-  node->combine_local_animation = matrix4_identity;
   node->name = new_string();
   QUICK_RETAIN(node->name);
   node->sid = new_string();

@@ -30,7 +30,6 @@ extern "C" {
   m_matrix4 world_matrix; \
   m_matrix4 fix_leaf; \
   m_matrix4 local_animation; \
-  m_matrix4 combine_local_animation; \
   m_matrix4 final_matrix; \
 	m_string* name; \
   m_string* uniform_id; \

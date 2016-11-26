@@ -222,7 +222,6 @@ void m_skin_node_build_skin(m_skin_node* node, m_controller_skin* skin)
 
   node->shader->func->use(node->shader);
 
-
   glBindVertexArray(node->vao);
 	glBindBuffer(GL_ARRAY_BUFFER, node->vbo);
   GLint posAttrib = glGetAttribLocation(shader->func->get_id(shader), "position");
@@ -385,29 +384,30 @@ void m_skin_node_set_join(m_skin_node* node, m_skin_join* join)
   node->join = join;
   QUICK_RETAIN(node->join);
 }
-float t = 0;
+
+int t = 0;
 void m_skin_node_update_skeleton(m_skin_node* node, m_skin_join* join)
 {
+  // printf("%s---\n", join->sid->content);
+  // matrix4_print(join->bind_pose);
+  // printf(" transform \n");
+  // matrix4_print(join->transform);
+  join->world_matrix = matrix4_identity;
   if(join->parent)
   {
     m_skin_join* parent = join->parent->owner;
-
-    join->world_matrix = matrix4_identity;
     join->world_matrix = parent->world_matrix;
-    join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);
-  }
-  else
-  {
-    join->world_matrix = join->bind_pose;
-  }
-  if(strcmp(join->sid->content, "Bone_003") == 0)
-  {
-    quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 1, 0, 0);
-    m_matrix4 m = matrix4_create_quaternion(offset_q);
-    join->world_matrix = matrix4_mul(join->world_matrix, m);
   }
 
-  t+= 1;
+  join->world_matrix = matrix4_mul(join->world_matrix, join->bind_pose);
+
+  // if(strcmp(join->sid->content, "Bone_003") == 0)
+  // {
+  //   t += 10;
+  //   quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(t * 0.1f), 0, 0, 1);
+  //   m_matrix4 m = matrix4_create_quaternion(offset_q);
+  //   join->world_matrix = matrix4_mul(join->world_matrix, m);
+  // }
 
   join->final_matrix = join->world_matrix;
   join->final_matrix = matrix4_mul(join->final_matrix, join->inverse_bind_pose);

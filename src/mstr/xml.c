@@ -68,8 +68,9 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
           current_node_value->func->release(current_node_value);
           current_node_value = new_string();
           #endif
-
-          if(text_func) text_func->callback(depth - 1, ((m_string*)node_stacks->func->get_last(node_stacks)), current_node_value);
+					
+/*          if(text_func) text_func->callback(depth - 1, ((m_string*)node_stacks->func->get_last(node_stacks)), current_node_value);*/
+					if(text_func) SAFE_CALL_LAMBDA(xml_text_delegate, text_func, depth - 1, ((m_string*)node_stacks->func->get_last(node_stacks)), current_node_value);
 
           value_white = 1;
         }
@@ -99,7 +100,9 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
             printf("end node: %s\n",((m_string*)node_stacks->func->get_last(node_stacks))->content);
             #endif
             depth = depth - 1;
-            if(end_func) end_func->callback(depth,((m_string*)node_stacks->func->get_last(node_stacks)));
+/*            if(end_func) end_func->callback(depth,((m_string*)node_stacks->func->get_last(node_stacks)));*/
+						if(end_func) SAFE_CALL_LAMBDA(xml_end_delegate, end_func, depth,((m_string*)node_stacks->func->get_last(node_stacks)));
+						
             // remove from stack
             m_string* str = ((m_string*)node_stacks->func->get_last(node_stacks));
             node_stacks->func->pop(node_stacks);
@@ -134,7 +137,9 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
             printf("begin node: %s\n",((m_string*)node_stacks->func->get_last(node_stacks))->content);
             tab++;
             #endif
-            if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+            
+            //if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+            if(begin_func) SAFE_CALL_LAMBDA(xml_begin_delegate, begin_func, depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
             depth = depth + 1;
             state = XML_STATE_TRY_READ_NEXT_NODE;
 
@@ -158,8 +163,10 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
             printf("end node: %s\n",((m_string*)node_stacks->func->get_last(node_stacks))->content);
             #endif
 
-            if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
-            if(end_func) end_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)));
+/*            if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);*/
+/*            if(end_func) end_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)));*/
+            if(begin_func) SAFE_CALL_LAMBDA(xml_begin_delegate, begin_func,depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+            if(end_func) SAFE_CALL_LAMBDA(xml_end_delegate, end_func,depth, ((m_string*)node_stacks->func->get_last(node_stacks)));
             // remove from stack
             m_string* str = ((m_string*)node_stacks->func->get_last(node_stacks));
             node_stacks->func->pop(node_stacks);
@@ -202,8 +209,11 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
             printf("end node: %s\n",((m_string*)node_stacks->func->get_last(node_stacks))->content);
             #endif
 
-            if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
-            if(end_func) end_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)));
+           // if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+           // if(end_func) end_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)));
+           	if(begin_func) SAFE_CALL_LAMBDA(xml_begin_delegate, begin_func, depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+            if(end_func) SAFE_CALL_LAMBDA(xml_end_delegate, end_func, depth, ((m_string*)node_stacks->func->get_last(node_stacks)));
+           
             // remove from stack
             m_string* str = ((m_string*)node_stacks->func->get_last(node_stacks));
             node_stacks->func->pop(node_stacks);
@@ -227,7 +237,8 @@ void parse_xml_file(const char* path, lambda_ref* begin_func, lambda_ref* text_f
             printf("begin node: %s\n",((m_string*)node_stacks->func->get_last(node_stacks))->content);
             tab++;
             #endif
-            if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+            //if(begin_func) begin_func->callback(depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
+            	if(begin_func) SAFE_CALL_LAMBDA(xml_begin_delegate, begin_func, depth, ((m_string*)node_stacks->func->get_last(node_stacks)), current_attributes);
             depth = depth + 1;
 
             state = XML_STATE_TRY_READ_NEXT_NODE;

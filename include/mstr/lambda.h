@@ -3,6 +3,7 @@
 
 #include <base/ref.h>
 #include <mstr/list.h>
+#include <base/config.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,6 +59,9 @@ lambda_ref* new_lambda(void* func, void* guards,...);
   new_lambda(({return_type __fn__ body __fn__;}),list,0)
 
 #endif
+
+#define SAFE_CALL_LAMBDA(function_signature, ret, arguments...) \
+		((function_signature)ret->callback)(arguments);
 
 #ifdef __cplusplus
 }

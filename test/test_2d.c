@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
   m_sprite2d* sprite = m_sprite2d_new();
   sprite->func->set_size(sprite, vector3_new(50, 50, 0));
   _(sprite, set_position, vector3_new(-25, -25, 0));
-  // _(sprite, set_anchor, vector3_new(0,0,0));
   _(sprite, set_texture, tex);
 
 
@@ -49,8 +48,6 @@ int main(int argc, char *argv[])
   {
     _(n, set_size, vector3_new(30, 30, 30));
     _(n, set_position, vector3_new(sprite->size.v[0]/2 + 50, sprite->size.v[1]/2, 0));
-	  // quaternion offset_q = quaternion_new_angle_axis(DEG_TO_RAD(-90), 1, 0, 0);
-    // n->fix_model = matrix4_create_quaternion(offset_q);
   }
 
 {
